@@ -78,3 +78,31 @@ function calculateAgePercentages(row) {
 
     return percentages;
 }
+
+function calculateAgeCounts(row) {
+    const ageGroupMapping = {
+        '영유아': ['0~9세'],
+        '10대': ['10~19세'],
+        '20대': ['20~29세'],
+        '30대': ['30~39세'],
+        '40대': ['40~49세'],
+        '50대': ['50~59세'],
+        '60대이상': ['60~69세', '70~79세', '80~89세', '90~99세', '100세 이상']
+    };
+
+    const counts = {};
+
+    Object.keys(ageGroupMapping).forEach(groupLabel => {
+        const ageKeys = ageGroupMapping[groupLabel];
+        let groupTotal = 0;
+
+        ageKeys.forEach(ageKey => {
+            const value = parseInt(row[`${ageKey}`].replace(/,/g, '')) || 0;
+            groupTotal += value;
+        });
+
+        counts[groupLabel] = groupTotal;
+    });
+
+    return counts;
+}

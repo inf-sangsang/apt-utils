@@ -156,7 +156,7 @@ function updateChart(filteredData, currentSortBy) {
     });
 }
 
-function updateBarChart(filteredData, currentSortBy) {
+function updateBarChart(filteredData, currentSortBy, currentRegion) {
     if (filteredData.length === 0) {
         if (window.barChart) {
             window.barChart.destroy();
@@ -165,7 +165,21 @@ function updateBarChart(filteredData, currentSortBy) {
         return;
     }
 
-    const sortedData = sortFilteredData(filteredData, currentSortBy);
+    // Filter out the selected region itself, only show child regions
+    const childRegionsOnly = filteredData.filter(row => {
+        const regionName = cleanRegionName(row['행정구역']);
+        return regionName !== currentRegion;
+    });
+
+    if (childRegionsOnly.length === 0) {
+        if (window.barChart) {
+            window.barChart.destroy();
+            window.barChart = null;
+        }
+        return;
+    }
+
+    const sortedData = sortFilteredData(childRegionsOnly, currentSortBy, true);
     const regionLabels = sortedData.map(row => getShortRegionName(row['행정구역']));
     const datasets = [];
 
@@ -173,8 +187,8 @@ function updateBarChart(filteredData, currentSortBy) {
         datasets.push({
             label: label,
             data: sortedData.map(row => {
-                const percentages = calculateAgePercentages(row);
-                return percentages[label];
+                const counts = calculateAgeCounts(row);
+                return counts[label];
             }),
             backgroundColor: COLORS[index],
             borderColor: COLORS[index],
@@ -223,7 +237,7 @@ function updateBarChart(filteredData, currentSortBy) {
                     },
                     callbacks: {
                         label: function (context) {
-                            return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + '%';
+                            return context.dataset.label + ': ' + context.parsed.y.toLocaleString() + '명';
                         }
                     }
                 }
@@ -242,10 +256,12 @@ function updateBarChart(filteredData, currentSortBy) {
                 },
                 y: {
                     beginAtZero: true,
-                    max: 100,
                     ticks: {
                         callback: function (value) {
-                            return value + '%';
+                            if (value >= 10000) {
+                                return (value / 10000).toFixed(0) + '만';
+                            }
+                            return value.toLocaleString();
                         },
                         font: {
                             family: 'Noto Sans KR',
@@ -261,7 +277,7 @@ function updateBarChart(filteredData, currentSortBy) {
     });
 }
 
-function updateAgeGroupChart(filteredData, currentSortBy) {
+function updateAgeGroupChart(filteredData, currentSortBy, currentRegion) {
     if (filteredData.length === 0) {
         if (window.ageGroupChart) {
             window.ageGroupChart.destroy();
@@ -270,7 +286,21 @@ function updateAgeGroupChart(filteredData, currentSortBy) {
         return;
     }
 
-    const sortedData = sortFilteredData(filteredData, currentSortBy);
+    // Filter out the selected region itself, only show child regions
+    const childRegionsOnly = filteredData.filter(row => {
+        const regionName = cleanRegionName(row['행정구역']);
+        return regionName !== currentRegion;
+    });
+
+    if (childRegionsOnly.length === 0) {
+        if (window.ageGroupChart) {
+            window.ageGroupChart.destroy();
+            window.ageGroupChart = null;
+        }
+        return;
+    }
+
+    const sortedData = sortFilteredData(childRegionsOnly, currentSortBy, true);
     const regionLabels = sortedData.map(row => getShortRegionName(row['행정구역']));
     const datasets = [];
 
@@ -288,8 +318,7 @@ function updateAgeGroupChart(filteredData, currentSortBy) {
                 groupTotal += value;
             });
 
-            const percentage = (groupTotal / totalPop) * 100;
-            ageData.push(percentage);
+            ageData.push(groupTotal);
         });
 
         datasets.push({
@@ -343,7 +372,7 @@ function updateAgeGroupChart(filteredData, currentSortBy) {
                     },
                     callbacks: {
                         label: function (context) {
-                            return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + '%';
+                            return context.dataset.label + ': ' + context.parsed.y.toLocaleString() + '명';
                         }
                     }
                 }
@@ -362,10 +391,12 @@ function updateAgeGroupChart(filteredData, currentSortBy) {
                 },
                 y: {
                     beginAtZero: true,
-                    max: 100,
                     ticks: {
                         callback: function (value) {
-                            return value + '%';
+                            if (value >= 10000) {
+                                return (value / 10000).toFixed(0) + '만';
+                            }
+                            return value.toLocaleString();
                         },
                         font: {
                             family: 'Noto Sans KR',
@@ -615,7 +646,7 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
     });
 }
 
-function sortFilteredData(data, currentSortBy) {
+function sortFilteredData(data, currentSortBy, useCounts = false) {
     if (currentSortBy === 'name') {
         return data.sort((a, b) => {
             const nameA = cleanRegionName(a['행정구역']);
@@ -624,9 +655,15 @@ function sortFilteredData(data, currentSortBy) {
         });
     } else {
         return data.sort((a, b) => {
-            const percA = calculateAgePercentages(a);
-            const percB = calculateAgePercentages(b);
-            return percB[currentSortBy] - percA[currentSortBy];
+            if (useCounts) {
+                const countsA = calculateAgeCounts(a);
+                const countsB = calculateAgeCounts(b);
+                return countsB[currentSortBy] - countsA[currentSortBy];
+            } else {
+                const percA = calculateAgePercentages(a);
+                const percB = calculateAgePercentages(b);
+                return percB[currentSortBy] - percA[currentSortBy];
+            }
         });
     }
 }

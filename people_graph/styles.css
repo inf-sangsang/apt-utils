@@ -171,6 +171,7 @@ h1 {
 
 .sort-section {
     margin-top: 15px;
+    margin-bottom: 15px;
     padding-top: 15px;
     border-top: 1px solid #e8eef4;
 }
@@ -195,6 +196,7 @@ h1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
+    margin-top: 15px;
     margin-bottom: 25px;
 }
 

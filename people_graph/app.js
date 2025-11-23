@@ -262,13 +262,59 @@ function updateTable() {
                 groupTotal += value;
             });
 
-            const percentage = ((groupTotal / totalPop) * 100).toFixed(1);
-            tableHTML += `<td>${groupTotal.toLocaleString()} (${percentage}%)</td>`;
+            tableHTML += `<td>${groupTotal.toLocaleString()}</td>`;
         });
         tableHTML += '</tr>';
     });
 
     tableHTML += '</tbody></table>';
+
+    // Add Household Data Table
+    const filteredHouseholdData = getFilteredHouseholdData();
+    if (filteredHouseholdData.length > 0) {
+        tableHTML += '<h3 style="margin-top: 30px; margin-bottom: 10px; color: #5a6c7d;">🏘️ 세대 현황</h3>';
+
+        // Sort household data based on currentHouseholdSortBy
+        const sortedHouseholdData = [...filteredHouseholdData].sort((a, b) => {
+            if (currentHouseholdSortBy === 'name') {
+                const nameA = cleanRegionName(a['행정구역']);
+                const nameB = cleanRegionName(b['행정구역']);
+                return nameA.localeCompare(nameB);
+            } else if (currentHouseholdSortBy === 'population') {
+                const popA = parseInt(a['총인구수'].replace(/,/g, '')) || 0;
+                const popB = parseInt(b['총인구수'].replace(/,/g, '')) || 0;
+                return popB - popA;
+            } else if (currentHouseholdSortBy === 'households') {
+                const houseA = parseInt(a['세대수'].replace(/,/g, '')) || 0;
+                const houseB = parseInt(b['세대수'].replace(/,/g, '')) || 0;
+                return houseB - houseA;
+            } else if (currentHouseholdSortBy === 'avgSize') {
+                const avgA = parseFloat(a['세대당 인구'].trim()) || 0;
+                const avgB = parseFloat(b['세대당 인구'].trim()) || 0;
+                return avgB - avgA;
+            }
+            return 0;
+        });
+
+        tableHTML += '<table><thead><tr>';
+        tableHTML += '<th>행정구역</th>';
+        tableHTML += '<th>총인구수</th>';
+        tableHTML += '<th>세대수</th>';
+        tableHTML += '<th>세대당 인구</th>';
+        tableHTML += '</tr></thead><tbody>';
+
+        sortedHouseholdData.forEach(row => {
+            tableHTML += '<tr>';
+            tableHTML += `<td>${getShortRegionName(row['행정구역'])}</td>`;
+            tableHTML += `<td>${row['총인구수']}</td>`;
+            tableHTML += `<td>${row['세대수']}</td>`;
+            tableHTML += `<td>${row['세대당 인구']}</td>`;
+            tableHTML += '</tr>';
+        });
+
+        tableHTML += '</tbody></table>';
+    }
+
     container.innerHTML = tableHTML;
 }
 
@@ -277,8 +323,8 @@ function updateAllViews() {
     const filteredHouseholdData = getFilteredHouseholdData();
     updateStats();
     updateChart(filteredData, currentSortBy);
-    updateBarChart(filteredData, currentSortBy);
-    updateAgeGroupChart(filteredData, currentSortBy);
+    updateBarChart(filteredData, currentSortBy, currentRegion);
+    updateAgeGroupChart(filteredData, currentSortBy, currentRegion);
     updateHouseholdChart(filteredHouseholdData, currentSortBy, currentRegion, currentHouseholdSortBy);
     updateTable();
 }

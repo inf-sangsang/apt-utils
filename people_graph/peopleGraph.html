@@ -45,6 +45,28 @@
                     <div id="dropdownList" class="dropdown-list"></div>
                 </div>
 
+
+
+                <div id="statsGrid" class="stats-grid"></div>
+            </div>
+
+            <div class="chart-container">
+                <h2>🏘️ 인구 및 세대 현황</h2>
+                <div class="sort-section">
+                    <label for="householdSortSelect">정렬 기준:</label>
+                    <select id="householdSortSelect">
+                        <option value="name" selected>이름순</option>
+                        <option value="population">총인구수</option>
+                        <option value="households">세대수</option>
+                        <option value="avgSize">세대당 인구</option>
+                    </select>
+                </div>
+                <div class="chart-wrapper" style="height: 400px;">
+                    <canvas id="householdChart"></canvas>
+                </div>
+            </div>
+
+            <div>
                 <div class="sort-section">
                     <label for="sortSelect">정렬 기준:</label>
                     <select id="sortSelect">
@@ -58,8 +80,6 @@
                         <option value="60대이상" selected>60대이상</option>
                     </select>
                 </div>
-
-                <div id="statsGrid" class="stats-grid"></div>
             </div>
 
             <div class="chart-container">
@@ -83,21 +103,6 @@
                 </div>
             </div>
 
-            <div class="chart-container">
-                <h2>🏘️ 인구 및 세대 현황</h2>
-                <div class="sort-section">
-                    <label for="householdSortSelect">정렬 기준:</label>
-                    <select id="householdSortSelect">
-                        <option value="name" selected>이름순</option>
-                        <option value="population">총인구수</option>
-                        <option value="households">세대수</option>
-                        <option value="avgSize">세대당 인구</option>
-                    </select>
-                </div>
-                <div class="chart-wrapper" style="height: 400px;">
-                    <canvas id="householdChart"></canvas>
-                </div>
-            </div>
 
             <div class="data-table">
                 <h2 style="color: #5a6c7d; margin-bottom: 15px;">📋 상세 데이터</h2>

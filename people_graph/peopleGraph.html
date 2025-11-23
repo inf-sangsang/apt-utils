@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인구 통계 대시보드 - 2025년 10월</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 인구 통계 대시보드</h1>
+            <div class="subtitle">2025년 10월 행정구역별 인구 현황</div>
+        </header>
+
+        <div class="control-panel">
+            <div class="filter-section">
+                <h3>🗺️ 행정구역 선택</h3>
+                <div class="region-buttons">
+                    <button class="region-btn active" data-level="1">시/도</button>
+                    <button class="region-btn" data-level="2">시/군/구</button>
+                </div>
+
+                <div class="search-container">
+                    <input type="text" id="regionSearch" placeholder="지역 검색...">
+                    <div id="dropdownList" class="dropdown-list"></div>
+                </div>
+
+                <div class="sort-section">
+                    <label for="sortSelect">정렬 기준:</label>
+                    <select id="sortSelect">
+                        <option value="name">이름순</option>
+                        <option value="영유아">영유아</option>
+                        <option value="10대">10대</option>
+                        <option value="20대">20대</option>
+                        <option value="30대">30대</option>
+                        <option value="40대">40대</option>
+                        <option value="50대">50대</option>
+                        <option value="60대이상" selected>60대이상</option>
+                    </select>
+                </div>
+
+                <div id="statsGrid" class="stats-grid"></div>
+            </div>
+
+            <div class="chart-container">
+                <h2>📊 연령대별 인구 비율</h2>
+                <div class="chart-wrapper">
+                    <canvas id="ageChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>📊 연령대별 비교 그래프</h2>
+                <div class="chart-wrapper" style="height: 400px;">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>📉 연령대별 행정구역 비교</h2>
+                <div class="chart-wrapper" style="height: 400px;">
+                    <canvas id="ageGroupChart"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>🏘️ 인구 및 세대 현황</h2>
+                <div class="sort-section">
+                    <label for="householdSortSelect">정렬 기준:</label>
+                    <select id="householdSortSelect">
+                        <option value="name" selected>이름순</option>
+                        <option value="population">총인구수</option>
+                        <option value="households">세대수</option>
+                        <option value="avgSize">세대당 인구</option>
+                    </select>
+                </div>
+                <div class="chart-wrapper" style="height: 400px;">
+                    <canvas id="householdChart"></canvas>
+                </div>
+            </div>
+
+            <div class="data-table">
+                <h2 style="color: #5a6c7d; margin-bottom: 15px;">📋 상세 데이터</h2>
+                <div id="tableContainer"></div>
+            </div>
+        </div>
+
+        <script src="csvData_202510_age.js"></script>
+        <script src="csvData_202510_family.js"></script>
+        <script src="utils.js"></script>
+        <script src="charts.js"></script>
+        <script src="app.js"></script>
+    </div>
+</body>
+
+</html>

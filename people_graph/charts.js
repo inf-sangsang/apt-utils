@@ -276,7 +276,7 @@ function updateAgeGroupChart(filteredData, currentSortBy) {
 
     regionLabels.forEach((regionLabel, regionIndex) => {
         const row = sortedData[regionIndex];
-        const totalPop = parseInt(row['2025년10월_계_총인구수'].replace(/,/g, '')) || 1;
+        const totalPop = parseInt(row['총인구수'].replace(/,/g, '')) || 1;
         const ageData = [];
 
         AGE_GROUP_LABELS.forEach(groupLabel => {
@@ -284,7 +284,7 @@ function updateAgeGroupChart(filteredData, currentSortBy) {
             let groupTotal = 0;
 
             ageKeys.forEach(ageKey => {
-                const value = parseInt(row[`2025년10월_계_${ageKey}`].replace(/,/g, '')) || 0;
+                const value = parseInt(row[`${ageKey}`].replace(/,/g, '')) || 0;
                 groupTotal += value;
             });
 
@@ -411,16 +411,16 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
             const nameB = cleanRegionName(b['행정구역']);
             return nameA.localeCompare(nameB);
         } else if (householdSortBy === 'population') {
-            const popA = parseInt(a['2025년10월_총인구수'].replace(/,/g, '')) || 0;
-            const popB = parseInt(b['2025년10월_총인구수'].replace(/,/g, '')) || 0;
+            const popA = parseInt(a['총인구수'].replace(/,/g, '')) || 0;
+            const popB = parseInt(b['총인구수'].replace(/,/g, '')) || 0;
             return popB - popA;
         } else if (householdSortBy === 'households') {
-            const houseA = parseInt(a['2025년10월_세대수'].replace(/,/g, '')) || 0;
-            const houseB = parseInt(b['2025년10월_세대수'].replace(/,/g, '')) || 0;
+            const houseA = parseInt(a['세대수'].replace(/,/g, '')) || 0;
+            const houseB = parseInt(b['세대수'].replace(/,/g, '')) || 0;
             return houseB - houseA;
         } else if (householdSortBy === 'avgSize') {
-            const avgA = parseFloat(a['2025년10월_세대당 인구'].trim()) || 0;
-            const avgB = parseFloat(b['2025년10월_세대당 인구'].trim()) || 0;
+            const avgA = parseFloat(a['세대당 인구'].trim()) || 0;
+            const avgB = parseFloat(b['세대당 인구'].trim()) || 0;
             return avgB - avgA;
         }
         return 0;
@@ -432,9 +432,9 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
     const avgHouseholdSizeData = [];
 
     sortedData.forEach(row => {
-        const population = parseInt(row['2025년10월_총인구수'].replace(/,/g, '')) || 0;
-        const households = parseInt(row['2025년10월_세대수'].replace(/,/g, '')) || 0;
-        const avgSize = parseFloat(row['2025년10월_세대당 인구'].trim()) || 0;
+        const population = parseInt(row['총인구수'].replace(/,/g, '')) || 0;
+        const households = parseInt(row['세대수'].replace(/,/g, '')) || 0;
+        const avgSize = parseFloat(row['세대당 인구'].trim()) || 0;
 
         populationData.push(population);
         householdData.push(households);

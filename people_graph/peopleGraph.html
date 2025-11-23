@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인구 통계 대시보드 - 2025년 10월</title>
+    <title>인구 통계 대시보드</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -16,11 +16,24 @@
     <div class="container">
         <header>
             <h1>📊 인구 통계 대시보드</h1>
-            <div class="subtitle">2025년 10월 행정구역별 인구 현황</div>
+            <div class="subtitle" id="subtitle">행정구역별 인구 현황</div>
         </header>
 
         <div class="control-panel">
             <div class="filter-section">
+                <h3>📅 데이터 기준월</h3>
+                <div class="sort-section">
+                    <label for="dateSelect">기준월 선택:</label>
+                    <select id="dateSelect">
+                        <option value="202510" selected>2025년 10월</option>
+                        <option value="202509">2025년 09월</option>
+                        <option value="202508">2025년 08월</option>
+                        <option value="202507">2025년 07월</option>
+                        <option value="202506">2025년 06월</option>
+                        <option value="202505">2025년 05월</option>
+                    </select>
+                </div>
+
                 <h3>🗺️ 행정구역 선택</h3>
                 <div class="region-buttons">
                     <button class="region-btn active" data-level="1">시/도</button>
@@ -92,11 +105,67 @@
             </div>
         </div>
 
-        <script src="csvData_202510_age.js"></script>
-        <script src="csvData_202510_family.js"></script>
-        <script src="utils.js"></script>
-        <script src="charts.js"></script>
-        <script src="app.js"></script>
+        <!-- Initialize app and load data -->
+        <script>
+            // Define available dates manually as requested
+            window.availableDates = ['202510', '202509', '202508', '202507', '202506', '202505'];
+
+            // Default date
+            let targetDate = '202510';
+
+            // Check session storage for user selection
+            const storedDate = sessionStorage.getItem('selectedDataDate');
+            if (storedDate && window.availableDates.includes(storedDate)) {
+                targetDate = storedDate;
+            }
+
+            // Set global currentDataDate for app.js to use
+            window.currentDataDate = targetDate;
+
+            // Update UI to reflect current date
+            const dateSelect = document.getElementById('dateSelect');
+            if (dateSelect) {
+                dateSelect.value = targetDate;
+            }
+
+            // Format date for display
+            const year = targetDate.substring(0, 4);
+            const month = targetDate.substring(4, 6);
+            const dateLabel = `${year}년 ${month}월`;
+
+            document.getElementById('subtitle').textContent = `${dateLabel} 행정구역별 인구 현황`;
+            document.title = `인구 통계 대시보드 - ${dateLabel}`;
+
+            // Lazy load the specific data files for the selected date
+            function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.body.appendChild(script);
+                });
+            }
+
+            // Load data files first, then app logic
+            Promise.all([
+                loadScript(`data/csvData_${targetDate}_age.js`),
+                loadScript(`data/csvData_${targetDate}_family.js`)
+            ])
+                .then(() => {
+                    console.log(`Loaded data for ${targetDate}`);
+                    // Load app scripts after data is ready
+                    return loadScript('utils.js');
+                })
+                .then(() => loadScript('charts.js'))
+                .then(() => loadScript('app.js'))
+                .catch(error => {
+                    console.error('Failed to load scripts:', error);
+                    document.getElementById('tableContainer').innerHTML =
+                        '<div class="no-data">데이터 파일을 로드하는 중 오류가 발생했습니다.<br>' +
+                        '해당 월의 데이터 파일이 존재하는지 확인해주세요.</div>';
+                });
+        </script>
     </div>
 </body>
 

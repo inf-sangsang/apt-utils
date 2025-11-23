@@ -61,7 +61,7 @@ function calculateAgePercentages(row) {
         '60대이상': ['60~69세', '70~79세', '80~89세', '90~99세', '100세 이상']
     };
 
-    const totalPop = parseInt(row['2025년10월_계_총인구수'].replace(/,/g, '')) || 1;
+    const totalPop = parseInt(row['총인구수'].replace(/,/g, '')) || 1;
     const percentages = {};
 
     Object.keys(ageGroupMapping).forEach(groupLabel => {
@@ -69,7 +69,7 @@ function calculateAgePercentages(row) {
         let groupTotal = 0;
 
         ageKeys.forEach(ageKey => {
-            const value = parseInt(row[`2025년10월_계_${ageKey}`].replace(/,/g, '')) || 0;
+            const value = parseInt(row[`${ageKey}`].replace(/,/g, '')) || 0;
             groupTotal += value;
         });
 

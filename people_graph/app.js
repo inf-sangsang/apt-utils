@@ -6,6 +6,7 @@ let currentLevel = 1;
 let currentRegion = '';
 let currentSortBy = '60대이상';
 let currentHouseholdSortBy = 'name';
+let currentDataDate = window.currentDataDate || '202510'; // Default to latest data
 
 // 전역 차트 변수
 window.chart = null;
@@ -15,13 +16,29 @@ window.householdChart = null;
 
 function loadCSV() {
     try {
-        csvDataParsed = parseCSV(csvData);
-        csvHouseholdDataParsed = parseCSV(csvData_202510_family);
+        // Dynamically load data based on currentDataDate
+        const ageDataVar = `csvData_${currentDataDate}_age`;
+        const familyDataVar = `csvData_${currentDataDate}_family`;
+
+        console.log(`Loading CSV for date: ${currentDataDate}`);
+        console.log(`Looking for variables: ${ageDataVar}, ${familyDataVar}`);
+        console.log(`Window keys starting with csvData:`, Object.keys(window).filter(k => k.startsWith('csvData')));
+
+        // Check if data variables exist in global scope
+        if (typeof window[ageDataVar] === 'undefined') {
+            throw new Error(`Age data for ${currentDataDate} not found`);
+        }
+        if (typeof window[familyDataVar] === 'undefined') {
+            throw new Error(`Family data for ${currentDataDate} not found`);
+        }
+
+        csvDataParsed = parseCSV(window[ageDataVar]);
+        csvHouseholdDataParsed = parseCSV(window[familyDataVar]);
         initializeRegionSelect();
     } catch (error) {
         console.error('CSV 로드 오류:', error);
         document.getElementById('tableContainer').innerHTML =
-            '<div class="no-data">CSV 파일을 로드할 수 없습니다.</div>';
+            '<div class="no-data">CSV 파일을 로드할 수 없습니다: ' + error.message + '</div>';
     }
 }
 
@@ -151,10 +168,20 @@ function updateStats() {
         return;
     }
 
-    const totalPopulation = filteredData.reduce((sum, row) => {
-        const pop = parseInt(row['2025년10월_계_총인구수'].replace(/,/g, '')) || 0;
-        return sum + pop;
-    }, 0);
+    // Calculate total population
+    // If a specific region is selected, use its data directly
+    // Otherwise (e.g. '전체'), sum up the child regions
+    let totalPopulation = 0;
+    const selectedRegionRow = filteredData.find(row => cleanRegionName(row['행정구역']) === currentRegion);
+
+    if (selectedRegionRow) {
+        totalPopulation = parseInt(selectedRegionRow['총인구수'].replace(/,/g, '')) || 0;
+    } else {
+        totalPopulation = filteredData.reduce((sum, row) => {
+            const pop = parseInt(row['총인구수'].replace(/,/g, '')) || 0;
+            return sum + pop;
+        }, 0);
+    }
 
     // Get the selected region's household data
     let avgHouseholdSize = '-';
@@ -165,7 +192,7 @@ function updateStats() {
         });
 
         if (selectedRegionData) {
-            const avgSize = parseFloat(selectedRegionData['2025년10월_세대당 인구'].trim());
+            const avgSize = parseFloat(selectedRegionData['세대당 인구'].trim());
             if (!isNaN(avgSize)) {
                 avgHouseholdSize = avgSize.toFixed(2);
             }
@@ -222,16 +249,16 @@ function updateTable() {
     sortedData.forEach(row => {
         tableHTML += '<tr>';
         tableHTML += `<td>${getShortRegionName(row['행정구역'])}</td>`;
-        tableHTML += `<td>${row['2025년10월_계_총인구수']}</td>`;
+        tableHTML += `<td>${row['총인구수']}</td>`;
 
-        const totalPop = parseInt(row['2025년10월_계_총인구수'].replace(/,/g, '')) || 1;
+        const totalPop = parseInt(row['총인구수'].replace(/,/g, '')) || 1;
 
         ageGroupLabels.forEach(groupLabel => {
             const ageKeys = ageGroupMapping[groupLabel];
             let groupTotal = 0;
 
             ageKeys.forEach(ageKey => {
-                const value = parseInt(row[`2025년10월_계_${ageKey}`].replace(/,/g, '')) || 0;
+                const value = parseInt(row[`${ageKey}`].replace(/,/g, '')) || 0;
                 groupTotal += value;
             });
 
@@ -257,7 +284,7 @@ function updateAllViews() {
 }
 
 // 이벤트 리스너 설정
-document.addEventListener('DOMContentLoaded', function () {
+function initApp() {
     document.querySelectorAll('.region-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
@@ -278,6 +305,16 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('householdSortSelect').addEventListener('change', function () {
         currentHouseholdSortBy = this.value;
         updateAllViews();
+    });
+
+    // Date selector event listener
+    document.getElementById('dateSelect').addEventListener('change', function () {
+        const selectedDate = this.value;
+        if (selectedDate !== currentDataDate) {
+            // Store selected date and reload
+            sessionStorage.setItem('selectedDataDate', selectedDate);
+            window.location.reload();
+        }
     });
 
     const searchInput = document.getElementById('regionSearch');
@@ -340,5 +377,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Check if there's a stored data date selection
+    const storedDate = sessionStorage.getItem('selectedDataDate');
+    if (storedDate && window.availableDates && window.availableDates.includes(storedDate)) {
+        currentDataDate = storedDate;
+        const dateSelect = document.getElementById('dateSelect');
+        if (dateSelect) {
+            dateSelect.value = storedDate;
+        }
+    }
+
     loadCSV();
-});
+}
+
+// Initialize app when document is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}

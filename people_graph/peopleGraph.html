@@ -25,7 +25,8 @@
                 <div class="sort-section">
                     <label for="dateSelect">기준월 선택:</label>
                     <select id="dateSelect">
-                        <option value="202510" selected>2025년 10월</option>
+                        <option value="202511" selected>2025년 11월</option>
+                        <option value="202510">2025년 10월</option>
                         <option value="202509">2025년 09월</option>
                         <option value="202508">2025년 08월</option>
                         <option value="202507">2025년 07월</option>
@@ -44,8 +45,6 @@
                     <input type="text" id="regionSearch" placeholder="지역 검색...">
                     <div id="dropdownList" class="dropdown-list"></div>
                 </div>
-
-
 
                 <div id="statsGrid" class="stats-grid"></div>
             </div>
@@ -70,14 +69,14 @@
                 <div class="sort-section">
                     <label for="sortSelect">정렬 기준:</label>
                     <select id="sortSelect">
-                        <option value="name">이름순</option>
+                        <option value="name" selected>이름순</option>
                         <option value="영유아">영유아</option>
                         <option value="10대">10대</option>
                         <option value="20대">20대</option>
                         <option value="30대">30대</option>
                         <option value="40대">40대</option>
                         <option value="50대">50대</option>
-                        <option value="60대이상" selected>60대이상</option>
+                        <option value="60대이상">60대이상</option>
                     </select>
                 </div>
             </div>
@@ -113,10 +112,10 @@
         <!-- Initialize app and load data -->
         <script>
             // Define available dates manually as requested
-            window.availableDates = ['202510', '202509', '202508', '202507', '202506', '202505'];
+            window.availableDates = ['202511', '202510', '202509', '202508', '202507', '202506', '202505'];
 
             // Default date
-            let targetDate = '202510';
+            let targetDate = '202511';
 
             // Check session storage for user selection
             const storedDate = sessionStorage.getItem('selectedDataDate');

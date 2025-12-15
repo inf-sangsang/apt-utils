@@ -7,6 +7,7 @@ let currentRegion = '';
 let currentSortBy = '60대이상';
 let currentHouseholdSortBy = 'name';
 let currentDataDate = window.currentDataDate || '202511'; // Default to latest data
+let currentAgeGrouping = 'default'; // default, group1, group2
 
 // 전역 차트 변수
 window.chart = null;
@@ -323,8 +324,8 @@ function updateAllViews() {
     const filteredHouseholdData = getFilteredHouseholdData();
     updateStats();
     updateChart(filteredData, currentSortBy);
-    updateBarChart(filteredData, currentSortBy, currentRegion);
-    updateAgeGroupChart(filteredData, currentSortBy, currentRegion);
+    updateBarChart(filteredData, currentSortBy, currentRegion, currentAgeGrouping);
+    updateAgeGroupChart(filteredData, currentSortBy, currentRegion, currentAgeGrouping);
     updateHouseholdChart(filteredHouseholdData, currentSortBy, currentRegion, currentHouseholdSortBy);
     updateTable();
 }
@@ -350,6 +351,11 @@ function initApp() {
 
     document.getElementById('householdSortSelect').addEventListener('change', function () {
         currentHouseholdSortBy = this.value;
+        updateAllViews();
+    });
+
+    document.getElementById('ageGroupSelect').addEventListener('change', function () {
+        currentAgeGrouping = this.value;
         updateAllViews();
     });
 

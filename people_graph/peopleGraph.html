@@ -88,17 +88,34 @@
                 </div>
             </div>
 
-            <div class="chart-container">
-                <h2>📊 연령대별 비교 그래프</h2>
-                <div class="chart-wrapper" style="height: 400px;">
-                    <canvas id="barChart"></canvas>
-                </div>
-            </div>
+            <!-- Age Group Comparison Section -->
+            <div class="chart-container"
+                style="border: 2px solid #e0e0e0; border-radius: 8px; padding: 20px; margin-top: 20px; background-color: #f9f9f9;">
+                <h2 style="margin-top: 0;">📊 연령대별 비교 분석</h2>
 
-            <div class="chart-container">
-                <h2>📉 연령대별 행정구역 비교</h2>
-                <div class="chart-wrapper" style="height: 400px;">
-                    <canvas id="ageGroupChart"></canvas>
+                <div class="sort-section" style="margin-bottom: 20px;">
+                    <label for="ageGroupSelect">연령대 그룹:</label>
+                    <select id="ageGroupSelect">
+                        <option value="default" selected>각 연령대별로 나누기</option>
+                        <option value="group1">각 연령대 묶음1</option>
+                        <option value="group2">각 연령대 묶음2</option>
+                    </select>
+                </div>
+
+                <!-- Bar Chart -->
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #5a6c7d; margin-bottom: 10px;">📊 연령대별 비교 그래프</h3>
+                    <div class="chart-wrapper" style="height: 400px;">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Age Group Chart -->
+                <div>
+                    <h3 style="color: #5a6c7d; margin-bottom: 10px;">📉 연령대별 행정구역 비교</h3>
+                    <div class="chart-wrapper" style="height: 400px;">
+                        <canvas id="ageGroupChart"></canvas>
+                    </div>
                 </div>
             </div>
 

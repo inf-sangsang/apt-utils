@@ -12,6 +12,41 @@ const AGE_GROUP_MAPPING = {
 
 const AGE_GROUP_LABELS = ['영유아', '10대', '20대', '30대', '40대', '50대', '60대이상'];
 
+// Custom age grouping configurations
+const AGE_GROUP_CONFIGS = {
+    'default': {
+        labels: ['영유아', '10대', '20대', '30대', '40대', '50대', '60대이상'],
+        mapping: {
+            '영유아': ['영유아'],
+            '10대': ['10대'],
+            '20대': ['20대'],
+            '30대': ['30대'],
+            '40대': ['40대'],
+            '50대': ['50대'],
+            '60대이상': ['60대이상']
+        }
+    },
+    'group1': {
+        labels: ['영유아+30대', '10대+40대', '30대+40대+50대', '60대'],
+        mapping: {
+            '영유아+30대': ['영유아', '30대'],
+            '10대+40대': ['10대', '40대'],
+            '30대+40대+50대': ['30대', '40대', '50대'],
+            '60대': ['60대이상']
+        }
+    },
+    'group2': {
+        labels: ['영유아+10대', '영유아+30대', '10대+40대', '30대+40대+50대', '60대'],
+        mapping: {
+            '영유아+10대': ['영유아', '10대'],
+            '영유아+30대': ['영유아', '30대'],
+            '10대+40대': ['10대', '40대'],
+            '30대+40대+50대': ['30대', '40대', '50대'],
+            '60대': ['60대이상']
+        }
+    }
+};
+
 const COLORS = [
     '#5B8FA7',
     '#F09B6F',
@@ -156,7 +191,7 @@ function updateChart(filteredData, currentSortBy) {
     });
 }
 
-function updateBarChart(filteredData, currentSortBy, currentRegion) {
+function updateBarChart(filteredData, currentSortBy, currentRegion, ageGrouping = 'default') {
     if (filteredData.length === 0) {
         if (window.barChart) {
             window.barChart.destroy();
@@ -183,15 +218,24 @@ function updateBarChart(filteredData, currentSortBy, currentRegion) {
     const regionLabels = sortedData.map(row => getShortRegionName(row['행정구역']));
     const datasets = [];
 
-    AGE_GROUP_LABELS.forEach((label, index) => {
+    const config = AGE_GROUP_CONFIGS[ageGrouping] || AGE_GROUP_CONFIGS['default'];
+    const customLabels = config.labels;
+    const customMapping = config.mapping;
+
+    customLabels.forEach((label, index) => {
         datasets.push({
             label: label,
             data: sortedData.map(row => {
                 const counts = calculateAgeCounts(row);
-                return counts[label];
+                const baseGroups = customMapping[label];
+                let total = 0;
+                baseGroups.forEach(baseGroup => {
+                    total += counts[baseGroup] || 0;
+                });
+                return total;
             }),
-            backgroundColor: COLORS[index],
-            borderColor: COLORS[index],
+            backgroundColor: COLORS[index % COLORS.length],
+            borderColor: COLORS[index % COLORS.length],
             borderWidth: 1
         });
     });
@@ -277,7 +321,7 @@ function updateBarChart(filteredData, currentSortBy, currentRegion) {
     });
 }
 
-function updateAgeGroupChart(filteredData, currentSortBy, currentRegion) {
+function updateAgeGroupChart(filteredData, currentSortBy, currentRegion, ageGrouping = 'default') {
     if (filteredData.length === 0) {
         if (window.ageGroupChart) {
             window.ageGroupChart.destroy();
@@ -304,21 +348,22 @@ function updateAgeGroupChart(filteredData, currentSortBy, currentRegion) {
     const regionLabels = sortedData.map(row => getShortRegionName(row['행정구역']));
     const datasets = [];
 
+    const config = AGE_GROUP_CONFIGS[ageGrouping] || AGE_GROUP_CONFIGS['default'];
+    const customLabels = config.labels;
+    const customMapping = config.mapping;
+
     regionLabels.forEach((regionLabel, regionIndex) => {
         const row = sortedData[regionIndex];
-        const totalPop = parseInt(row['총인구수'].replace(/,/g, '')) || 1;
+        const counts = calculateAgeCounts(row);
         const ageData = [];
 
-        AGE_GROUP_LABELS.forEach(groupLabel => {
-            const ageKeys = AGE_GROUP_MAPPING[groupLabel];
-            let groupTotal = 0;
-
-            ageKeys.forEach(ageKey => {
-                const value = parseInt(row[`${ageKey}`].replace(/,/g, '')) || 0;
-                groupTotal += value;
+        customLabels.forEach(customLabel => {
+            const baseGroups = customMapping[customLabel];
+            let total = 0;
+            baseGroups.forEach(baseGroup => {
+                total += counts[baseGroup] || 0;
             });
-
-            ageData.push(groupTotal);
+            ageData.push(total);
         });
 
         datasets.push({
@@ -339,7 +384,7 @@ function updateAgeGroupChart(filteredData, currentSortBy, currentRegion) {
     window.ageGroupChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: AGE_GROUP_LABELS,
+            labels: config.labels,
             datasets: datasets
         },
         options: {

@@ -359,6 +359,36 @@ function initApp() {
         updateAllViews();
     });
 
+    // Font selector event listener
+    document.getElementById('fontSelect').addEventListener('change', function () {
+        const selectedFont = this.value;
+        // Update body font
+        document.body.style.fontFamily = `'${selectedFont}', sans-serif`;
+
+        // Update all elements that have explicit font-family
+        const elementsWithFont = document.querySelectorAll('button, input, select, .region-btn, #regionSearch, .sort-section select');
+        elementsWithFont.forEach(element => {
+            element.style.fontFamily = `'${selectedFont}', sans-serif`;
+        });
+
+        // Save font preference
+        localStorage.setItem('selectedFont', selectedFont);
+
+        // Update charts to use new font
+        updateAllViews();
+    });
+
+    // Load saved font preference
+    const savedFont = localStorage.getItem('selectedFont');
+    if (savedFont) {
+        document.getElementById('fontSelect').value = savedFont;
+        document.body.style.fontFamily = `'${savedFont}', sans-serif`;
+        const elementsWithFont = document.querySelectorAll('button, input, select, .region-btn, #regionSearch, .sort-section select');
+        elementsWithFont.forEach(element => {
+            element.style.fontFamily = `'${savedFont}', sans-serif`;
+        });
+    }
+
     // Date selector event listener
     document.getElementById('dateSelect').addEventListener('change', function () {
         const selectedDate = this.value;

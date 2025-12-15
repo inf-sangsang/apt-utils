@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>인구 통계 대시보드</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Serif+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -17,6 +18,23 @@
         <header>
             <h1>📊 인구 통계 대시보드</h1>
             <div class="subtitle" id="subtitle">행정구역별 인구 현황</div>
+            <div style="margin-top: 20px; text-align: center;">
+                <label for="fontSelect" style="color: #5a6c7d; font-weight: 500; margin-right: 10px;">폰트 선택:</label>
+                <select id="fontSelect"
+                    style="padding: 8px 15px; border: 2px solid #d0dce8; border-radius: 6px; font-size: 0.9em; background: white; cursor: pointer;">
+                    <option value="Noto Sans KR" selected>Noto Sans KR</option>
+                    <option value="Nanum Gothic">나눔고딕</option>
+                    <option value="Noto Serif KR">Noto Serif KR</option>
+                    <option value="old_studio1">a옛날사진관1</option>
+                    <option value="old_studio2">a옛날사진관2</option>
+                    <option value="old_studio3">a옛날사진관3</option>
+                    <option value="old_studio4">a옛날사진관4</option>
+                    <option value="old_studio5">a옛날사진관5</option>
+                    <option value="esamanru_light">이사만루 light</option>
+                    <option value="esamanru_medium">이사만루 medium</option>
+                    <option value="esamanru_bold">이사만루 bold</option>
+                </select>
+            </div>
         </header>
 
         <div class="control-panel">
@@ -104,7 +122,7 @@
 
                 <!-- Bar Chart -->
                 <div style="margin-bottom: 30px;">
-                    <h3 style="color: #5a6c7d; margin-bottom: 10px;">📊 연령대별 비교 그래프</h3>
+                    <h3 style="color: #5a6c7d; margin-bottom: 10px;">📉 연령대별 비교 그래프</h3>
                     <div class="chart-wrapper" style="height: 400px;">
                         <canvas id="barChart"></canvas>
                     </div>

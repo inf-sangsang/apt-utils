@@ -66,6 +66,12 @@ const REGION_COLORS = [
     '#bd1e51', '#6a4c93', '#1982c4', '#8ac926', '#ff595e', '#ffca3a', '#c9ada7'
 ];
 
+// Helper function to get current font family
+function getCurrentFont() {
+    const selectedFont = localStorage.getItem('selectedFont') || 'Noto Sans KR';
+    return selectedFont;
+}
+
 function updateChart(filteredData, currentSortBy) {
     if (filteredData.length === 0) {
         if (window.chart) {
@@ -117,7 +123,7 @@ function updateChart(filteredData, currentSortBy) {
                     position: 'top',
                     labels: {
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 11
                         },
                         padding: 10,
@@ -146,7 +152,7 @@ function updateChart(filteredData, currentSortBy) {
                     font: {
                         size: 13,
                         weight: 'bold',
-                        family: 'Noto Sans KR'
+                        family: getCurrentFont()
                     },
                     anchor: 'center',
                     align: 'center',
@@ -165,7 +171,7 @@ function updateChart(filteredData, currentSortBy) {
                             return value + '%';
                         },
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 10
                         }
                     },
@@ -177,7 +183,7 @@ function updateChart(filteredData, currentSortBy) {
                     stacked: true,
                     ticks: {
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 10
                         }
                     },
@@ -261,7 +267,7 @@ function updateBarChart(filteredData, currentSortBy, currentRegion, ageGrouping 
                     position: 'bottom',
                     labels: {
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 11
                         },
                         padding: 12,
@@ -290,7 +296,7 @@ function updateBarChart(filteredData, currentSortBy, currentRegion, ageGrouping 
                 x: {
                     ticks: {
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 10
                         }
                     },
@@ -308,7 +314,7 @@ function updateBarChart(filteredData, currentSortBy, currentRegion, ageGrouping 
                             return value.toLocaleString();
                         },
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 10
                         }
                     },
@@ -396,7 +402,7 @@ function updateAgeGroupChart(filteredData, currentSortBy, currentRegion, ageGrou
                     position: 'bottom',
                     labels: {
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 9
                         },
                         padding: 8,
@@ -426,7 +432,7 @@ function updateAgeGroupChart(filteredData, currentSortBy, currentRegion, ageGrou
                 x: {
                     ticks: {
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 11
                         }
                     },
@@ -444,7 +450,7 @@ function updateAgeGroupChart(filteredData, currentSortBy, currentRegion, ageGrou
                             return value.toLocaleString();
                         },
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 10
                         }
                     },
@@ -585,7 +591,7 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
                     position: 'bottom',
                     labels: {
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 11
                         },
                         padding: 12,
@@ -626,7 +632,7 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
                 x: {
                     ticks: {
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 10
                         }
                     },
@@ -643,7 +649,7 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
                             return value.toLocaleString();
                         },
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 10
                         }
                     },
@@ -654,7 +660,7 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
                         display: true,
                         text: '인구수 / 세대수',
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 11
                         }
                     }
@@ -669,7 +675,7 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
                             return value.toFixed(1);
                         },
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 10
                         }
                     },
@@ -680,7 +686,7 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
                         display: true,
                         text: '세대당 인구 (명)',
                         font: {
-                            family: 'Noto Sans KR',
+                            family: getCurrentFont(),
                             size: 11
                         }
                     }

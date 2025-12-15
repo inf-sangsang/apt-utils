@@ -1,3 +1,60 @@
+/* Local Fonts */
+@font-face {
+    font-family: 'a옛날사진관1';
+    src: url('fonts/a옛날사진관1.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'a옛날사진관2';
+    src: url('fonts/a옛날사진관2.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'a옛날사진관3';
+    src: url('fonts/a옛날사진관3.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'a옛날사진관4';
+    src: url('fonts/a옛날사진관4.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'a옛날사진관5';
+    src: url('fonts/a옛날사진관5.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: '이사만루_light';
+    src: url('fonts/이사만루_light.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: '이사만루_medium';
+    src: url('fonts/이사만루_medium.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: '이사만루_bold';
+    src: url('fonts/이사만루_bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;

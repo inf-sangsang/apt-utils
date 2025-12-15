@@ -538,10 +538,11 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
                     type: 'bar',
                     label: '총인구수',
                     data: populationData,
-                    backgroundColor: '#156082',
-                    borderColor: '#156082',
+                    backgroundColor: '#2280acff',
+                    borderColor: '#2280acff',
                     borderWidth: 1,
-                    yAxisID: 'y'
+                    yAxisID: 'y',
+                    order: 2
                 },
                 {
                     type: 'bar',
@@ -550,7 +551,8 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
                     backgroundColor: '#E97132',
                     borderColor: '#E97132',
                     borderWidth: 1,
-                    yAxisID: 'y'
+                    yAxisID: 'y',
+                    order: 3
                 },
                 {
                     type: 'line',
@@ -562,6 +564,7 @@ function updateHouseholdChart(filteredData, currentSortBy, currentRegion, househ
                     pointRadius: 4,
                     pointHoverRadius: 6,
                     yAxisID: 'y1',
+                    order: 1,
                     datalabels: {
                         display: true,
                         align: 'top',

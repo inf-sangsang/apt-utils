@@ -1,0 +1,692 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to JavaScript 변환기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            font-weight: 600;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            box-shadow: 0 4px 15px rgba(132, 250, 176, 0.4);
+        }
+
+        button.secondary:hover {
+            box-shadow: 0 6px 20px rgba(132, 250, 176, 0.6);
+        }
+
+        .output-box {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .output-box pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-card .label {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .value {
+            color: #2c3e50;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .info-box ol {
+            margin-left: 20px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            textarea {
+                min-height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔄 CSV to JavaScript 변환기</h1>
+        <p class="subtitle">CSV 데이터를 JavaScript 파일 형식으로 변환합니다</p>
+
+        <div class="info-box">
+            <h3>📋 사용 방법</h3>
+            <ol>
+                <li>CSV 파일의 내용을 복사하여 아래 입력창에 붙여넣기</li>
+                <li>"변환하기" 버튼 클릭</li>
+                <li>변환된 JavaScript 코드를 복사하거나 다운로드</li>
+                <li>생성된 <code>supplyData.js</code> 파일을 HTML에서 불러오기</li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <div class="section-title">
+                📥 CSV 입력
+            </div>
+            <textarea id="csvInput" placeholder='CSV 데이터를 여기에 붙여넣으세요...
+
+
+예시:
+주택유형,단지명,소재지,입주시기,총세대수,매매시세(3.3㎡),분양가(3.3㎡),시공사
+아파트,롯데캐슬이스트폴　,서울 광진구 자양동 870,2025-01,1345,7404,4294,롯데건설주식회사
+아파트,래미안라그란데　,서울 동대문구 이문동 257-42,2025-01,3069,4527,3366,삼성물산(주)
+아파트(임대),성북펠릭스,서울 성북구 하월곡동 88-222,2025-01,299,0,0,
+아파트,까사펠리체,서울 구로구 신도림동 330-42,2025-01,31,0,0,'></textarea>
+        </div>
+
+        <div class="controls">
+            <button onclick="convertCSV()">🔄 변환하기</button>
+            <button class="secondary" onclick="clearAll()">🗑️ 초기화</button>
+        </div>
+
+        <div id="statsSection" style="display: none;">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="label">총 행 수</div>
+                    <div class="value" id="totalRows">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">데이터 행</div>
+                    <div class="value" id="dataRows">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">컬럼 수</div>
+                    <div class="value" id="columnCount">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="outputSection" style="display: none;">
+            <div class="section-title">
+                📤 변환된 JavaScript 코드
+            </div>
+            <div class="output-box">
+                <button class="copy-btn" onclick="copyToClipboard()">📋 복사</button>
+                <pre id="jsOutput"></pre>
+            </div>
+            <div class="controls" style="margin-top: 15px;">
+                <button onclick="downloadJS()">💾 다운로드 (supplyData.js)</button>
+            </div>
+        </div>
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
+
+        <div class="section">
+            <div class="section-title">
+                📊 지역별 년도별 공급 데이터 생성
+            </div>
+            <div class="info-box">
+                <h3>설명</h3>
+                <p>위에서 변환한 supplyData JavaScript 코드를 이용하여 지역별 년도별 세대수 총량을 계산합니다.</p>
+            </div>
+            <div class="controls">
+                <button onclick="generateRegionYearlyData()">🔄 지역별 년도별 데이터 생성</button>
+            </div>
+        </div>
+
+        <div class="section" id="regionYearlySection" style="display: none;">
+            <div class="section-title">
+                📤 지역별 년도별 JavaScript 코드
+            </div>
+            <div class="output-box">
+                <button class="copy-btn" onclick="copyRegionYearlyToClipboard()">📋 복사</button>
+                <pre id="regionYearlyOutput"></pre>
+            </div>
+            <div class="controls" style="margin-top: 15px;">
+                <button onclick="downloadRegionYearlyJS()">💾 다운로드 (regionYearlyData.js)</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- regionList.js 로드 -->
+    <script src="./data/regionList.js"></script>
+    <script>
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        function parseCSV(csv) {
+            const lines = [];
+            let currentLine = [];
+            let currentCell = '';
+            let inQuotes = false;
+
+            // Remove BOM if present
+            if (csv.charCodeAt(0) === 0xFEFF) {
+                csv = csv.slice(1);
+            }
+
+            for (let i = 0; i < csv.length; i++) {
+                const char = csv[i];
+                const nextChar = csv[i + 1];
+
+                if (char === '"') {
+                    if (inQuotes && nextChar === '"') {
+                        currentCell += '"';
+                        i++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (char === ',' && !inQuotes) {
+                    currentLine.push(currentCell.trim());
+                    currentCell = '';
+                } else if ((char === '\r' || char === '\n') && !inQuotes) {
+                    // Handle CRLF (skip \n if previous was \r, but here we process char by char)
+                    // If we hit \r, next might be \n. 
+                    // To keep it simple and robust for mixed line endings:
+                    if (currentLine.length > 0 || currentCell) {
+                        currentLine.push(currentCell.trim());
+                        lines.push(currentLine);
+                    }
+                    currentLine = [];
+                    currentCell = '';
+
+                    if (char === '\r' && nextChar === '\n') {
+                        i++;
+                    }
+                } else {
+                    currentCell += char;
+                }
+            }
+
+            if (currentLine.length > 0 || currentCell) {
+                currentLine.push(currentCell.trim());
+                lines.push(currentLine);
+            }
+
+            return lines;
+        }
+
+        function escapeForJS(str) {
+            return str.replace(/\\/g, '\\\\')
+                .replace(/"/g, '\\"')
+                .replace(/'/g, "\\'")
+                .replace(/\n/g, '\\n')
+                .replace(/\r/g, '\\r')
+                .replace(/\t/g, '\\t');
+        }
+
+        function convertCSV() {
+            const csvInput = document.getElementById('csvInput').value;
+
+            if (!csvInput.trim()) {
+                showToast('❌ CSV 데이터를 입력해주세요!');
+                return;
+            }
+
+            try {
+                // CSV 파싱
+                const data = parseCSV(csvInput);
+
+                if (data.length === 0) {
+                    showToast('❌ 유효한 CSV 데이터가 없습니다!');
+                    return;
+                }
+
+                // 필요한 헤더 정의
+                const requiredHeaders = ['주택유형', '단지명', '소재지', '입주시기', '총세대수'];
+
+                // 헤더 행 (첫 번째 행)
+                const headers = data[0];
+
+                // 필요한 열의 인덱스 찾기
+                const columnIndices = requiredHeaders.map(header => {
+                    const index = headers.indexOf(header);
+                    if (index === -1) {
+                        throw new Error(`필수 헤더 "${header}"을(를) 찾을 수 없습니다!`);
+                    }
+                    return index;
+                });
+
+                // 필요한 열만 추출한 데이터 생성
+                const filteredData = data.map((row, rowIndex) => {
+                    return columnIndices.map(colIndex => row[colIndex] || '');
+                });
+
+                // 첫 번째 행을 필요한 헤더로 변경
+                filteredData[0] = requiredHeaders;
+
+                // 통계 업데이트
+                const totalRows = filteredData.length;
+                const dataRows = filteredData.length - 1;
+                const columnCount = requiredHeaders.length;
+
+                document.getElementById('totalRows').textContent = totalRows;
+                document.getElementById('dataRows').textContent = dataRows;
+                document.getElementById('columnCount').textContent = columnCount;
+                document.getElementById('statsSection').style.display = 'block';
+
+                // JavaScript 코드 생성
+                let jsCode = '// 자동 생성된 데이터 파일\n';
+                jsCode += `// 생성 시간: ${new Date().toLocaleString('ko-KR')}\n\n`;
+                jsCode += 'const supplyData = [\n';
+
+                filteredData.forEach((row, index) => {
+                    jsCode += '    [';
+                    jsCode += row.map(cell => `"${escapeForJS(cell)}"`).join(', ');
+                    jsCode += ']';
+                    if (index < filteredData.length - 1) {
+                        jsCode += ',';
+                    }
+                    jsCode += '\n';
+                });
+
+                jsCode += '];\n\n';
+                jsCode += '// 데이터를 전역으로 export (모듈이 아닌 경우)\n';
+                jsCode += 'if (typeof module !== \'undefined\' && module.exports) {\n';
+                jsCode += '    module.exports = supplyData;\n';
+                jsCode += '}\n';
+
+                // 결과 표시
+                document.getElementById('jsOutput').textContent = jsCode;
+                document.getElementById('outputSection').style.display = 'block';
+
+                // 스크롤
+                document.getElementById('outputSection').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                showToast('✅ 변환 완료!');
+
+            } catch (error) {
+                showToast('❌ 오류: ' + error.message);
+                console.error('변환 오류:', error);
+            }
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('jsOutput').textContent;
+            navigator.clipboard.writeText(output).then(() => {
+                showToast('✅ 클립보드에 복사되었습니다!');
+            }).catch(err => {
+                showToast('❌ 복사 실패: ' + err.message);
+            });
+        }
+
+        function downloadJS() {
+            const output = document.getElementById('jsOutput').textContent;
+            const blob = new Blob([output], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'supplyData.js';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('✅ 파일이 다운로드되었습니다!');
+        }
+
+        function clearAll() {
+            document.getElementById('csvInput').value = '';
+            document.getElementById('jsOutput').textContent = '';
+            document.getElementById('outputSection').style.display = 'none';
+            document.getElementById('statsSection').style.display = 'none';
+            showToast('🗑️ 초기화 완료!');
+        }
+
+        // 지역별 년도별 데이터 생성
+        function generateRegionYearlyData() {
+            const jsOutput = document.getElementById('jsOutput').textContent;
+
+            if (!jsOutput.trim()) {
+                showToast('❌ 먼저 supplyData를 변환해주세요!');
+                return;
+            }
+
+            try {
+                // supplyData 재구성
+                const supplyDataMatch = jsOutput.match(/const supplyData = \[([\s\S]*?)\];/);
+                if (!supplyDataMatch) {
+                    showToast('❌ 유효한 supplyData 형식이 아닙니다!');
+                    return;
+                }
+
+                // 간단한 방식으로 supplyData 파싱
+                const lines = jsOutput.split('\n').filter(line =>
+                    line.trim().startsWith('[') && line.includes(',')
+                );
+
+                const supplyData = [];
+                lines.forEach(line => {
+                    try {
+                        // JSON 형식으로 변환하기 위해 대괄호 추출
+                        const jsonStr = line.trim().replace(/,\s*$/, '');
+                        const parsed = JSON.parse(jsonStr);
+                        supplyData.push(parsed);
+                    } catch (e) {
+                        // 파싱 실패한 줄은 무시
+                    }
+                });
+
+                if (supplyData.length === 0) {
+                    showToast('❌ supplyData를 파싱할 수 없습니다!');
+                    return;
+                }
+
+                // regionList.js에서 regions 가져오기
+                // Note: regionList.js가 이미 로드되어 있다고 가정
+                const regionData = typeof regions !== 'undefined' ? regions : [];
+
+                if (regionData.length === 0) {
+                    showToast('⚠️ regionList.js를 로드할 수 없습니다. 계속 진행합니다.');
+                }
+
+                // regions을 지역명 배열로 변환
+                const regionNames = regionData.map(r => r[0]);
+
+                // 지역별 년도별 세대수 계산
+                const regionYearlyMap = {};
+
+                // regions의 각 지역에 대해 초기화
+                regionNames.forEach(regionName => {
+                    regionYearlyMap[regionName] = {};
+                });
+
+                // supplyData의 행을 순회 (첫 번째 행은 헤더)
+                for (let i = 1; i < supplyData.length; i++) {
+                    const row = supplyData[i];
+                    if (row.length < 5) continue;
+
+                    const sojachiLocation = row[2]; // "소재지"
+                    const moveInDate = row[3]; // "입주시기" (예: "2025-01")
+                    const households = parseInt(row[4]) || 0; // "총세대수"
+
+                    if (!sojachiLocation || !moveInDate) continue;
+
+                    // 년도 추출
+                    const yearMatch = moveInDate.match(/(\d{4})/);
+                    if (!yearMatch) continue;
+                    const year = yearMatch[1];
+
+                    // 소재지가 각 region으로 시작하는지 확인하고 모두 카운트
+                    // 예: "서울 광진구"는 "서울", "서울 광진구" 모두에 카운트됨
+                    for (const regionName of regionNames) {
+                        if (sojachiLocation.startsWith(regionName)) {
+                            if (!regionYearlyMap[regionName][year]) {
+                                regionYearlyMap[regionName][year] = 0;
+                            }
+                            regionYearlyMap[regionName][year] += households;
+                        }
+                    }
+                }
+
+                // 결과 배열 생성 (regions 순서대로)
+                const regionYearlyArray = [];
+                regionNames.forEach(region => {
+                    const yearlyData = regionYearlyMap[region];
+                    // 데이터가 있는 경우만 포함
+                    if (Object.keys(yearlyData).length > 0) {
+                        regionYearlyArray.push([region, yearlyData]);
+                    }
+                });
+
+                // JavaScript 코드 생성
+                let jsCode = '// 지역별 년도별 공급 데이터\n';
+                jsCode += `// 생성 시간: ${new Date().toLocaleString('ko-KR')}\n\n`;
+                jsCode += 'const regionYearlyData = [\n';
+
+                regionYearlyArray.forEach((item, index) => {
+                    const region = item[0];
+                    const yearlyData = item[1];
+
+                    jsCode += `    ["${escapeForJS(region)}", {\n`;
+                    const years = Object.keys(yearlyData).sort();
+                    years.forEach((year, yearIndex) => {
+                        jsCode += `        "${year}": ${yearlyData[year]}`;
+                        if (yearIndex < years.length - 1) {
+                            jsCode += ',';
+                        }
+                        jsCode += '\n';
+                    });
+                    jsCode += '    }]';
+                    if (index < regionYearlyArray.length - 1) {
+                        jsCode += ',';
+                    }
+                    jsCode += '\n';
+                });
+
+                jsCode += '];\n\n';
+                jsCode += '// 데이터를 전역으로 export (모듈이 아닌 경우)\n';
+                jsCode += 'if (typeof module !== \'undefined\' && module.exports) {\n';
+                jsCode += '    module.exports = regionYearlyData;\n';
+                jsCode += '}\n';
+
+                // 결과 표시
+                document.getElementById('regionYearlyOutput').textContent = jsCode;
+                document.getElementById('regionYearlySection').style.display = 'block';
+
+                // 스크롤
+                document.getElementById('regionYearlySection').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                showToast('✅ 지역별 년도별 데이터 생성 완료!');
+
+            } catch (error) {
+                showToast('❌ 오류: ' + error.message);
+                console.error('생성 오류:', error);
+            }
+        }
+
+        function copyRegionYearlyToClipboard() {
+            const output = document.getElementById('regionYearlyOutput').textContent;
+            navigator.clipboard.writeText(output).then(() => {
+                showToast('✅ 클립보드에 복사되었습니다!');
+            }).catch(err => {
+                showToast('❌ 복사 실패: ' + err.message);
+            });
+        }
+
+        function downloadRegionYearlyJS() {
+            const output = document.getElementById('regionYearlyOutput').textContent;
+            const blob = new Blob([output], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'regionYearlyData.js';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('✅ 파일이 다운로드되었습니다!');
+        }
+
+        // 키보드 단축키
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+Enter: 변환
+            if (e.ctrlKey && e.key === 'Enter') {
+                convertCSV();
+            }
+        });
+    </script>
+</body>
+
+</html>

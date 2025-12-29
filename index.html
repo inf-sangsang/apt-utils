@@ -279,8 +279,15 @@
         <p class="subtitle">아파트 인구 및 세대 현황을 한눈에 분석하고<br>시각화하는 데이터 분석 도구</p>
 
         <div class="button-container">
-            <a href="people_graph/peopleGraph.html" class="btn btn-primary" id="graphButton">
+            <a href="people_graph/peopleGraph.html" class="btn btn-primary" id="peopleGraphButton">
                 <span>인구그래프</span>
+                <span class="icon">→</span>
+            </a>
+        </div>
+
+        <div class="button-container">
+            <a href="apt_supply/aptSupplyDashboard.html" class="btn btn-primary" id="supplyGraphButton">
+                <span>공급그래프</span>
                 <span class="icon">→</span>
             </a>
         </div>
@@ -288,7 +295,14 @@
 
     <script>
         // Add smooth scroll and interaction effects
-        document.getElementById('graphButton').addEventListener('click', function (e) {
+        document.getElementById('peopleGraphButton').addEventListener('click', function (e) {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+
+        document.getElementById('supplyGraphButton').addEventListener('click', function (e) {
             this.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 this.style.transform = '';
@@ -297,8 +311,11 @@
 
         // Add keyboard navigation
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' && document.activeElement.id === 'graphButton') {
+            if (e.key === 'Enter' && document.activeElement.id === 'peopleGraphButton') {
                 window.location.href = 'people_graph/peopleGraph.html';
+            }
+            if (e.key === 'Enter' && document.activeElement.id === 'supplyGraphButton') {
+                window.location.href = 'apt_supply/aptSupplyDashboard.html';
             }
         });
     </script>

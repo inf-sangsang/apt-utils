@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아파트 공급 대시보드</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Serif+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- 데이터 파일 로드 -->
+    <script src="data/regionList.js"></script>
+    <script src="data/supplyList.js"></script>
+    <script src="data/supplyCountList.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🏢 아파트 공급 대시보드</h1>        
+        <div style="margin-top: 20px; text-align: center;">
+            <label for="fontSelect" style="color: #555; font-weight: 500; margin-right: 10px;">폰트 선택:</label>
+            <select id="fontSelect" style="padding: 8px 15px; border: 2px solid #d0d0d0; border-radius: 6px; font-size: 0.9em; background: white; cursor: pointer;">
+                <option value="Noto Sans KR" selected style="font-family: 'Noto Sans KR', sans-serif;">Noto Sans KR</option>
+                <option value="Nanum Gothic" style="font-family: 'Nanum Gothic', sans-serif;">나눔고딕</option>
+                <option value="Noto Serif KR" style="font-family: 'Noto Serif KR', serif;">Noto Serif KR</option>
+                <option value="old_studio1" style="font-family: 'old_studio1', sans-serif;">a옛날사진관1</option>
+                <option value="old_studio2" style="font-family: 'old_studio2', sans-serif;">a옛날사진관2</option>
+                <option value="old_studio3" style="font-family: 'old_studio3', sans-serif;">a옛날사진관3</option>
+                <option value="old_studio4" style="font-family: 'old_studio4', sans-serif;">a옛날사진관4</option>
+                <option value="old_studio5" style="font-family: 'old_studio5', sans-serif;">a옛날사진관5</option>
+                <option value="esamanru_light" style="font-family: 'esamanru_light', sans-serif;">이사만루 light</option>
+                <option value="esamanru_medium" style="font-family: 'esamanru_medium', sans-serif;">이사만루 medium</option>
+                <option value="esamanru_bold" style="font-family: 'esamanru_bold', sans-serif;">이사만루 bold</option>
+            </select>
+        </div>
+        <div class="info-box">
+            <h3>📋 지역 선택</h3>
+            <p>원하는 지역을 검색하여 추가하세요. 2025년부터 2030년까지의 공급 현황을 모두 확인할 수 있습니다.</p>
+            <div class="search-controls-wrapper">
+                <input type="text" id="regionSearch" placeholder="지역명을 입력하세요 (예: 서울 광진구)" class="region-input">
+                <div id="searchResults" class="search-results"></div>
+            </div>
+        </div>
+
+        <div class="selected-regions-container">
+            <h3>선택된 지역</h3>
+            <div id="selectedRegions" class="selected-regions"></div>
+        </div>
+
+        <div id="tablesContainer"></div>
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
+
+        <div class="section" style="margin-top: 40px;">
+            <h3>📈 전체 지역 년도별 공급량 추이</h3>
+            <div style="margin: 20px 0; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);">
+                <canvas id="yearlySupplyChart"></canvas>
+            </div>
+        </div>
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
+
+        <div class="section" style="margin-top: 40px;">
+            <h3>📊 지역별 연도별 공급량 그래프</h3>
+            <div class="graph-controls" style="margin: 20px 0; padding: 20px; background: #f5f5f5; border-radius: 10px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center;">
+                <div>
+                    <label for="startYear" style="color: #555; font-weight: 500; margin-right: 10px;">시작 연도:</label>
+                    <select id="startYear" style="padding: 8px 15px; border: 2px solid #d0d0d0; border-radius: 6px; font-size: 0.9em; background: white; cursor: pointer;">
+                        <option value="2025">2025년</option>
+                        <option value="2026">2026년</option>
+                        <option value="2027">2027년</option>
+                        <option value="2028">2028년</option>
+                        <option value="2029">2029년</option>
+                        <option value="2030">2030년</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="yearCount" style="color: #555; font-weight: 500; margin-right: 10px;">표시 연도 수:</label>
+                    <select id="yearCount" style="padding: 8px 15px; border: 2px solid #d0d0d0; border-radius: 6px; font-size: 0.9em; background: white; cursor: pointer;">
+                        <option value="2">2년</option>
+                        <option value="3">3년</option>
+                        <option value="4">4년</option>
+                        <option value="5">5년</option>
+                        <option value="6">6년</option>
+                    </select>
+                </div>
+                <button id="generateGraphBtn" style="padding: 8px 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; font-size: 0.9em; cursor: pointer; font-weight: 500;">그래프 생성</button>
+            </div>
+            <div id="chartContainer" style="margin-top: 30px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); display: none;">
+                <canvas id="supplyChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="js/supplyCalendar.js"></script>
+</body>
+
+</html>

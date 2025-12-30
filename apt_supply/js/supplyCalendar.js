@@ -547,7 +547,115 @@ function renderAllTables() {
 
     // 년도별 그래프 갱신
     generateYearlyChart();
+
+    // 3개년 요약 테이블 갱신
+    renderThreeYearSummary();
 }
+
+// 3개년 공급 현황 테이블 렌더링 함수
+function renderThreeYearSummary() {
+    const tbody = document.getElementById('threeYearSummaryBody');
+
+    if (!tbody) return;
+
+    if (selectedRegions.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" style="text-align: center; padding: 40px; color: #999;">
+                    지역을 선택하면 3개년 공급 현황이 표시됩니다
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = '';
+
+    selectedRegions.forEach(region => {
+        const row = document.createElement('tr');
+        row.style.borderBottom = '1px solid #ddd';
+
+        // 지역명 셀
+        const regionCell = document.createElement('td');
+        regionCell.style.padding = '12px';
+        regionCell.style.fontWeight = '500';
+        regionCell.style.border = '1px solid #ddd';
+        regionCell.textContent = region;
+        row.appendChild(regionCell);
+
+        // 적정 공급량 계산 (인구수 * 0.5%)
+        const optimalSupply = calculateOptimalSupply(region);
+        const optimalCell = document.createElement('td');
+        optimalCell.style.padding = '12px';
+        optimalCell.style.textAlign = 'right';
+        optimalCell.style.border = '1px solid #ddd';
+        optimalCell.style.background = '#fff9e6';
+        optimalCell.textContent = optimalSupply.toLocaleString();
+        row.appendChild(optimalCell);
+
+        // regionYearlyData에서 해당 지역 찾기
+        const regionData = regionYearlyData.find(r => r[0] === region);
+        const yearlyData = regionData ? regionData[1] : {};
+
+        // 2026, 2027, 2028년 데이터 가져오기
+        const supply2026 = yearlyData['2026'] || 0;
+        const supply2027 = yearlyData['2027'] || 0;
+        const supply2028 = yearlyData['2028'] || 0;
+
+        // 3개년 평균 계산
+        const average = Math.round((supply2026 + supply2027 + supply2028) / 3);
+
+        // 2026년 셀
+        const cell2026 = document.createElement('td');
+        cell2026.style.padding = '12px';
+        cell2026.style.textAlign = 'right';
+        cell2026.style.border = '1px solid #ddd';
+        cell2026.textContent = supply2026.toLocaleString();
+        row.appendChild(cell2026);
+
+        // 2027년 셀
+        const cell2027 = document.createElement('td');
+        cell2027.style.padding = '12px';
+        cell2027.style.textAlign = 'right';
+        cell2027.style.border = '1px solid #ddd';
+        cell2027.textContent = supply2027.toLocaleString();
+        row.appendChild(cell2027);
+
+        // 2028년 셀
+        const cell2028 = document.createElement('td');
+        cell2028.style.padding = '12px';
+        cell2028.style.textAlign = 'right';
+        cell2028.style.border = '1px solid #ddd';
+        cell2028.textContent = supply2028.toLocaleString();
+        row.appendChild(cell2028);
+
+        // 평균 셀
+        const avgCell = document.createElement('td');
+        avgCell.style.padding = '12px';
+        avgCell.style.textAlign = 'right';
+        avgCell.style.border = '1px solid #ddd';
+        avgCell.style.fontWeight = '600';
+        avgCell.style.background = '#f8f9fa';
+        avgCell.textContent = average.toLocaleString();
+        row.appendChild(avgCell);
+
+        // 판단 셀 (3개년 평균을 기준으로 판단)
+        const judgment = getJudgmentGrade(average, optimalSupply);
+        const judgmentCell = document.createElement('td');
+        judgmentCell.style.padding = '12px';
+        judgmentCell.style.textAlign = 'center';
+        judgmentCell.style.border = '1px solid #ddd';
+        judgmentCell.style.fontWeight = '600';
+        judgmentCell.style.backgroundColor = judgment.color;
+        judgmentCell.style.color = 'white';
+        judgmentCell.textContent = judgment.grade;
+        row.appendChild(judgmentCell);
+
+        tbody.appendChild(row);
+    });
+}
+
+
 
 // 그래프 관련 변수
 let chartInstance = null;
@@ -738,7 +846,7 @@ function generateYearlyChart() {
     const datasets = [];
     const optimalSupplyArray = years.map(() => optimalSupply);
     datasets.push({
-        label: `적정 공급량 (${(Math.round(optimalSupply/1000) / 10).toFixed(1) + '만'})`,
+        label: `적정 공급량 (${(Math.round(optimalSupply / 1000) / 10).toFixed(1) + '만'})`,
         data: optimalSupplyArray,
         type: 'line',
         borderColor: '#E94549',

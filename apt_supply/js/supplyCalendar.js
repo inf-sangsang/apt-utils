@@ -634,14 +634,47 @@ function renderThreeYearSummary() {
         let sumSupply = 0;
 
         years.forEach(year => {
-            const supply = yearlyData[year.toString()] || 0;
-            sumSupply += supply;
+            // 해당 연도, 지역의 상세 데이터 수집
+            const yearComplexes = [];
+            let yearTotal = 0;
+
+            for (let i = 1; i < supplyData.length; i++) {
+                const rowData = supplyData[i];
+                if (rowData.length < 5) continue;
+
+                const location = rowData[2]; // 소재지
+                const moveInDate = rowData[3]; // 입주시기
+                const complexName = rowData[1]; // 단지명
+                const households = parseInt(rowData[4], 10); // 총세대수
+
+                if (location && location.startsWith(region)) {
+                    const dateInfo = extractMonthYear(moveInDate);
+                    if (dateInfo && dateInfo.year === year) {
+                        yearTotal += households;
+                        yearComplexes.push({ complexName, households });
+                    }
+                }
+            }
+
+            sumSupply += yearTotal;
 
             const cell = document.createElement('td');
             cell.style.padding = '14px';
             cell.style.textAlign = 'center';
             cell.style.border = '1px solid #ddd';
-            cell.textContent = supply.toLocaleString();
+            cell.textContent = yearTotal.toLocaleString();
+
+            // 툴팁 추가
+            if (yearComplexes.length > 0) {
+                const tooltipText = yearComplexes
+                    .map(item => `${item.complexName}, ${item.households}세대`)
+                    .join('\n');
+                cell.setAttribute('data-tooltip', tooltipText);
+                cell.classList.add('has-tooltip');
+                cell.style.cursor = 'pointer';
+                cell.addEventListener('click', (e) => showTooltip(e, tooltipText));
+            }
+
             row.appendChild(cell);
         });
 

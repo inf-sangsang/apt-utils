@@ -78,7 +78,7 @@ let currentSearchResults = [];
 let displayedCount = 0; // 현재 표시된 항목 수
 let filteredRegions = []; // 필터링된 전체 지역 목록
 const ITEMS_PER_LOAD = 30; // 한 번에 로드할 항목 수
-const yearRange = [2025, 2026, 2027, 2028, 2029, 2030];
+
 const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
 
 // 검색 결과 항목 하이라이트 업데이트
@@ -499,11 +499,25 @@ function renderTable(tableId, year, regions) {
     });
 }
 
+// DOM 요소 선택에 기준연도 선택 추가
+const baseYearSelect = document.getElementById('baseYearSelect');
+
+// 기준연도 변경 이벤트
+baseYearSelect.addEventListener('change', (e) => {
+    currentBaseYear = parseInt(e.target.value);
+    renderAllTables();
+});
+
+let currentBaseYear = 2026; // 기본값
+
 // 모든 테이블 렌더링 함수
 function renderAllTables() {
     tablesContainer.innerHTML = '';
 
-    yearRange.forEach(year => {
+    // 표시할 연도 범위 생성 (기준연도부터 4개년)
+    const displayYears = [currentBaseYear, currentBaseYear + 1, currentBaseYear + 2, currentBaseYear + 3];
+
+    displayYears.forEach(year => {
         const tableId = `calendarTable-${year}`;
 
         const tableWrapper = document.createElement('div');
@@ -555,8 +569,27 @@ function renderAllTables() {
 // 3개년 공급 현황 테이블 렌더링 함수
 function renderThreeYearSummary() {
     const tbody = document.getElementById('threeYearSummaryBody');
+    const tableHeader = document.querySelector('#threeYearSummaryTable thead tr');
 
-    if (!tbody) return;
+    if (!tbody || !tableHeader) return;
+
+    // 헤더 업데이트
+    const years = [currentBaseYear, currentBaseYear + 1, currentBaseYear + 2];
+    tableHeader.innerHTML = `
+        <th style="padding: 15px; text-align: left; border: 1px solid #ddd;">지역</th>
+        <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">적정공급</th>
+        <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">${years[0]}년</th>
+        <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">${years[1]}년</th>
+        <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">${years[2]}년</th>
+        <th style="padding: 15px; text-align: center; border: 1px solid #ddd; background: rgba(255, 255, 255, 0.2);">3개년 평균</th>
+        <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">판단</th>
+    `;
+
+    // 타이틀 업데이트
+    const summaryTitle = document.querySelector('#threeYearSummaryContainer').previousElementSibling;
+    if (summaryTitle) {
+        summaryTitle.textContent = `📊 3개년 공급 현황 (${years[0]}~${years[2]})`;
+    }
 
     if (selectedRegions.length === 0) {
         tbody.innerHTML = `
@@ -597,37 +630,23 @@ function renderThreeYearSummary() {
         const regionData = regionYearlyData.find(r => r[0] === region);
         const yearlyData = regionData ? regionData[1] : {};
 
-        // 2026, 2027, 2028년 데이터 가져오기
-        const supply2026 = yearlyData['2026'] || 0;
-        const supply2027 = yearlyData['2027'] || 0;
-        const supply2028 = yearlyData['2028'] || 0;
+        // 3개년 데이터 가져오기 및 셀 생성
+        let sumSupply = 0;
+
+        years.forEach(year => {
+            const supply = yearlyData[year.toString()] || 0;
+            sumSupply += supply;
+
+            const cell = document.createElement('td');
+            cell.style.padding = '14px';
+            cell.style.textAlign = 'center';
+            cell.style.border = '1px solid #ddd';
+            cell.textContent = supply.toLocaleString();
+            row.appendChild(cell);
+        });
 
         // 3개년 평균 계산
-        const average = Math.round((supply2026 + supply2027 + supply2028) / 3);
-
-        // 2026년 셀
-        const cell2026 = document.createElement('td');
-        cell2026.style.padding = '14px';
-        cell2026.style.textAlign = 'center';
-        cell2026.style.border = '1px solid #ddd';
-        cell2026.textContent = supply2026.toLocaleString();
-        row.appendChild(cell2026);
-
-        // 2027년 셀
-        const cell2027 = document.createElement('td');
-        cell2027.style.padding = '14px';
-        cell2027.style.textAlign = 'center';
-        cell2027.style.border = '1px solid #ddd';
-        cell2027.textContent = supply2027.toLocaleString();
-        row.appendChild(cell2027);
-
-        // 2028년 셀
-        const cell2028 = document.createElement('td');
-        cell2028.style.padding = '14px';
-        cell2028.style.textAlign = 'center';
-        cell2028.style.border = '1px solid #ddd';
-        cell2028.textContent = supply2028.toLocaleString();
-        row.appendChild(cell2028);
+        const average = Math.round(sumSupply / 3);
 
         // 평균 셀
         const avgCell = document.createElement('td');

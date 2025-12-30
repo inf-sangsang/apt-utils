@@ -18,23 +18,65 @@
 <body>
     <div class="container">
         <h1>🏢 아파트 공급 대시보드</h1>
-        <div style="margin-top: 20px; text-align: center;">
-            <label for="fontSelect" style="color: #555; font-weight: 500; margin-right: 10px;">폰트 선택:</label>
-            <select id="fontSelect"
-                style="padding: 8px 15px; border: 2px solid #d0d0d0; border-radius: 6px; font-size: 0.9em; background: white; cursor: pointer;">
-                <option value="Noto Sans KR" selected style="font-family: 'Noto Sans KR', sans-serif;">Noto Sans KR
-                </option>
-                <option value="Nanum Gothic" style="font-family: 'Nanum Gothic', sans-serif;">나눔고딕</option>
-                <option value="Noto Serif KR" style="font-family: 'Noto Serif KR', serif;">Noto Serif KR</option>
-                <option value="old_studio1" style="font-family: 'old_studio1', sans-serif;">a옛날사진관1</option>
-                <option value="old_studio2" style="font-family: 'old_studio2', sans-serif;">a옛날사진관2</option>
-                <option value="old_studio3" style="font-family: 'old_studio3', sans-serif;">a옛날사진관3</option>
-                <option value="old_studio4" style="font-family: 'old_studio4', sans-serif;">a옛날사진관4</option>
-                <option value="old_studio5" style="font-family: 'old_studio5', sans-serif;">a옛날사진관5</option>
-                <option value="esamanru_light" style="font-family: 'esamanru_light', sans-serif;">이사만루 light</option>
-                <option value="esamanru_medium" style="font-family: 'esamanru_medium', sans-serif;">이사만루 medium</option>
-                <option value="esamanru_bold" style="font-family: 'esamanru_bold', sans-serif;">이사만루 bold</option>
-            </select>
+        <div
+            style="margin-top: 20px; text-align: center; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+            <div>
+                <label for="fontSelect" style="color: #555; font-weight: 500; margin-right: 10px;">폰트 선택:</label>
+                <select id="fontSelect"
+                    style="padding: 8px 15px; border: 2px solid #d0d0d0; border-radius: 6px; font-size: 0.9em; background: white; cursor: pointer;">
+                    <option value="Noto Sans KR" selected style="font-family: 'Noto Sans KR', sans-serif;">Noto Sans KR
+                    </option>
+                    <option value="Nanum Gothic" style="font-family: 'Nanum Gothic', sans-serif;">나눔고딕</option>
+                    <option value="Noto Serif KR" style="font-family: 'Noto Serif KR', serif;">Noto Serif KR</option>
+                    <option value="old_studio1" style="font-family: 'old_studio1', sans-serif;">a옛날사진관1</option>
+                    <option value="old_studio2" style="font-family: 'old_studio2', sans-serif;">a옛날사진관2</option>
+                    <option value="old_studio3" style="font-family: 'old_studio3', sans-serif;">a옛날사진관3</option>
+                    <option value="old_studio4" style="font-family: 'old_studio4', sans-serif;">a옛날사진관4</option>
+                    <option value="old_studio5" style="font-family: 'old_studio5', sans-serif;">a옛날사진관5</option>
+                    <option value="esamanru_light" style="font-family: 'esamanru_light', sans-serif;">이사만루 light
+                    </option>
+                    <option value="esamanru_medium" style="font-family: 'esamanru_medium', sans-serif;">이사만루 medium
+                    </option>
+                    <option value="esamanru_bold" style="font-family: 'esamanru_bold', sans-serif;">이사만루 bold</option>
+                </select>
+            </div>
+            <div>
+                <label for="baseYearSelect" style="color: #555; font-weight: 500; margin-right: 10px;">기준연도:</label>
+                <select id="baseYearSelect"
+                    style="padding: 8px 15px; border: 2px solid #d0d0d0; border-radius: 6px; font-size: 0.9em; background: white; cursor: pointer;">
+                    <option value="2000">2000년</option>
+                    <option value="2001">2001년</option>
+                    <option value="2002">2002년</option>
+                    <option value="2003">2003년</option>
+                    <option value="2004">2004년</option>
+                    <option value="2005">2005년</option>
+                    <option value="2006">2006년</option>
+                    <option value="2007">2007년</option>
+                    <option value="2008">2008년</option>
+                    <option value="2009">2009년</option>
+                    <option value="2010">2010년</option>
+                    <option value="2011">2011년</option>
+                    <option value="2012">2012년</option>
+                    <option value="2013">2013년</option>
+                    <option value="2014">2014년</option>
+                    <option value="2015">2015년</option>
+                    <option value="2016">2016년</option>
+                    <option value="2017">2017년</option>
+                    <option value="2018">2018년</option>
+                    <option value="2019">2019년</option>
+                    <option value="2020">2020년</option>
+                    <option value="2021">2021년</option>
+                    <option value="2022">2022년</option>
+                    <option value="2023">2023년</option>
+                    <option value="2024">2024년</option>
+                    <option value="2025">2025년</option>
+                    <option value="2026" selected>2026년</option>
+                    <option value="2027">2027년</option>
+                    <option value="2028">2028년</option>
+                    <option value="2029">2029년</option>
+                    <option value="2030">2030년</option>
+                </select>
+            </div>
         </div>
         <div class="info-box">
             <h3>📋 지역 선택</h3>
@@ -50,7 +92,10 @@
             <div id="selectedRegions" class="selected-regions"></div>
         </div>
 
-        <div id="tablesContainer"></div>
+        <div class="section" style="margin-top: 40px;">
+            <h3>📅 공급 캘린더</h3>
+            <div id="tablesContainer"> </div>
+        </div>
 
         <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
 
@@ -65,7 +110,7 @@
         <hr style="margin: 40px 0; border: none; border-top: 2px solid #e0e0e0;">
 
         <div class="section" style="margin-top: 40px;">
-            <h3>📊 선택 지역 3개년 공급 현황 (2026~2028)</h3>
+            <h3>📊 3개년 공급 현황 (2026~2028)</h3>
             <div id="threeYearSummaryContainer"
                 style="margin-top: 20px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);">
                 <table id="threeYearSummaryTable" style="width: 100%; border-collapse: collapse;">

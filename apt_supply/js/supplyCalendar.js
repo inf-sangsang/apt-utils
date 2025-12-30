@@ -385,7 +385,7 @@ function getJudgmentGrade(totalSupply, optimalSupply) {
     } else if (totalSupply <= optimalSupply * 2.0) {
         return { grade: 'B (과잉)', color: '#ECB751' };
     } else {
-        return { grade: 'C (적정)', color: '#ED6C69' };
+        return { grade: 'C (과잉)', color: '#ED6C69' };
     }
 }
 

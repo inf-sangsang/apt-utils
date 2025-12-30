@@ -577,7 +577,7 @@ function renderThreeYearSummary() {
 
         // 지역명 셀
         const regionCell = document.createElement('td');
-        regionCell.style.padding = '12px';
+        regionCell.style.padding = '14px';
         regionCell.style.fontWeight = '500';
         regionCell.style.border = '1px solid #ddd';
         regionCell.textContent = region;
@@ -586,8 +586,8 @@ function renderThreeYearSummary() {
         // 적정 공급량 계산 (인구수 * 0.5%)
         const optimalSupply = calculateOptimalSupply(region);
         const optimalCell = document.createElement('td');
-        optimalCell.style.padding = '12px';
-        optimalCell.style.textAlign = 'right';
+        optimalCell.style.padding = '14px';
+        optimalCell.style.textAlign = 'center';
         optimalCell.style.border = '1px solid #ddd';
         optimalCell.style.background = '#fff9e6';
         optimalCell.textContent = optimalSupply.toLocaleString();
@@ -607,32 +607,32 @@ function renderThreeYearSummary() {
 
         // 2026년 셀
         const cell2026 = document.createElement('td');
-        cell2026.style.padding = '12px';
-        cell2026.style.textAlign = 'right';
+        cell2026.style.padding = '14px';
+        cell2026.style.textAlign = 'center';
         cell2026.style.border = '1px solid #ddd';
         cell2026.textContent = supply2026.toLocaleString();
         row.appendChild(cell2026);
 
         // 2027년 셀
         const cell2027 = document.createElement('td');
-        cell2027.style.padding = '12px';
-        cell2027.style.textAlign = 'right';
+        cell2027.style.padding = '14px';
+        cell2027.style.textAlign = 'center';
         cell2027.style.border = '1px solid #ddd';
         cell2027.textContent = supply2027.toLocaleString();
         row.appendChild(cell2027);
 
         // 2028년 셀
         const cell2028 = document.createElement('td');
-        cell2028.style.padding = '12px';
-        cell2028.style.textAlign = 'right';
+        cell2028.style.padding = '14px';
+        cell2028.style.textAlign = 'center';
         cell2028.style.border = '1px solid #ddd';
         cell2028.textContent = supply2028.toLocaleString();
         row.appendChild(cell2028);
 
         // 평균 셀
         const avgCell = document.createElement('td');
-        avgCell.style.padding = '12px';
-        avgCell.style.textAlign = 'right';
+        avgCell.style.padding = '14px';
+        avgCell.style.textAlign = 'center';
         avgCell.style.border = '1px solid #ddd';
         avgCell.style.fontWeight = '600';
         avgCell.style.background = '#f8f9fa';
@@ -642,7 +642,7 @@ function renderThreeYearSummary() {
         // 판단 셀 (3개년 평균을 기준으로 판단)
         const judgment = getJudgmentGrade(average, optimalSupply);
         const judgmentCell = document.createElement('td');
-        judgmentCell.style.padding = '12px';
+        judgmentCell.style.padding = '14px';
         judgmentCell.style.textAlign = 'center';
         judgmentCell.style.border = '1px solid #ddd';
         judgmentCell.style.fontWeight = '600';

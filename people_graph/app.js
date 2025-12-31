@@ -15,6 +15,26 @@ window.barChart = null;
 window.ageGroupChart = null;
 window.householdChart = null;
 
+const PROVINCE_ALIASES = {
+    '경기': '경기도',
+    '강원': '강원도',
+    '경북': '경상북도',
+    '경남': '경상남도',
+    '충북': '충청북도',
+    '충남': '충청남도',
+    '전북': '전라북도',
+    '전남': '전라남도',
+    '제주': '제주특별자치도',
+    '대전': '대전광역시',
+    '대구': '대구광역시',
+    '광주': '광주광역시',
+    '부산': '부산광역시',
+    '울산': '울산광역시',
+    '인천': '인천광역시',
+    '서울': '서울특별시',
+    '세종': '세종특별자치시'
+};
+
 function loadCSV() {
     try {
         // Dynamically load data based on currentDataDate
@@ -49,16 +69,10 @@ function initializeRegionSelect() {
 }
 
 function getRegionList() {
-    const regions = new Set();
-    csvDataParsed.forEach(row => {
-        const regionName = cleanRegionName(row['행정구역']);
-        const level = getRegionLevel(regionName);
-
-        if (level === currentLevel) {
-            regions.add(regionName);
-        }
-    });
-    return Array.from(regions).sort();
+    if (typeof window.regions !== 'undefined') {
+        return window.regions;
+    }
+    return [];
 }
 
 function showDropdown(filteredRegions) {
@@ -90,21 +104,72 @@ function hideDropdown() {
     dropdown.classList.remove('show');
 }
 
+function resolveRegionName(region) {
+    // 1. Check exact alias match (e.g. '경기' -> '경기도')
+    if (PROVINCE_ALIASES[region]) {
+        return PROVINCE_ALIASES[region];
+    }
+
+    // 2. Check prefix match for composite names (e.g. '경기 수원시' -> '경기도 수원시')
+    // Split by space to check the first part
+    const parts = region.split(' ');
+    const province = parts[0];
+
+    if (PROVINCE_ALIASES[province]) {
+        parts[0] = PROVINCE_ALIASES[province];
+        return parts.join(' ');
+    }
+
+    return region;
+}
+
 function selectRegion(region) {
-    currentRegion = region;
-    document.getElementById('regionSearch').value = region;
+    const resolvedRegion = resolveRegionName(region);
+    currentRegion = resolvedRegion;
+    currentLevel = getRegionLevel(resolvedRegion); // Update level based on the RESOLVED name
+    document.getElementById('regionSearch').value = region; // Keep user's selection visible
     hideDropdown();
     updateAllViews();
 }
 
-function searchRegions(query) {
-    const regions = getRegionList();
-    if (!query.trim()) {
-        return regions;
+function getAllRegions() {
+    const regions = new Set();
+    csvDataParsed.forEach(row => {
+        regions.add(cleanRegionName(row['행정구역']));
+    });
+    return Array.from(regions).sort();
+}
+
+function normalizeQuery(query) {
+    let normalized = query.trim();
+    for (const [alias, fullName] of Object.entries(PROVINCE_ALIASES)) {
+        if (normalized.startsWith(alias)) {
+            normalized = normalized.replace(alias, fullName);
+            break;
+        }
     }
-    return regions.filter(region =>
-        region.toLowerCase().includes(query.toLowerCase())
-    );
+    return normalized;
+}
+
+function searchRegions(query) {
+    if (!query.trim()) {
+        return getRegionList(); // Return all provided regions
+    }
+
+    const allRegions = getRegionList();
+    const normalizedQuery = normalizeQuery(query).toLowerCase();
+    const rawQuery = query.toLowerCase().trim();
+
+    // Filter matches
+    const matches = allRegions.filter(region => {
+        const regionLower = region.toLowerCase();
+        // Check both raw query and normalized query (so '경기' matches '경기...' and '경기도...')
+        // Also check if the aliased version of the region matches
+        // But simply: does the region name from the list contain the query?
+        return regionLower.includes(normalizedQuery) || regionLower.includes(rawQuery);
+    });
+
+    return matches;
 }
 
 function getFilteredData() {
@@ -332,17 +397,7 @@ function updateAllViews() {
 
 // 이벤트 리스너 설정
 function initApp() {
-    document.querySelectorAll('.region-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
-            document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            currentLevel = parseInt(this.dataset.level);
-            currentRegion = '';
-            document.getElementById('regionSearch').value = '';
-            hideDropdown();
-            updateAllViews();
-        });
-    });
+
 
     document.getElementById('sortSelect').addEventListener('change', function () {
         currentSortBy = this.value;
@@ -366,7 +421,7 @@ function initApp() {
         document.body.style.fontFamily = `'${selectedFont}', sans-serif`;
 
         // Update all elements that have explicit font-family
-        const elementsWithFont = document.querySelectorAll('button, input, select, .region-btn, #regionSearch, .sort-section select');
+        const elementsWithFont = document.querySelectorAll('button, input, select, #regionSearch, .sort-section select');
         elementsWithFont.forEach(element => {
             element.style.fontFamily = `'${selectedFont}', sans-serif`;
         });
@@ -383,7 +438,7 @@ function initApp() {
     if (savedFont) {
         document.getElementById('fontSelect').value = savedFont;
         document.body.style.fontFamily = `'${savedFont}', sans-serif`;
-        const elementsWithFont = document.querySelectorAll('button, input, select, .region-btn, #regionSearch, .sort-section select');
+        const elementsWithFont = document.querySelectorAll('button, input, select, #regionSearch, .sort-section select');
         elementsWithFont.forEach(element => {
             element.style.fontFamily = `'${savedFont}', sans-serif`;
         });

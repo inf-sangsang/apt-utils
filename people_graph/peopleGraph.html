@@ -57,10 +57,7 @@
                 </div>
 
                 <h3>🗺️ 행정구역 선택</h3>
-                <div class="region-buttons">
-                    <button class="region-btn active" data-level="1">시/도</button>
-                    <button class="region-btn" data-level="2">시/군/구</button>
-                </div>
+
 
                 <div class="search-container">
                     <input type="text" id="regionSearch" placeholder="지역 검색...">
@@ -197,8 +194,9 @@
                 .then(() => {
                     console.log(`Loaded data for ${targetDate}`);
                     // Load app scripts after data is ready
-                    return loadScript('utils.js');
+                    return loadScript('data/regionOriginalList.js');
                 })
+                .then(() => loadScript('utils.js'))
                 .then(() => loadScript('charts.js'))
                 .then(() => loadScript('app.js'))
                 .catch(error => {

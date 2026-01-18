@@ -564,6 +564,9 @@ function renderAllTables() {
 
     // 3개년 요약 테이블 갱신
     renderThreeYearSummary();
+
+    // 공급 리스트 갱신
+    renderSupplyList();
 }
 
 // 3개년 공급 현황 테이블 렌더링 함수
@@ -1055,3 +1058,188 @@ document.addEventListener('DOMContentLoaded', () => {
         generateYearlyChart();
     }, 100);
 });
+
+// 공급 리스트 관련 변수
+let currentListPage = 1;
+let listItemsPerPage = 10;
+
+// 페이지당 항목 수 변경 이벤트
+if (document.getElementById('itemsPerPage')) {
+    document.getElementById('itemsPerPage').addEventListener('change', (e) => {
+        listItemsPerPage = parseInt(e.target.value);
+        currentListPage = 1;
+        renderSupplyList();
+    });
+}
+
+// 공급 리스트 렌더링 함수
+function renderSupplyList() {
+    const tableBody = document.getElementById('supplyListBody');
+    const paginationContainer = document.getElementById('paginationContainer');
+    const titleElement = document.getElementById('supplyListTitle');
+
+    if (titleElement) {
+        titleElement.textContent = `📋 아파트 공급 리스트 (${currentBaseYear}~${currentBaseYear + 3})`;
+    }
+
+    if (!tableBody || !paginationContainer) return;
+
+    if (selectedRegions.length === 0) {
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 40px; color: #999;">
+                    지역을 선택하면 공급 리스트가 표시됩니다
+                </td>
+            </tr>
+        `;
+        paginationContainer.innerHTML = '';
+        return;
+    }
+
+    // 데이터 필터링 (헤더 제외)
+    // supplyData[0]은 헤더이므로 인덱스 1부터 시작
+    const filteredData = [];
+    for (let i = 1; i < supplyData.length; i++) {
+        const row = supplyData[i];
+        if (row.length < 5) continue;
+
+        const location = row[2]; // 소재지
+
+        // 선택된 지역 중 하나로 시작하는 데이터 필터링
+        const matchedRegion = selectedRegions.some(region => location.startsWith(region));
+
+        if (matchedRegion) {
+            // 기간 필터링 (기준연도 ~ 기준연도+3)
+            const dateInfo = extractMonthYear(row[3]);
+            if (dateInfo) {
+                const endYear = currentBaseYear + 3;
+                if (dateInfo.year >= currentBaseYear && dateInfo.year <= endYear) {
+                    filteredData.push(row);
+                }
+            }
+        }
+    }
+
+    // 입주시기 기준 정렬 (오름차순)
+    filteredData.sort((a, b) => {
+        return a[3].localeCompare(b[3]);
+    });
+
+    // 총 페이지 수 계산
+    const totalItems = filteredData.length;
+    const totalPages = Math.ceil(totalItems / listItemsPerPage);
+
+    // 현재 페이지 데이터 슬라이싱
+    const startIndex = (currentListPage - 1) * listItemsPerPage;
+    const endIndex = Math.min(startIndex + listItemsPerPage, totalItems);
+    const currentPageData = filteredData.slice(startIndex, endIndex);
+
+    // 테이블 렌더링
+    tableBody.innerHTML = '';
+
+    if (currentPageData.length === 0) {
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 40px; color: #999;">
+                    데이터가 없습니다.
+                </td>
+            </tr>
+        `;
+    } else {
+        currentPageData.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.style.borderBottom = '1px solid #eee';
+
+            // 데이터 매핑: [주택유형, 단지명, 소재지, 입주시기, 총세대수]
+            const type = row[0];
+            const name = row[1];
+            const location = row[2];
+            const date = row[3];
+            const households = parseInt(row[4]).toLocaleString();
+
+            tr.innerHTML = `
+                <td style="padding: 12px; text-align: center; color: #666;">${getRegionShortName(location)}</td>
+                <td style="padding: 12px; text-align: center; font-weight: 500;">${name}</td>
+                <td style="padding: 12px; text-align: center; color: #666;">${type}</td>
+                <td style="padding: 12px; text-align: center;">${date}</td>
+                <td style="padding: 12px; text-align: center;">${households}</td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    }
+
+    // 페이지네이션 렌더링
+    renderPagination(totalPages);
+}
+
+// 소재지에서 지역명 짧게 추출 (예: "서울 강남구 역삼동..." -> "강남구 역삼동")
+function getRegionShortName(fullLocation) {
+    // 필요하다면 가공 로직 추가
+    return fullLocation;
+}
+
+// 페이지네이션 렌더링 함수
+function renderPagination(totalPages) {
+    const paginationContainer = document.getElementById('paginationContainer');
+    paginationContainer.innerHTML = '';
+
+    if (totalPages <= 1) return;
+
+    // 페이지 그룹 계산 (한 번에 10개씩 표시)
+    const pageGroupSize = 10;
+    const currentGroup = Math.ceil(currentListPage / pageGroupSize);
+    const startPage = (currentGroup - 1) * pageGroupSize + 1;
+    const endPage = Math.min(startPage + pageGroupSize - 1, totalPages);
+
+    // 이전 버튼
+    if (startPage > 1) {
+        const prevBtn = createPageButton('<', () => {
+            currentListPage = startPage - 1;
+            renderSupplyList();
+        });
+        paginationContainer.appendChild(prevBtn);
+    }
+
+    // 페이지 번호 버튼
+    for (let i = startPage; i <= endPage; i++) {
+        const pageBtn = createPageButton(i, () => {
+            currentListPage = i;
+            renderSupplyList();
+        }, i === currentListPage);
+        paginationContainer.appendChild(pageBtn);
+    }
+
+    // 다음 버튼
+    if (endPage < totalPages) {
+        const nextBtn = createPageButton('>', () => {
+            currentListPage = endPage + 1;
+            renderSupplyList();
+        });
+        paginationContainer.appendChild(nextBtn);
+    }
+}
+
+// 페이지 버튼 생성 헬퍼
+function createPageButton(text, onClick, isActive = false) {
+    const btn = document.createElement('button');
+    btn.textContent = text;
+    btn.style.padding = '5px 10px';
+    btn.style.border = '1px solid #ddd';
+    btn.style.backgroundColor = isActive ? '#667eea' : 'white';
+    btn.style.color = isActive ? 'white' : '#333';
+    btn.style.cursor = 'pointer';
+    btn.style.borderRadius = '4px';
+    btn.style.minWidth = '30px';
+
+    if (!isActive) {
+        btn.addEventListener('mouseover', () => {
+            btn.style.backgroundColor = '#f5f5f5';
+        });
+        btn.addEventListener('mouseout', () => {
+            btn.style.backgroundColor = 'white';
+        });
+    }
+
+    btn.addEventListener('click', onClick);
+    return btn;
+}

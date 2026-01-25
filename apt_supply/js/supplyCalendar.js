@@ -1129,6 +1129,13 @@ function renderSupplyList() {
     const totalItems = filteredData.length;
     const totalPages = Math.ceil(totalItems / listItemsPerPage);
 
+    // 전체 세대수 합계 계산
+    let totalHouseholdsSum = 0;
+    filteredData.forEach(row => {
+        // row[4]가 숫자형 문자열이어야 함
+        totalHouseholdsSum += parseInt(row[4], 10) || 0;
+    });
+
     // 현재 페이지 데이터 슬라이싱
     const startIndex = (currentListPage - 1) * listItemsPerPage;
     const endIndex = Math.min(startIndex + listItemsPerPage, totalItems);
@@ -1166,6 +1173,18 @@ function renderSupplyList() {
             `;
             tableBody.appendChild(tr);
         });
+
+        // 합계 행 추가
+        const totalRow = document.createElement('tr');
+        totalRow.style.borderTop = '2px solid #ddd';
+        totalRow.style.backgroundColor = '#f8f9fa';
+        totalRow.style.fontWeight = 'bold';
+
+        totalRow.innerHTML = `
+            <td colspan="4" style="padding: 12px; text-align: center;">총계</td>
+            <td style="padding: 12px; text-align: center; color: #333;">${totalHouseholdsSum.toLocaleString()}</td>
+        `;
+        tableBody.appendChild(totalRow);
     }
 
     // 페이지네이션 렌더링

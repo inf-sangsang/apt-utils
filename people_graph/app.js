@@ -23,11 +23,12 @@ const PROVINCE_ALIASES = {
     '충북': '충청북도',
     '충남': '충청남도',
     '전북': '전북특별자치도',
-    '전남': '전라남도',
+    // 광주광역시 + 전라남도 통합 (구 명칭 '광주'/'전남' 모두 검색 가능하도록 유지)
+    '전남': '전남광주통합특별시',
     '제주': '제주특별자치도',
     '대전': '대전광역시',
     '대구': '대구광역시',
-    '광주': '광주광역시',
+    '광주': '전남광주통합특별시',
     '부산': '부산광역시',
     '울산': '울산광역시',
     '인천': '인천광역시',
@@ -143,6 +144,10 @@ function getAllRegions() {
 function normalizeQuery(query) {
     let normalized = query.trim();
     for (const [alias, fullName] of Object.entries(PROVINCE_ALIASES)) {
+        // 이미 전체 명칭으로 입력된 경우는 치환하지 않음 ('경기도' -> '경기도도' 방지)
+        if (normalized.startsWith(fullName)) {
+            break;
+        }
         if (normalized.startsWith(alias)) {
             normalized = normalized.replace(alias, fullName);
             break;

@@ -300,6 +300,13 @@
                 <span class="icon">→</span>
             </a>
         </div>
+
+        <div class="button-container">
+            <a href="school/schoolDashboard.html" class="btn btn-primary" id="schoolGraphButton">
+                <span>학교데이터</span>
+                <span class="icon">→</span>
+            </a>
+        </div>
     </div>
 
     <script>
@@ -318,6 +325,13 @@
             }, 150);
         });
 
+        document.getElementById('schoolGraphButton').addEventListener('click', function (e) {
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+
         // Add keyboard navigation
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Enter' && document.activeElement.id === 'peopleGraphButton') {
@@ -325,6 +339,9 @@
             }
             if (e.key === 'Enter' && document.activeElement.id === 'supplyGraphButton') {
                 window.location.href = 'apt_supply/aptSupplyDashboard.html';
+            }
+            if (e.key === 'Enter' && document.activeElement.id === 'schoolGraphButton') {
+                window.location.href = 'school/schoolDashboard.html';
             }
         });
     </script>

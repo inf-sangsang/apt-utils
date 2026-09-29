@@ -1,0 +1,377 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f5f7fa;
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    color: #5a6c7d;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1em;
+    font-weight: 300;
+    color: #7a8a9a;
+}
+
+.home-link {
+    display: inline-block;
+    margin-top: 12px;
+    color: #7a9fc4;
+    text-decoration: none;
+    font-size: 0.95em;
+}
+
+.home-link:hover {
+    text-decoration: underline;
+}
+
+/* 탭 */
+.tabs {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 12px 36px;
+    border: 2px solid #b8c5d6;
+    background: white;
+    color: #5a6c7d;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: 600;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+    background: #e8f0f7;
+}
+
+.tab-btn.active {
+    background: #d4e4f7;
+    border-color: #7a9fc4;
+    color: #37536e;
+}
+
+/* 필터 */
+.control-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 22px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.filter-section+.filter-section {
+    margin-top: 16px;
+}
+
+.filter-section h3 {
+    color: #5a6c7d;
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.region-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.region-btn {
+    padding: 8px 16px;
+    border: 2px solid #b8c5d6;
+    background: white;
+    color: #5a6c7d;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.92em;
+    font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.region-btn:hover {
+    background: #e8f0f7;
+    border-color: #8fa3b8;
+}
+
+.region-btn.active {
+    background: #d4e4f7;
+    border-color: #7a9fc4;
+    color: #37536e;
+}
+
+.inline-controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+select,
+input[type="search"] {
+    padding: 9px 14px;
+    border: 2px solid #d0dce8;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: white;
+    color: #37536e;
+}
+
+input[type="search"] {
+    min-width: 220px;
+}
+
+.check-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #37536e;
+    font-size: 0.95em;
+    cursor: pointer;
+    user-select: none;
+}
+
+.check-label[hidden] {
+    display: none;
+}
+
+.hint {
+    color: #8fa3b8;
+    font-size: 0.88em;
+}
+
+/* 표 */
+.table-wrapper {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.table-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e8eef4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.table-header h3 {
+    color: #5a6c7d;
+    font-size: 1.05em;
+}
+
+.table-container {
+    max-height: 520px;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+thead {
+    background: white;
+    border-bottom: 1px solid #ccc;
+}
+
+th {
+    padding: 13px 10px;
+    text-align: right;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: white;
+    font-size: 0.92em;
+    border-right: 1px solid #e0e0e0;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+th:first-child,
+td:first-child {
+    text-align: left;
+    min-width: 150px;
+}
+
+th.sorted::after {
+    content: ' ▾';
+    color: #7a9fc4;
+}
+
+th.sorted.asc::after {
+    content: ' ▴';
+}
+
+td {
+    padding: 11px 10px;
+    text-align: right;
+    font-size: 0.92em;
+    border-bottom: 1px solid #f0f4f8;
+    border-right: 1px solid #f4f7fa;
+    white-space: nowrap;
+}
+
+tbody tr {
+    cursor: pointer;
+}
+
+tbody tr:hover {
+    background: #f0f6fc;
+}
+
+tbody tr.selected {
+    background: #d4e4f7;
+}
+
+.pos {
+    color: #1e7d5a;
+    font-weight: 600;
+}
+
+.neg {
+    color: #b8474d;
+    font-weight: 600;
+}
+
+.muted {
+    color: #a9b6c4;
+}
+
+/* 상세 */
+.detail-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+}
+
+.detail-title {
+    color: #37536e;
+    font-size: 1.4em;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.detail-sub {
+    color: #8fa3b8;
+    font-size: 0.92em;
+    margin-bottom: 18px;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.stat {
+    background: #f5f8fc;
+    border: 1px solid #e3ebf3;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+}
+
+.stat-label {
+    color: #8fa3b8;
+    font-size: 0.82em;
+    margin-bottom: 6px;
+}
+
+.stat-value {
+    color: #37536e;
+    font-size: 1.45em;
+    font-weight: 700;
+}
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+    gap: 22px;
+}
+
+.chart-box {
+    border: 1px solid #eef2f7;
+    border-radius: 10px;
+    padding: 16px;
+}
+
+.chart-box h4 {
+    color: #5a6c7d;
+    font-size: 0.98em;
+    margin-bottom: 12px;
+}
+
+.chart-canvas {
+    position: relative;
+    height: 280px;
+}
+
+.empty {
+    text-align: center;
+    color: #a9b6c4;
+    padding: 40px 20px;
+}
+
+footer {
+    text-align: center;
+    color: #8fa3b8;
+    font-size: 0.85em;
+    line-height: 1.7;
+    padding: 20px 0 40px;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-canvas {
+        height: 240px;
+    }
+
+    input[type="search"] {
+        min-width: 160px;
+    }
+}

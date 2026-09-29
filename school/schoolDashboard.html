@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="전국 초·중학교 학생수와 진학 현황을 학교별로 확인하는 대시보드">
+    <title>학교 데이터 대시보드</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="data/regionIndex.js"></script>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PTYRE0ZWFW"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-PTYRE0ZWFW');
+</script>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🏫 학교 데이터 대시보드</h1>
+            <div class="subtitle">전국 초·중학교 학생수와 진학 현황</div>
+            <a class="home-link" href="../index.html">← APT Utils 홈으로</a>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="elem">초등학교</button>
+            <button class="tab-btn" data-tab="mid">중학교</button>
+        </div>
+
+        <div class="control-panel">
+            <div class="filter-section">
+                <h3>시도</h3>
+                <div class="region-buttons" id="sidoButtons"></div>
+            </div>
+            <div class="filter-section">
+                <div class="inline-controls">
+                    <select id="sigunguSelect">
+                        <option value="">시군구 전체</option>
+                    </select>
+                    <select id="foundSelect">
+                        <option value="">설립 전체</option>
+                    </select>
+                    <input type="search" id="searchInput" placeholder="학교명 검색">
+                    <label class="check-label" id="auToggle" hidden>
+                        <input type="checkbox" id="auCheckbox" checked> 비율에 자사고 포함
+                    </label>
+                    <span class="hint" id="filterHint"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <div class="table-header">
+                <h3 id="tableTitle">학교 목록</h3>
+                <span class="hint">열 제목을 누르면 정렬, 행을 누르면 아래에 상세가 나옵니다</span>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr id="tableHead"></tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="detail-panel" id="detailPanel">
+            <div class="empty">학교를 선택하면 연도별 추이가 나타납니다.</div>
+        </div>
+
+        <footer>
+            출처: 학교알리미(초·중등 교육정보 공시서비스) 공시자료 ·
+            초등 학년별 학생수 2021~2026년(매년 4월 1일 기준) ·
+            중등 졸업생 진로 2020~2025년(2023년은 제공처 오류로 제외)<br>
+            중학교 비율 = (과고 + 외고/국제고 + 자사고 + 기타) ÷ 졸업자, '비율에 자사고 포함'을 끄면 자사고를 뺍니다.
+            기타에는 영재학교·외국인학교·국외 진학 등이 섞여 있어 분리할 수 없습니다.<br>
+            국가수준 학업성취도(보통학력 이상, 중3 국어·영어·수학)는 2016년 마지막 전수평가 기준입니다.
+        </footer>
+    </div>
+
+    <script src="charts.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -9,6 +9,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="vendor/leaflet.css">
+    <link rel="stylesheet" href="vendor/MarkerCluster.css">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="data/regionIndex.js"></script>
@@ -31,25 +33,27 @@
             <a class="home-link" href="../index.html">← APT Utils 홈으로</a>
         </header>
 
-        <div class="tabs">
+        <!-- 지도 기능은 추가 개선 후 공개: 코드와 UI 구조는 유지한다. -->
+        <div class="view-switch" role="group" aria-label="학교 보기 방식" hidden>
+            <button class="view-btn active" data-view="list" aria-pressed="true">목록으로 보기</button>
+            <button class="view-btn" data-view="map" aria-pressed="false">지도로 보기</button>
+        </div>
+
+        <div class="tabs" id="schoolTabs">
             <button class="tab-btn active" data-tab="elem">초등학교</button>
             <button class="tab-btn" data-tab="mid">중학교</button>
         </div>
 
         <div class="control-panel">
             <div class="filter-section">
-                <h3>시도</h3>
-                <div class="region-buttons" id="sidoButtons"></div>
-            </div>
-            <div class="filter-section">
                 <div class="inline-controls">
-                    <select id="sigunguSelect">
-                        <option value="">시군구 전체</option>
-                    </select>
+                    <input type="search" id="regionInput" list="regionOptions" aria-label="지역 검색" placeholder="지역 검색 (예: 분당구, 서울 강남구)">
+                    <datalist id="regionOptions"></datalist>
                     <select id="foundSelect">
                         <option value="">설립 전체</option>
                     </select>
-                    <input type="search" id="searchInput" placeholder="학교명 검색">
+                    <input type="search" id="searchInput" aria-label="전국 학교명 검색" placeholder="학교명 검색 (전국)">
+                    <span class="hint">학교명을 입력하면 지역과 관계없이 전국에서 검색합니다.</span>
                     <label class="check-label" id="auToggle" hidden>
                         <input type="checkbox" id="auCheckbox" checked> 비율에 자사고 포함
                     </label>
@@ -58,7 +62,26 @@
             </div>
         </div>
 
-        <div class="table-wrapper">
+        <section class="map-panel" id="mapPanel" hidden aria-label="전국 학교 지도">
+            <div class="map-toolbar">
+                <fieldset class="map-layers">
+                    <legend>지도에 표시할 학교</legend>
+                    <label class="check-label"><input type="checkbox" id="mapElemCheckbox" checked>
+                        <span class="school-dot elem-dot" aria-hidden="true"></span> 초등학교</label>
+                    <label class="check-label"><input type="checkbox" id="mapMidCheckbox" checked>
+                        <span class="school-dot mid-dot" aria-hidden="true"></span> 중학교</label>
+                </fieldset>
+                <button type="button" class="map-fit-btn" id="mapFitButton">검색 결과 전체 보기</button>
+            </div>
+            <p class="map-status" id="mapStatus" role="status" aria-live="polite">학교 위치를 불러오는 중입니다.</p>
+            <p id="mapTileNotice" class="map-tile-notice" role="status" hidden>배경 지도를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.</p>
+            <div id="schoolMap" aria-label="학교 위치 지도"></div>
+            <div class="map-help">숫자를 누르면 지도가 확대되고, 학교 표시를 누르면 상세 정보를 볼 수 있습니다.
+                <span id="mapSource"></span>
+            </div>
+        </section>
+
+        <div class="table-wrapper" id="tablePanel">
             <div class="table-header">
                 <h3 id="tableTitle">학교 목록</h3>
                 <span class="hint">열 제목을 누르면 정렬, 행을 누르면 아래에 상세가 나옵니다</span>
@@ -81,13 +104,14 @@
             출처: 학교알리미(초·중등 교육정보 공시서비스) 공시자료 ·
             초등 학년별 학생수 2021~2026년(매년 4월 1일 기준) ·
             중등 졸업생 진로 2020~2025년(2023년은 제공처 오류로 제외)<br>
-            중학교 비율 = (과고 + 외고/국제고 + 자사고 + 기타) ÷ 졸업자, '비율에 자사고 포함'을 끄면 자사고를 뺍니다.
-            기타에는 영재학교·외국인학교·국외 진학 등이 섞여 있어 분리할 수 없습니다.<br>
+            중학교 비율 = (과고 + 외고/국제고 + 자사고) ÷ 졸업자, '비율에 자사고 포함'을 끄면 자사고를 뺍니다.
+            영재학교·외국인학교·국외 진학 등이 섞인 ‘기타’는 목록과 비율에서 제외합니다.<br>
             국가수준 학업성취도(보통학력 이상, 중3 국어·영어·수학)는 2016년 마지막 전수평가 기준입니다.
         </footer>
     </div>
 
     <script src="charts.js"></script>
+    <script src="map.js"></script>
     <script src="app.js"></script>
 </body>
 

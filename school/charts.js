@@ -144,11 +144,11 @@ window.SchoolCharts = (function () {
 
     /* ---------- 중학교 ---------- */
 
-    /* 연도별 (과고+외고/국제고+[자사고]+기타) / 졸업자 * 100. 진학 자료가 없는 해는 null */
+    /* 연도별 (과고+외고/국제고+[자사고]) / 졸업자 * 100. 진학 자료가 없는 해는 null */
     function eliteRates(s, withAu) {
         return s.grad.map(function (g, i) {
             if (!g || s.sci[i] == null) return null;
-            var sum = s.sci[i] + s.fl[i] + s.etc[i] + (withAu ? s.au[i] : 0);
+            var sum = s.sci[i] + s.fl[i] + (withAu ? s.au[i] : 0);
             return Math.round(sum / g * 1000) / 10;
         });
     }
@@ -159,7 +159,6 @@ window.SchoolCharts = (function () {
             stat('과고', n(lastOf(s.sci)) + '명') +
             stat('외고/국제고', n(lastOf(s.fl)) + '명') +
             stat('자사고', n(lastOf(s.au)) + '명') +
-            stat('기타', n(lastOf(s.etc)) + '명') +
             stat(rateLabel, n(lastOf(eliteRates(s, withAu)), 1) + '%');
         if (s.ach) {
             stats += stat('성취도 평균', n(s.ach.avg, 1) + '%') +
@@ -168,7 +167,7 @@ window.SchoolCharts = (function () {
         }
         return shell(s.n, sido + ' ' + s.g + ' · ' + s.f,
             stats,
-            box('chartElite', '연도별 특목고·자사고·기타 진학자') +
+            box('chartElite', '연도별 과고·외고/국제고·자사고 진학자') +
             box('chartGrad', '졸업자수와 ' + rateLabel));
     }
 
@@ -182,8 +181,7 @@ window.SchoolCharts = (function () {
                 datasets: [
                     { label: '과고', data: s.sci, backgroundColor: PALETTE[1] },
                     { label: '외고/국제고', data: s.fl, backgroundColor: PALETTE[0] },
-                    { label: '자사고', data: s.au, backgroundColor: PALETTE[3] },
-                    { label: '기타', data: s.etc, backgroundColor: PALETTE[2] }
+                    { label: '자사고', data: s.au, backgroundColor: PALETTE[3] }
                 ]
             },
             options: baseOptions({

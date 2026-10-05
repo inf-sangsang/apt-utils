@@ -100,8 +100,15 @@ def build_middle():
     # 비율은 '자사고 포함/제외' 토글에 따라 화면에서 계산하므로 인원만 넘긴다
     m = rate.merge(elite[["공시년도", "학교코드", "과학고", "외고·국제고", "자사고",
                           "기타(영재학교 포함, 분리불가)"]],
-                   on=["공시년도", "학교코드"], how="left")
-    m = m[m["졸업자"] > 0].copy()
+                   on=["공시년도", "학교코드"], how="left", validate="one_to_one")
+    kinds = pd.read_csv(SRC / "중학교_졸업생진로현황_전체컬럼_2020-2025.csv",
+                        usecols=["공시년도", "학교코드", "학교급코드"])
+    m = m.merge(kinds, on=["공시년도", "학교코드"], validate="one_to_one")
+    m = m[(m["졸업자"] > 0) & (m["학교급코드"] == 3)].copy()
+    assert ach.index.is_unique, "성취도 중복 학교코드"
+    assert set(ach.index).issubset(set(m["학교코드"])), "중학교가 아닌 성취도 연결"
+
+    m.loc[m["학교코드"] == "S090006652", "지역"] = "경기도 화성시 병점구"
     m["시도"] = m["시도교육청"].map(SIDO)
     m["시군구"] = sigungu(m)
 
@@ -120,6 +127,8 @@ def build_middle():
             }
             if code in ach.index:
                 a = ach.loc[code]
+                if a["원본학교명"] != last["학교명"]:
+                    row["aliases"] = [a["원본학교명"]]
                 row["ach"] = {"avg": num(a["평균"]), "kor": num(a["국어"]),
                               "eng": num(a["영어"]), "math": num(a["수학"]),
                               "n": num(a["응시자수"], 0)}

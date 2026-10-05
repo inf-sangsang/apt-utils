@@ -97,36 +97,6 @@ h1 {
     font-size: 1em;
 }
 
-.region-buttons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.region-btn {
-    padding: 8px 16px;
-    border: 2px solid #b8c5d6;
-    background: white;
-    color: #5a6c7d;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.92em;
-    font-weight: 500;
-    font-family: 'Noto Sans KR', sans-serif;
-    transition: all 0.2s ease;
-}
-
-.region-btn:hover {
-    background: #e8f0f7;
-    border-color: #8fa3b8;
-}
-
-.region-btn.active {
-    background: #d4e4f7;
-    border-color: #7a9fc4;
-    color: #37536e;
-}
-
 .inline-controls {
     display: flex;
     gap: 12px;
@@ -147,6 +117,11 @@ input[type="search"] {
 
 input[type="search"] {
     min-width: 220px;
+}
+
+#regionInput {
+    width: 330px;
+    max-width: 100%;
 }
 
 .check-label {
@@ -374,4 +349,50 @@ footer {
     input[type="search"] {
         min-width: 160px;
     }
+}
+
+/* 목록 / 지도 전환 */
+[hidden] { display: none !important; }
+.view-switch { display: flex; justify-content: center; gap: 8px; margin-bottom: 18px; }
+.view-btn, .map-fit-btn, .popup-detail-btn {
+    font: inherit; cursor: pointer; border: 1px solid #b8c5d6; border-radius: 8px;
+    background: #fff; color: #37536e; padding: 9px 18px;
+}
+.view-btn.active { color: #fff; background: #37536e; border-color: #37536e; }
+.view-btn:focus-visible, .map-fit-btn:focus-visible, .check-label input:focus-visible {
+    outline: 3px solid #78a9dd; outline-offset: 3px;
+}
+.map-panel { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.08); margin-bottom: 20px; overflow: hidden; }
+.map-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; padding: 18px 20px 8px; }
+.map-layers { display: flex; gap: 24px; flex-wrap: wrap; border: 0; }
+.map-layers legend { font-weight: 600; font-size: .9em; color: #5a6c7d; margin-bottom: 10px; }
+.map-layers input { width: 17px; height: 17px; accent-color: #37536e; }
+.school-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.elem-dot { background: #1976ad; }
+.mid-dot { background: #8352ba; }
+.map-status { padding: 10px 20px 16px; font-size: .9em; color: #5a6c7d; }
+#schoolMap { height: min(68vh, 720px); min-height: 420px; background: #e8edf1; z-index: 0; }
+.map-help { padding: 14px 20px; font-size: .82em; color: #64778a; line-height: 1.8; }
+.map-help a { color: #37536e; }
+.map-tile-notice { background: #fff5d9; color: #745720; padding: 8px 20px; font-size: .88em; }
+.school-marker, .school-cluster { color: #fff; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 2px 7px #0004; text-align: center; font-family: 'Noto Sans KR', sans-serif; }
+.school-marker { font-size: 12px; line-height: 24px; font-weight: 700; }
+.school-marker-elem, .school-cluster-elem { background: #1976ad; }
+.school-marker-mid, .school-cluster-mid { background: #8352ba; }
+.school-cluster { display: flex; flex-direction: column; justify-content: center; line-height: 1.15; }
+.school-cluster span { font-size: 10px; opacity: .9; }
+.school-cluster strong { font-size: 14px; }
+.school-map-popup { font-family: 'Noto Sans KR', sans-serif; min-width: 220px; color: #37536e; }
+.school-map-popup h3 { font-size: 16px; margin: 8px 0; }
+.school-map-popup p { margin: 8px 0; }
+.school-map-popup .popup-address { color: #64778a; font-size: 12px; }
+.popup-kind { font-size: 11px; font-weight: 600; }
+.popup-kind.elem { color: #1976ad; }
+.popup-kind.mid { color: #8352ba; }
+.popup-detail-btn { width: 100%; font-size: 12px; margin-top: 8px; }
+@media (max-width: 768px) {
+    .map-toolbar { padding: 14px; }
+    .map-fit-btn { font-size: .85em; }
+    #schoolMap { height: 60vh; min-height: 360px; }
+    .map-status, .map-help { padding-left: 14px; padding-right: 14px; }
 }

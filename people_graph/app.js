@@ -6,7 +6,7 @@ let currentLevel = 1;
 let currentRegion = '';
 let currentSortBy = '60대이상';
 let currentHouseholdSortBy = 'name';
-let currentDataDate = window.currentDataDate || '202511'; // Default to latest data
+let currentDataDate = window.currentDataDate || '202609'; // Default to latest data
 let currentAgeGrouping = 'default'; // default, group1, group2
 
 // 전역 차트 변수

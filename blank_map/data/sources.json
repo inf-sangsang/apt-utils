@@ -1,0 +1,891 @@
+[
+  {
+    "지역": "서울특별시 종로구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/jongno-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 87
+  },
+  {
+    "지역": "서울특별시 중구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/jung-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 15,
+    "법정동수": 74
+  },
+  {
+    "지역": "서울특별시 용산구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/yongsan-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 36
+  },
+  {
+    "지역": "서울특별시 성동구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/seongdong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 17
+  },
+  {
+    "지역": "서울특별시 광진구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/gwangjin-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 15,
+    "법정동수": 7
+  },
+  {
+    "지역": "서울특별시 동대문구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/dongdaemun-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 15,
+    "법정동수": 10
+  },
+  {
+    "지역": "서울특별시 중랑구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/jungnang-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 6
+  },
+  {
+    "지역": "서울특별시 성북구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/seongbuk-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 20,
+    "법정동수": 39
+  },
+  {
+    "지역": "서울특별시 강북구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/gangbuk-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 4
+  },
+  {
+    "지역": "서울특별시 도봉구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/dobong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 14,
+    "법정동수": 4
+  },
+  {
+    "지역": "서울특별시 노원구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/nowon-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 19,
+    "법정동수": 5
+  },
+  {
+    "지역": "서울특별시 은평구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/eunpyeong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 11
+  },
+  {
+    "지역": "서울특별시 서대문구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/seodaemun-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 14,
+    "법정동수": 20
+  },
+  {
+    "지역": "서울특별시 마포구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/mapo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 26
+  },
+  {
+    "지역": "서울특별시 양천구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/yangcheon-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 18,
+    "법정동수": 3
+  },
+  {
+    "지역": "서울특별시 강서구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/gangseo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 20,
+    "법정동수": 13
+  },
+  {
+    "지역": "서울특별시 구로구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/guro-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 10
+  },
+  {
+    "지역": "서울특별시 금천구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/geumcheon-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 10,
+    "법정동수": 3
+  },
+  {
+    "지역": "서울특별시 영등포구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/yeongdeungpo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 18,
+    "법정동수": 34
+  },
+  {
+    "지역": "서울특별시 동작구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/dongjak-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 15,
+    "법정동수": 9
+  },
+  {
+    "지역": "서울특별시 관악구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/gwanak-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 21,
+    "법정동수": 3
+  },
+  {
+    "지역": "서울특별시 서초구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/seocho-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 18,
+    "법정동수": 10
+  },
+  {
+    "지역": "서울특별시 강남구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/gangnam-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 22,
+    "법정동수": 14
+  },
+  {
+    "지역": "서울특별시 송파구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/songpa-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 27,
+    "법정동수": 13
+  },
+  {
+    "지역": "서울특별시 강동구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/seoul/gangdong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 19,
+    "법정동수": 9
+  },
+  {
+    "지역": "부산광역시 중구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/jung-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 9,
+    "법정동수": 41
+  },
+  {
+    "지역": "부산광역시 서구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/seo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 24
+  },
+  {
+    "지역": "부산광역시 동구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/dong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 4
+  },
+  {
+    "지역": "부산광역시 영도구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/yeongdo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 11,
+    "법정동수": 21
+  },
+  {
+    "지역": "부산광역시 부산진구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/busanjin-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 20,
+    "법정동수": 11
+  },
+  {
+    "지역": "부산광역시 동래구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/dongnae-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 9
+  },
+  {
+    "지역": "부산광역시 남구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/nam-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 6
+  },
+  {
+    "지역": "부산광역시 북구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/buk-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 5
+  },
+  {
+    "지역": "부산광역시 해운대구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/haeundae-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 18,
+    "법정동수": 8
+  },
+  {
+    "지역": "부산광역시 사하구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/saha-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 8
+  },
+  {
+    "지역": "부산광역시 금정구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/geumjeong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 13
+  },
+  {
+    "지역": "부산광역시 강서구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/gangseo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 9,
+    "법정동수": 22
+  },
+  {
+    "지역": "부산광역시 연제구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/yeonje-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 2
+  },
+  {
+    "지역": "부산광역시 수영구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/suyeong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 10,
+    "법정동수": 5
+  },
+  {
+    "지역": "부산광역시 사상구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/busan/sasang-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 8
+  },
+  {
+    "지역": "대구광역시 중구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daegu/jung-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 57
+  },
+  {
+    "지역": "대구광역시 동구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daegu/dong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 22,
+    "법정동수": 45
+  },
+  {
+    "지역": "대구광역시 서구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daegu/seo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 9
+  },
+  {
+    "지역": "대구광역시 남구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daegu/nam-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 3
+  },
+  {
+    "지역": "대구광역시 북구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daegu/buk-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 23,
+    "법정동수": 31
+  },
+  {
+    "지역": "대구광역시 수성구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daegu/suseong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 23,
+    "법정동수": 26
+  },
+  {
+    "지역": "대구광역시 달서구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daegu/dalseo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 23,
+    "법정동수": 24
+  },
+  {
+    "지역": "인천광역시 제물포구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/incheon/jemulpo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 18,
+    "법정동수": 51
+  },
+  {
+    "지역": "인천광역시 영종구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/incheon/yeongjong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 6,
+    "법정동수": 8
+  },
+  {
+    "지역": "인천광역시 미추홀구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/incheon/michuhol-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 21,
+    "법정동수": 7
+  },
+  {
+    "지역": "인천광역시 연수구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/incheon/yeonsu-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 15,
+    "법정동수": 6
+  },
+  {
+    "지역": "인천광역시 남동구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/incheon/namdong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 20,
+    "법정동수": 11
+  },
+  {
+    "지역": "인천광역시 부평구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/incheon/bupyeong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 22,
+    "법정동수": 9
+  },
+  {
+    "지역": "인천광역시 계양구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/incheon/gyeyang-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 23
+  },
+  {
+    "지역": "인천광역시 서해구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/incheon/seohae-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 11
+  },
+  {
+    "지역": "인천광역시 검단구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/incheon/geomdan-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 8,
+    "법정동수": 10
+  },
+  {
+    "지역": "대전광역시 동구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daejeon/dong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 45
+  },
+  {
+    "지역": "대전광역시 중구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daejeon/jung-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 26
+  },
+  {
+    "지역": "대전광역시 서구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daejeon/seo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 24,
+    "법정동수": 27
+  },
+  {
+    "지역": "대전광역시 유성구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daejeon/yuseong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 53
+  },
+  {
+    "지역": "대전광역시 대덕구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/daejeon/daedeok-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 26
+  },
+  {
+    "지역": "울산광역시 중구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/ulsan/jung-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 18
+  },
+  {
+    "지역": "울산광역시 남구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/ulsan/nam-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 14,
+    "법정동수": 19
+  },
+  {
+    "지역": "울산광역시 동구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/ulsan/dong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 9,
+    "법정동수": 8
+  },
+  {
+    "지역": "울산광역시 북구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/ulsan/buk-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 8,
+    "법정동수": 27
+  },
+  {
+    "지역": "전남광주통합특별시 동구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/jeonnam-gwangju/dong-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 34
+  },
+  {
+    "지역": "전남광주통합특별시 서구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/jeonnam-gwangju/seo-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 18,
+    "법정동수": 18
+  },
+  {
+    "지역": "전남광주통합특별시 남구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/jeonnam-gwangju/nam-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 30
+  },
+  {
+    "지역": "전남광주통합특별시 북구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/jeonnam-gwangju/buk-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 27,
+    "법정동수": 41
+  },
+  {
+    "지역": "전남광주통합특별시 광산구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/jeonnam-gwangju/gwangsan-gu/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 21,
+    "법정동수": 79
+  },
+  {
+    "지역": "경기도 수원시 장안구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/jangan-gu-suwon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 10,
+    "법정동수": 11
+  },
+  {
+    "지역": "경기도 수원시 권선구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/gwonseon-gu-suwon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 16
+  },
+  {
+    "지역": "경기도 수원시 팔달구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/paldal-gu-suwon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 10,
+    "법정동수": 22
+  },
+  {
+    "지역": "경기도 수원시 영통구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/yeongtong-gu-suwon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 7
+  },
+  {
+    "지역": "경기도 성남시 수정구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/sujeong-gu-seongnam-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 17
+  },
+  {
+    "지역": "경기도 성남시 중원구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/jungwon-gu-seongnam-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 11,
+    "법정동수": 9
+  },
+  {
+    "지역": "경기도 성남시 분당구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/bundang-gu-seongnam-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 22,
+    "법정동수": 18
+  },
+  {
+    "지역": "경기도 의정부시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/uijeongbu-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 15,
+    "법정동수": 13
+  },
+  {
+    "지역": "경기도 안양시 만안구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/manan-gu-anyang-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 14,
+    "법정동수": 3
+  },
+  {
+    "지역": "경기도 안양시 동안구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/dongan-gu-anyang-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 4
+  },
+  {
+    "지역": "경기도 부천시 원미구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/wonmi-gu-bucheon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 20,
+    "법정동수": 9
+  },
+  {
+    "지역": "경기도 부천시 소사구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/sosa-gu-bucheon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 10,
+    "법정동수": 7
+  },
+  {
+    "지역": "경기도 부천시 오정구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/ojeong-gu-bucheon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 7,
+    "법정동수": 8
+  },
+  {
+    "지역": "경기도 광명시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/gwangmyeong-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 19,
+    "법정동수": 8
+  },
+  {
+    "지역": "경기도 평택시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/pyeongtaek-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 25,
+    "법정동수": 37
+  },
+  {
+    "지역": "경기도 안산시 상록구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/sangnok-gu-ansan-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 15
+  },
+  {
+    "지역": "경기도 안산시 단원구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/danwon-gu-ansan-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 15
+  },
+  {
+    "지역": "경기도 고양시 덕양구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/deogyang-gu-goyang-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 21,
+    "법정동수": 32
+  },
+  {
+    "지역": "경기도 고양시 일산동구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/ilsandong-gu-goyang-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 13
+  },
+  {
+    "지역": "경기도 고양시 일산서구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/ilsanseo-gu-goyang-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 11,
+    "법정동수": 8
+  },
+  {
+    "지역": "경기도 남양주시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/namyangju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 20
+  },
+  {
+    "지역": "경기도 시흥시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/siheung-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 20,
+    "법정동수": 31
+  },
+  {
+    "지역": "경기도 하남시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/hanam-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 14,
+    "법정동수": 24
+  },
+  {
+    "지역": "경기도 용인시 처인구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/cheoin-gu-yongin-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 17
+  },
+  {
+    "지역": "경기도 용인시 기흥구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/giheung-gu-yongin-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 15,
+    "법정동수": 18
+  },
+  {
+    "지역": "경기도 용인시 수지구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/suji-gu-yongin-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 11,
+    "법정동수": 7
+  },
+  {
+    "지역": "경기도 파주시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/paju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 20,
+    "법정동수": 35
+  },
+  {
+    "지역": "경기도 김포시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/gimpo-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 14,
+    "법정동수": 15
+  },
+  {
+    "지역": "경기도 화성시 만세구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/manse-gu-hwaseong-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 10,
+    "법정동수": 10
+  },
+  {
+    "지역": "경기도 화성시 효행구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/hyohaeng-gu-hwaseong-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 5,
+    "법정동수": 6
+  },
+  {
+    "지역": "경기도 화성시 병점구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/byeongjeom-gu-hwaseong-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 5,
+    "법정동수": 9
+  },
+  {
+    "지역": "경기도 화성시 동탄구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/dongtan-gu-hwaseong-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 9,
+    "법정동수": 14
+  },
+  {
+    "지역": "경기도 광주시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeonggi-do/gwangju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 26
+  },
+  {
+    "지역": "강원특별자치도 원주시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gangwon-do/wonju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 25,
+    "법정동수": 27
+  },
+  {
+    "지역": "충청북도 청주시 상당구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/chungcheongbuk-do/sangdang-gu-cheongju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 31
+  },
+  {
+    "지역": "충청북도 청주시 서원구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/chungcheongbuk-do/seowon-gu-cheongju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 11,
+    "법정동수": 14
+  },
+  {
+    "지역": "충청북도 청주시 흥덕구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/chungcheongbuk-do/heungdeok-gu-cheongju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 11,
+    "법정동수": 34
+  },
+  {
+    "지역": "충청북도 청주시 청원구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/chungcheongbuk-do/cheongwon-gu-cheongju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 8,
+    "법정동수": 16
+  },
+  {
+    "지역": "충청남도 천안시 동남구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/chungcheongnam-do/dongnam-gu-cheonan-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 28
+  },
+  {
+    "지역": "충청남도 천안시 서북구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/chungcheongnam-do/seobuk-gu-cheonan-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 14,
+    "법정동수": 15
+  },
+  {
+    "지역": "충청남도 아산시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/chungcheongnam-do/asan-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 30
+  },
+  {
+    "지역": "전북특별자치도 전주시 완산구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/jeonbuk-do/wansan-gu-jeonju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 19,
+    "법정동수": 46
+  },
+  {
+    "지역": "전북특별자치도 전주시 덕진구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/jeonbuk-do/deokjin-gu-jeonju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 16,
+    "법정동수": 37
+  },
+  {
+    "지역": "경상북도 포항시 남구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangbuk-do/nam-gu-pohang-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 14,
+    "법정동수": 24
+  },
+  {
+    "지역": "경상북도 포항시 북구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangbuk-do/buk-gu-pohang-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 15,
+    "법정동수": 31
+  },
+  {
+    "지역": "경상북도 구미시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangbuk-do/gumi-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 25,
+    "법정동수": 38
+  },
+  {
+    "지역": "경상남도 창원시 의창구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangnam-do/uichang-gu-changwon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 7,
+    "법정동수": 25
+  },
+  {
+    "지역": "경상남도 창원시 성산구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangnam-do/seongsan-gu-changwon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 8,
+    "법정동수": 41
+  },
+  {
+    "지역": "경상남도 창원시 마산합포구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangnam-do/masanhappo-gu-changwon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 15,
+    "법정동수": 64
+  },
+  {
+    "지역": "경상남도 창원시 마산회원구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangnam-do/masanhoewon-gu-changwon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 12,
+    "법정동수": 9
+  },
+  {
+    "지역": "경상남도 창원시 진해구",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangnam-do/jinhae-gu-changwon-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 65
+  },
+  {
+    "지역": "경상남도 진주시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangnam-do/jinju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 30,
+    "법정동수": 49
+  },
+  {
+    "지역": "경상남도 김해시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangnam-do/gimhae-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 19,
+    "법정동수": 41
+  },
+  {
+    "지역": "경상남도 양산시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/gyeongsangnam-do/yangsan-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 13,
+    "법정동수": 26
+  },
+  {
+    "지역": "제주특별자치도 제주시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/jeju-do/jeju-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 26,
+    "법정동수": 47
+  },
+  {
+    "지역": "세종특별자치시 세종특별자치시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/sejong-si/sejong-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 25,
+    "법정동수": 33
+  },
+  {
+    "지역": "제주특별자치도 서귀포시",
+    "최신참고지도": "https://dokdokinfo.kr/areaboundary/jeju-do/seogwipo-si/",
+    "지도기준일": "2026-09-30",
+    "행정동수": 17,
+    "법정동수": 27
+  }
+]

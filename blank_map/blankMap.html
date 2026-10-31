@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="127개 지역의 행정동·법정동 백지도. 이름 표시 유무별 4종을 미리 보고 PNG·SVG로 다운로드하세요.">
+    <title>백지도 | APT Utils</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="data/regions.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>🗺️ 백지도</h1>
+        <p class="subtitle">지역별 행정동·법정동 지도를 한눈에</p>
+        <a class="home-link" href="../index.html">← APT Utils 홈으로</a>
+    </header>
+    <section class="control-panel" aria-label="지역 검색 및 필터">
+        <div class="panel-heading"><h2>지역 선택</h2><span class="hint">127개 지역 · 지역별 4종</span></div>
+        <div class="inline-controls">
+            <label class="field">시·도<select id="province"><option value="">전체 시·도</option></select></label>
+            <label class="field search-field">지역 검색<input type="search" id="search" placeholder="예: 강남구, 수원시, 서귀포시" autocomplete="off"></label>
+            <button class="button secondary" id="reset" type="button">초기화</button>
+        </div>
+    </section>
+    <div class="workspace">
+        <aside class="region-panel" aria-label="지역 목록">
+            <div class="list-heading"><h2>대상 지역</h2><span id="result-count" role="status" aria-live="polite"></span></div>
+            <div id="regions" class="region-list"></div>
+            <p id="empty" class="empty" hidden>검색 결과가 없습니다.<br>다른 지역명을 입력해 주세요.</p>
+        </aside>
+        <main id="map-panel" class="map-panel" aria-labelledby="region-title">
+            <div class="region-heading">
+                <div><p class="eyebrow" id="region-province"></p><h2 id="region-title"></h2></div>
+                <div class="region-counts" id="region-counts"></div>
+            </div>
+            <p class="map-intro">이름 표시 유무를 선택해 활용하세요. 지도를 누르면 크게 볼 수 있습니다.</p>
+            <div class="map-grid" id="maps"></div>
+        </main>
+    </div>
+    <noscript><p class="empty">지역 선택과 지도 미리보기를 사용하려면 JavaScript를 켜 주세요.</p></noscript>
+</div>
+<dialog id="preview" aria-labelledby="preview-title">
+    <div class="preview-toolbar"><h2 id="preview-title"></h2><button type="button" id="close-preview" class="button secondary">닫기 ✕</button></div>
+    <div class="preview-canvas"><img id="preview-image" alt=""></div>
+    <p class="preview-note">원본 크기의 파일은 PNG·SVG 다운로드 버튼을 이용해 주세요.</p>
+</dialog>
+</body>
+</html>

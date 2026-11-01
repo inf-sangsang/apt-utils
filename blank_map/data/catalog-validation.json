@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-11-01T14:07:57.638598+00:00",
+  "status": "PASS",
+  "regions": 127,
+  "standaloneMapFiles": 1016,
+  "connectionDataFiles": 127,
+  "archiveMapFiles": 1016,
+  "sourceRecords": 127,
+  "checks": [
+    "기준 지역 목록과 페이지 지역 집합·ID",
+    "제작 원본·페이지 지도 폴더의 누락/초과",
+    "PNG/SVG 전 파일의 원본 SHA-256 일치",
+    "SVG 경계별 이름·표시 이름과 제작 입력 대응",
+    "연결 지도별 행정동/법정동 이름 대응",
+    "인접 관계의 양방향 참조",
+    "출처 목록·파일",
+    "전체 다운로드 ZIP 내 지도 목록·CRC·크기 일치"
+  ],
+  "displayFix": "원본 목록 끝에 추가된 서귀포시가 세종시 뒤에 분리되어 보였음. UI에서 시도별로 모아 제주시·서귀포시를 같은 제주 그룹에 표시. 기존 ID·URL·지도 파일은 유지.",
+  "limitations": "목록·파일·명칭 대조 결과이며 새 경계 정확도 검증이나 브라우저 실사용 검증은 아니다.",
+  "jeju": [
+    {
+      "id": 125,
+      "sido": "제주특별자치도",
+      "name": "제주시",
+      "adminCount": 26,
+      "legalCount": 47
+    },
+    {
+      "id": 127,
+      "sido": "제주특별자치도",
+      "name": "서귀포시",
+      "adminCount": 17,
+      "legalCount": 27
+    }
+  ],
+  "issues": []
+}

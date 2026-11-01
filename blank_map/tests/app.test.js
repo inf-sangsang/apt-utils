@@ -7,7 +7,7 @@ const base = path.join(__dirname, '..');
 class Element {
     constructor(tag = 'div') { this.tagName = tag.toUpperCase(); this.children = []; this.attrs = {}; this.listeners = {}; this.dataset = {}; this.value = ''; this.textContent = ''; this.open = false; }
     append(...children) { this.children.push(...children); }
-    add(option) { this.append(option); if (!this.value) this.value = String(option.value); }
+    add(option) { this.append(option); if (this.children.length === 1) this.value = String(option.value); }
     replaceChildren(...children) { this.children = children; this.textContent = ''; if (this.tagName === 'SELECT') this.value = ''; }
     setAttribute(name, value) { this.attrs[name] = String(value); }
     removeAttribute(name) { delete this.attrs[name]; }
@@ -27,6 +27,7 @@ function setup(hash = '', loader) {
         getElementById: id => elements[id] ||= new Element(['province', 'neighbor'].includes(id) ? 'select' : 'div'),
         createElement: tag => new Element(tag), title: ''
     };
+    document.getElementById('province').add({ textContent: '전체 시·도', value: '' });
     let calls = [], revoked = [];
     const window = { BlankMapConnection: engine, addEventListener: (name, fn) => window[name] = fn };
     const location = { hash, protocol: 'file:' };
@@ -51,6 +52,20 @@ function setup(hash = '', loader) {
     const ui = setup(), e = ui.elements;
     assert.equal(e['region-title'].textContent, '강남구');
     assert.equal(e.maps.children.length, 4);
+    const regionButtons = () => e.regions.children.filter(c => c.className === 'region-button');
+    assert.equal(regionButtons().length, 127, '전체 지역 목록 누락 없음');
+    assert.equal(new Set(regionButtons().map(c => c.dataset.id)).size, 127, '지역 중복 없음');
+    const jejuIndex = e.regions.children.findIndex(c => c.className === 'region-group' && c.textContent === '제주특별자치도');
+    assert.equal(e.regions.children.filter(c => c.className === 'region-group' && c.textContent === '제주특별자치도').length, 1, '제주 그룹이 분리되지 않음');
+    assert.equal(e.regions.children[jejuIndex+1].textContent, '제주시');
+    assert.equal(e.regions.children[jejuIndex+2].textContent, '서귀포시');
+    e.province.value = '제주특별자치도'; e.province.listeners.change();
+    assert.deepEqual(regionButtons().map(c => c.textContent), ['제주시', '서귀포시']);
+    e.search.value = '서귀포'; e.search.listeners.input();
+    assert.deepEqual(regionButtons().map(c => c.textContent), ['서귀포시']);
+    e.reset.click();
+    assert.equal(regionButtons().length, 127);
+
     assert.ok(e.neighbor.children.some(o => o.value === 22));
     e.neighbor.value = '22'; e.connect.click(); await tick();
     assert.equal(e['region-title'].textContent, '강남구 + 서초구');

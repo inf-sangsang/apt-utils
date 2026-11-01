@@ -1,6 +1,10 @@
 (() => {
     'use strict';
-    const regions = window.BLANK_MAP_REGIONS;
+    // Later additions may appear at the end of the catalog. Keep each province
+    // together without changing stable region IDs used by URLs and map files.
+    const catalog = window.BLANK_MAP_REGIONS;
+    const provinces = [...new Set(catalog.map(r => r.sido))];
+    const regions = provinces.flatMap(sido => catalog.filter(r => r.sido === sido));
     const graph = window.BLANK_MAP_NEIGHBORS;
     const engine = window.BlankMapConnection;
     const $ = id => document.getElementById(id);

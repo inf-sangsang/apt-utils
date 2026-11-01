@@ -1,0 +1,2650 @@
+{
+  "method": "공통 TM 투영, 10m 이하 경계 표본. 행정동 5m/법정동 40m 이내 양방향 근접 길이 각각 200m 이상인 쌍만 허용. 점 접촉 제외. 불일치는 보수적으로 연결 목록에서 제외.",
+  "sources": [
+    {
+      "url": "https://github.com/vuski/admdongkor",
+      "date": "2026-10-01",
+      "role": "행정동 좌표"
+    },
+    {
+      "url": "https://github.com/KnellBalm/kr-admin-geojson",
+      "date": "2023-07-29",
+      "role": "법정동 좌표, 기존 제작 입력의 최신 명칭 재분류 포함"
+    },
+    {
+      "url": "https://dokdokinfo.kr/areaboundary/",
+      "date": "2026-09-30",
+      "role": "지역별 참고 지도·명칭. 지역별 URL은 sources.json 및 connections/{id}.js"
+    }
+  ],
+  "inputSha256": "999a83e7899b7236d03434162f67571853a9013405c77b563696ed1c6a2534e6",
+  "regions": 127,
+  "accepted": [
+    {
+      "ids": [
+        1,
+        2
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5279,
+        "legal": 6211
+      }
+    },
+    {
+      "ids": [
+        1,
+        6
+      ],
+      "nearBoundaryMeters": {
+        "admin": 709,
+        "legal": 757
+      }
+    },
+    {
+      "ids": [
+        1,
+        8
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10491,
+        "legal": 11114
+      }
+    },
+    {
+      "ids": [
+        1,
+        12
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3973,
+        "legal": 2832
+      }
+    },
+    {
+      "ids": [
+        1,
+        13
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6452,
+        "legal": 7147
+      }
+    },
+    {
+      "ids": [
+        1,
+        88
+      ],
+      "nearBoundaryMeters": {
+        "admin": 316,
+        "legal": 1677
+      }
+    },
+    {
+      "ids": [
+        2,
+        3
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5970,
+        "legal": 6315
+      }
+    },
+    {
+      "ids": [
+        2,
+        4
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4120,
+        "legal": 4370
+      }
+    },
+    {
+      "ids": [
+        2,
+        13
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1329,
+        "legal": 1344
+      }
+    },
+    {
+      "ids": [
+        2,
+        14
+      ],
+      "nearBoundaryMeters": {
+        "admin": 987,
+        "legal": 1102
+      }
+    },
+    {
+      "ids": [
+        3,
+        4
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1702,
+        "legal": 1747
+      }
+    },
+    {
+      "ids": [
+        3,
+        14
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2948,
+        "legal": 3405
+      }
+    },
+    {
+      "ids": [
+        3,
+        19
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1896,
+        "legal": 2029
+      }
+    },
+    {
+      "ids": [
+        3,
+        20
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3035,
+        "legal": 3078
+      }
+    },
+    {
+      "ids": [
+        3,
+        22
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3897,
+        "legal": 3575
+      }
+    },
+    {
+      "ids": [
+        3,
+        23
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1147,
+        "legal": 1299
+      }
+    },
+    {
+      "ids": [
+        4,
+        5
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3887,
+        "legal": 4104
+      }
+    },
+    {
+      "ids": [
+        4,
+        6
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4967,
+        "legal": 5352
+      }
+    },
+    {
+      "ids": [
+        4,
+        23
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3391,
+        "legal": 3901
+      }
+    },
+    {
+      "ids": [
+        5,
+        6
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1451,
+        "legal": 1523
+      }
+    },
+    {
+      "ids": [
+        5,
+        7
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2231,
+        "legal": 2262
+      }
+    },
+    {
+      "ids": [
+        5,
+        23
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1042,
+        "legal": 1175
+      }
+    },
+    {
+      "ids": [
+        5,
+        24
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4927,
+        "legal": 4664
+      }
+    },
+    {
+      "ids": [
+        5,
+        25
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1796,
+        "legal": 1679
+      }
+    },
+    {
+      "ids": [
+        6,
+        7
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4192,
+        "legal": 4477
+      }
+    },
+    {
+      "ids": [
+        6,
+        8
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6699,
+        "legal": 6419
+      }
+    },
+    {
+      "ids": [
+        7,
+        8
+      ],
+      "nearBoundaryMeters": {
+        "admin": 988,
+        "legal": 989
+      }
+    },
+    {
+      "ids": [
+        7,
+        11
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3348,
+        "legal": 3167
+      }
+    },
+    {
+      "ids": [
+        8,
+        9
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8450,
+        "legal": 8554
+      }
+    },
+    {
+      "ids": [
+        8,
+        11
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2561,
+        "legal": 2359
+      }
+    },
+    {
+      "ids": [
+        8,
+        88
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1042,
+        "legal": 1180
+      }
+    },
+    {
+      "ids": [
+        9,
+        10
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8000,
+        "legal": 8434
+      }
+    },
+    {
+      "ids": [
+        9,
+        11
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1094,
+        "legal": 1089
+      }
+    },
+    {
+      "ids": [
+        9,
+        88
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5792,
+        "legal": 6210
+      }
+    },
+    {
+      "ids": [
+        10,
+        11
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7815,
+        "legal": 7998
+      }
+    },
+    {
+      "ids": [
+        10,
+        78
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4876,
+        "legal": 5175
+      }
+    },
+    {
+      "ids": [
+        11,
+        78
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3135,
+        "legal": 3308
+      }
+    },
+    {
+      "ids": [
+        11,
+        91
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9446,
+        "legal": 8847
+      }
+    },
+    {
+      "ids": [
+        12,
+        13
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6907,
+        "legal": 7693
+      }
+    },
+    {
+      "ids": [
+        12,
+        14
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2640,
+        "legal": 2500
+      }
+    },
+    {
+      "ids": [
+        12,
+        88
+      ],
+      "nearBoundaryMeters": {
+        "admin": 18210,
+        "legal": 19401
+      }
+    },
+    {
+      "ids": [
+        13,
+        14
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6901,
+        "legal": 6962
+      }
+    },
+    {
+      "ids": [
+        14,
+        16
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2965,
+        "legal": 3014
+      }
+    },
+    {
+      "ids": [
+        14,
+        19
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6794,
+        "legal": 6951
+      }
+    },
+    {
+      "ids": [
+        14,
+        88
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3921,
+        "legal": 4044
+      }
+    },
+    {
+      "ids": [
+        15,
+        16
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10301,
+        "legal": 10311
+      }
+    },
+    {
+      "ids": [
+        15,
+        17
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7108,
+        "legal": 8524
+      }
+    },
+    {
+      "ids": [
+        15,
+        19
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4456,
+        "legal": 4818
+      }
+    },
+    {
+      "ids": [
+        15,
+        83
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4260,
+        "legal": 4478
+      }
+    },
+    {
+      "ids": [
+        16,
+        19
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1153,
+        "legal": 1223
+      }
+    },
+    {
+      "ids": [
+        16,
+        54
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5918,
+        "legal": 7933
+      }
+    },
+    {
+      "ids": [
+        16,
+        83
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7297,
+        "legal": 8062
+      }
+    },
+    {
+      "ids": [
+        16,
+        88
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5668,
+        "legal": 5170
+      }
+    },
+    {
+      "ids": [
+        16,
+        98
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3484,
+        "legal": 4470
+      }
+    },
+    {
+      "ids": [
+        17,
+        18
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2664,
+        "legal": 2673
+      }
+    },
+    {
+      "ids": [
+        17,
+        19
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4745,
+        "legal": 4844
+      }
+    },
+    {
+      "ids": [
+        17,
+        21
+      ],
+      "nearBoundaryMeters": {
+        "admin": 622,
+        "legal": 837
+      }
+    },
+    {
+      "ids": [
+        17,
+        81
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2740,
+        "legal": 2720
+      }
+    },
+    {
+      "ids": [
+        17,
+        82
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4609,
+        "legal": 4789
+      }
+    },
+    {
+      "ids": [
+        17,
+        83
+      ],
+      "nearBoundaryMeters": {
+        "admin": 410,
+        "legal": 674
+      }
+    },
+    {
+      "ids": [
+        17,
+        84
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6315,
+        "legal": 7882
+      }
+    },
+    {
+      "ids": [
+        18,
+        21
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5904,
+        "legal": 5830
+      }
+    },
+    {
+      "ids": [
+        18,
+        79
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3645,
+        "legal": 3998
+      }
+    },
+    {
+      "ids": [
+        18,
+        84
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6804,
+        "legal": 7834
+      }
+    },
+    {
+      "ids": [
+        19,
+        20
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6677,
+        "legal": 6603
+      }
+    },
+    {
+      "ids": [
+        20,
+        21
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9594,
+        "legal": 9618
+      }
+    },
+    {
+      "ids": [
+        20,
+        22
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4157,
+        "legal": 3786
+      }
+    },
+    {
+      "ids": [
+        21,
+        22
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2228,
+        "legal": 2299
+      }
+    },
+    {
+      "ids": [
+        21,
+        79
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3032,
+        "legal": 3014
+      }
+    },
+    {
+      "ids": [
+        21,
+        80
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1516,
+        "legal": 1498
+      }
+    },
+    {
+      "ids": [
+        22,
+        23
+      ],
+      "nearBoundaryMeters": {
+        "admin": 13930,
+        "legal": 14905
+      }
+    },
+    {
+      "ids": [
+        22,
+        75
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7417,
+        "legal": 7084
+      }
+    },
+    {
+      "ids": [
+        23,
+        24
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9329,
+        "legal": 9662
+      }
+    },
+    {
+      "ids": [
+        23,
+        75
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3407,
+        "legal": 3766
+      }
+    },
+    {
+      "ids": [
+        24,
+        25
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5147,
+        "legal": 5237
+      }
+    },
+    {
+      "ids": [
+        24,
+        75
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2972,
+        "legal": 2893
+      }
+    },
+    {
+      "ids": [
+        24,
+        93
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7992,
+        "legal": 8494
+      }
+    },
+    {
+      "ids": [
+        25,
+        93
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10642,
+        "legal": 10984
+      }
+    },
+    {
+      "ids": [
+        26,
+        27
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3017,
+        "legal": 3498
+      }
+    },
+    {
+      "ids": [
+        26,
+        28
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1771,
+        "legal": 1931
+      }
+    },
+    {
+      "ids": [
+        27,
+        28
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2025,
+        "legal": 2558
+      }
+    },
+    {
+      "ids": [
+        27,
+        30
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1392,
+        "legal": 1475
+      }
+    },
+    {
+      "ids": [
+        27,
+        35
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6982,
+        "legal": 7272
+      }
+    },
+    {
+      "ids": [
+        27,
+        40
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2736,
+        "legal": 4623
+      }
+    },
+    {
+      "ids": [
+        28,
+        30
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4660,
+        "legal": 4412
+      }
+    },
+    {
+      "ids": [
+        28,
+        32
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1350,
+        "legal": 1395
+      }
+    },
+    {
+      "ids": [
+        30,
+        31
+      ],
+      "nearBoundaryMeters": {
+        "admin": 591,
+        "legal": 731
+      }
+    },
+    {
+      "ids": [
+        30,
+        32
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3195,
+        "legal": 3609
+      }
+    },
+    {
+      "ids": [
+        30,
+        33
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2697,
+        "legal": 2972
+      }
+    },
+    {
+      "ids": [
+        30,
+        38
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7030,
+        "legal": 7832
+      }
+    },
+    {
+      "ids": [
+        30,
+        40
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7169,
+        "legal": 6750
+      }
+    },
+    {
+      "ids": [
+        31,
+        33
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3699,
+        "legal": 3717
+      }
+    },
+    {
+      "ids": [
+        31,
+        34
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2846,
+        "legal": 3194
+      }
+    },
+    {
+      "ids": [
+        31,
+        36
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6158,
+        "legal": 6332
+      }
+    },
+    {
+      "ids": [
+        31,
+        38
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7408,
+        "legal": 7293
+      }
+    },
+    {
+      "ids": [
+        31,
+        39
+      ],
+      "nearBoundaryMeters": {
+        "admin": 523,
+        "legal": 435
+      }
+    },
+    {
+      "ids": [
+        32,
+        38
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1236,
+        "legal": 1340
+      }
+    },
+    {
+      "ids": [
+        32,
+        39
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3522,
+        "legal": 3451
+      }
+    },
+    {
+      "ids": [
+        33,
+        36
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9063,
+        "legal": 8627
+      }
+    },
+    {
+      "ids": [
+        33,
+        37
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4608,
+        "legal": 4269
+      }
+    },
+    {
+      "ids": [
+        33,
+        40
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3955,
+        "legal": 4575
+      }
+    },
+    {
+      "ids": [
+        33,
+        123
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4586,
+        "legal": 4623
+      }
+    },
+    {
+      "ids": [
+        33,
+        124
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3883,
+        "legal": 3272
+      }
+    },
+    {
+      "ids": [
+        34,
+        36
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6499,
+        "legal": 6821
+      }
+    },
+    {
+      "ids": [
+        34,
+        39
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3464,
+        "legal": 2608
+      }
+    },
+    {
+      "ids": [
+        35,
+        37
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5054,
+        "legal": 3947
+      }
+    },
+    {
+      "ids": [
+        35,
+        40
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5141,
+        "legal": 6997
+      }
+    },
+    {
+      "ids": [
+        36,
+        124
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7482,
+        "legal": 8464
+      }
+    },
+    {
+      "ids": [
+        37,
+        40
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9266,
+        "legal": 8438
+      }
+    },
+    {
+      "ids": [
+        37,
+        121
+      ],
+      "nearBoundaryMeters": {
+        "admin": 15125,
+        "legal": 14116
+      }
+    },
+    {
+      "ids": [
+        37,
+        123
+      ],
+      "nearBoundaryMeters": {
+        "admin": 33092,
+        "legal": 35044
+      }
+    },
+    {
+      "ids": [
+        38,
+        39
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4701,
+        "legal": 4981
+      }
+    },
+    {
+      "ids": [
+        41,
+        42
+      ],
+      "nearBoundaryMeters": {
+        "admin": 874,
+        "legal": 996
+      }
+    },
+    {
+      "ids": [
+        41,
+        43
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3150,
+        "legal": 3284
+      }
+    },
+    {
+      "ids": [
+        41,
+        44
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3228,
+        "legal": 3374
+      }
+    },
+    {
+      "ids": [
+        41,
+        45
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2935,
+        "legal": 3140
+      }
+    },
+    {
+      "ids": [
+        41,
+        46
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1675,
+        "legal": 1892
+      }
+    },
+    {
+      "ids": [
+        41,
+        47
+      ],
+      "nearBoundaryMeters": {
+        "admin": 303,
+        "legal": 289
+      }
+    },
+    {
+      "ids": [
+        42,
+        45
+      ],
+      "nearBoundaryMeters": {
+        "admin": 16106,
+        "legal": 16945
+      }
+    },
+    {
+      "ids": [
+        42,
+        46
+      ],
+      "nearBoundaryMeters": {
+        "admin": 12415,
+        "legal": 12730
+      }
+    },
+    {
+      "ids": [
+        43,
+        45
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6465,
+        "legal": 7227
+      }
+    },
+    {
+      "ids": [
+        43,
+        47
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6367,
+        "legal": 6888
+      }
+    },
+    {
+      "ids": [
+        44,
+        46
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6447,
+        "legal": 6149
+      }
+    },
+    {
+      "ids": [
+        44,
+        47
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8519,
+        "legal": 8495
+      }
+    },
+    {
+      "ids": [
+        48,
+        50
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9090,
+        "legal": 10050
+      }
+    },
+    {
+      "ids": [
+        48,
+        55
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3475,
+        "legal": 3888
+      }
+    },
+    {
+      "ids": [
+        50,
+        51
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7481,
+        "legal": 7979
+      }
+    },
+    {
+      "ids": [
+        50,
+        52
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5382,
+        "legal": 5689
+      }
+    },
+    {
+      "ids": [
+        50,
+        55
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1293,
+        "legal": 1187
+      }
+    },
+    {
+      "ids": [
+        51,
+        52
+      ],
+      "nearBoundaryMeters": {
+        "admin": 11603,
+        "legal": 8782
+      }
+    },
+    {
+      "ids": [
+        52,
+        53
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9836,
+        "legal": 9949
+      }
+    },
+    {
+      "ids": [
+        52,
+        82
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1045,
+        "legal": 1007
+      }
+    },
+    {
+      "ids": [
+        52,
+        92
+      ],
+      "nearBoundaryMeters": {
+        "admin": 11044,
+        "legal": 9298
+      }
+    },
+    {
+      "ids": [
+        53,
+        54
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6331,
+        "legal": 6660
+      }
+    },
+    {
+      "ids": [
+        53,
+        55
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8154,
+        "legal": 8527
+      }
+    },
+    {
+      "ids": [
+        53,
+        81
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4871,
+        "legal": 5319
+      }
+    },
+    {
+      "ids": [
+        53,
+        82
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3377,
+        "legal": 3239
+      }
+    },
+    {
+      "ids": [
+        53,
+        83
+      ],
+      "nearBoundaryMeters": {
+        "admin": 691,
+        "legal": 740
+      }
+    },
+    {
+      "ids": [
+        54,
+        55
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9262,
+        "legal": 7887
+      }
+    },
+    {
+      "ids": [
+        54,
+        56
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7495,
+        "legal": 9219
+      }
+    },
+    {
+      "ids": [
+        54,
+        83
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3542,
+        "legal": 4322
+      }
+    },
+    {
+      "ids": [
+        54,
+        98
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8360,
+        "legal": 8808
+      }
+    },
+    {
+      "ids": [
+        55,
+        56
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9682,
+        "legal": 6472
+      }
+    },
+    {
+      "ids": [
+        56,
+        98
+      ],
+      "nearBoundaryMeters": {
+        "admin": 20389,
+        "legal": 20123
+      }
+    },
+    {
+      "ids": [
+        57,
+        58
+      ],
+      "nearBoundaryMeters": {
+        "admin": 23013,
+        "legal": 25252
+      }
+    },
+    {
+      "ids": [
+        57,
+        61
+      ],
+      "nearBoundaryMeters": {
+        "admin": 18714,
+        "legal": 20663
+      }
+    },
+    {
+      "ids": [
+        57,
+        105
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6098,
+        "legal": 6094
+      }
+    },
+    {
+      "ids": [
+        58,
+        59
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10151,
+        "legal": 11335
+      }
+    },
+    {
+      "ids": [
+        58,
+        61
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1218,
+        "legal": 1565
+      }
+    },
+    {
+      "ids": [
+        59,
+        60
+      ],
+      "nearBoundaryMeters": {
+        "admin": 18942,
+        "legal": 19811
+      }
+    },
+    {
+      "ids": [
+        59,
+        61
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2856,
+        "legal": 2870
+      }
+    },
+    {
+      "ids": [
+        60,
+        61
+      ],
+      "nearBoundaryMeters": {
+        "admin": 11941,
+        "legal": 12825
+      }
+    },
+    {
+      "ids": [
+        60,
+        106
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4378,
+        "legal": 3643
+      }
+    },
+    {
+      "ids": [
+        60,
+        126
+      ],
+      "nearBoundaryMeters": {
+        "admin": 19103,
+        "legal": 19020
+      }
+    },
+    {
+      "ids": [
+        61,
+        105
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7422,
+        "legal": 7326
+      }
+    },
+    {
+      "ids": [
+        61,
+        106
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9844,
+        "legal": 9154
+      }
+    },
+    {
+      "ids": [
+        62,
+        63
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9274,
+        "legal": 8662
+      }
+    },
+    {
+      "ids": [
+        62,
+        65
+      ],
+      "nearBoundaryMeters": {
+        "admin": 12458,
+        "legal": 13178
+      }
+    },
+    {
+      "ids": [
+        63,
+        65
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1137,
+        "legal": 1078
+      }
+    },
+    {
+      "ids": [
+        64,
+        65
+      ],
+      "nearBoundaryMeters": {
+        "admin": 12672,
+        "legal": 12901
+      }
+    },
+    {
+      "ids": [
+        66,
+        67
+      ],
+      "nearBoundaryMeters": {
+        "admin": 381,
+        "legal": 406
+      }
+    },
+    {
+      "ids": [
+        66,
+        68
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8490,
+        "legal": 8990
+      }
+    },
+    {
+      "ids": [
+        66,
+        69
+      ],
+      "nearBoundaryMeters": {
+        "admin": 13315,
+        "legal": 13564
+      }
+    },
+    {
+      "ids": [
+        67,
+        68
+      ],
+      "nearBoundaryMeters": {
+        "admin": 17852,
+        "legal": 18368
+      }
+    },
+    {
+      "ids": [
+        67,
+        69
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7634,
+        "legal": 7874
+      }
+    },
+    {
+      "ids": [
+        67,
+        70
+      ],
+      "nearBoundaryMeters": {
+        "admin": 13264,
+        "legal": 12844
+      }
+    },
+    {
+      "ids": [
+        68,
+        70
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4077,
+        "legal": 4159
+      }
+    },
+    {
+      "ids": [
+        69,
+        70
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10219,
+        "legal": 9786
+      }
+    },
+    {
+      "ids": [
+        71,
+        72
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3137,
+        "legal": 3250
+      }
+    },
+    {
+      "ids": [
+        71,
+        73
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6484,
+        "legal": 7000
+      }
+    },
+    {
+      "ids": [
+        71,
+        74
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3478,
+        "legal": 3216
+      }
+    },
+    {
+      "ids": [
+        71,
+        96
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4477,
+        "legal": 4599
+      }
+    },
+    {
+      "ids": [
+        72,
+        73
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8521,
+        "legal": 10013
+      }
+    },
+    {
+      "ids": [
+        72,
+        74
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1766,
+        "legal": 3071
+      }
+    },
+    {
+      "ids": [
+        72,
+        86
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3464,
+        "legal": 3559
+      }
+    },
+    {
+      "ids": [
+        72,
+        100
+      ],
+      "nearBoundaryMeters": {
+        "admin": 11655,
+        "legal": 13790
+      }
+    },
+    {
+      "ids": [
+        72,
+        101
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4202,
+        "legal": 3794
+      }
+    },
+    {
+      "ids": [
+        73,
+        74
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6870,
+        "legal": 8110
+      }
+    },
+    {
+      "ids": [
+        74,
+        95
+      ],
+      "nearBoundaryMeters": {
+        "admin": 12851,
+        "legal": 12445
+      }
+    },
+    {
+      "ids": [
+        74,
+        96
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7242,
+        "legal": 7138
+      }
+    },
+    {
+      "ids": [
+        74,
+        101
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5438,
+        "legal": 4011
+      }
+    },
+    {
+      "ids": [
+        75,
+        76
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9481,
+        "legal": 9859
+      }
+    },
+    {
+      "ids": [
+        75,
+        77
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8214,
+        "legal": 9497
+      }
+    },
+    {
+      "ids": [
+        75,
+        93
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3398,
+        "legal": 3238
+      }
+    },
+    {
+      "ids": [
+        76,
+        77
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5569,
+        "legal": 5176
+      }
+    },
+    {
+      "ids": [
+        76,
+        93
+      ],
+      "nearBoundaryMeters": {
+        "admin": 531,
+        "legal": 569
+      }
+    },
+    {
+      "ids": [
+        76,
+        103
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9592,
+        "legal": 10184
+      }
+    },
+    {
+      "ids": [
+        77,
+        96
+      ],
+      "nearBoundaryMeters": {
+        "admin": 12295,
+        "legal": 12388
+      }
+    },
+    {
+      "ids": [
+        77,
+        103
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10663,
+        "legal": 10853
+      }
+    },
+    {
+      "ids": [
+        78,
+        91
+      ],
+      "nearBoundaryMeters": {
+        "admin": 11206,
+        "legal": 11567
+      }
+    },
+    {
+      "ids": [
+        79,
+        80
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8656,
+        "legal": 9064
+      }
+    },
+    {
+      "ids": [
+        79,
+        84
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6907,
+        "legal": 7899
+      }
+    },
+    {
+      "ids": [
+        79,
+        86
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2849,
+        "legal": 2888
+      }
+    },
+    {
+      "ids": [
+        79,
+        92
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2991,
+        "legal": 3071
+      }
+    },
+    {
+      "ids": [
+        81,
+        82
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7327,
+        "legal": 7102
+      }
+    },
+    {
+      "ids": [
+        81,
+        83
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8685,
+        "legal": 8904
+      }
+    },
+    {
+      "ids": [
+        82,
+        84
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2488,
+        "legal": 2475
+      }
+    },
+    {
+      "ids": [
+        82,
+        92
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5786,
+        "legal": 5770
+      }
+    },
+    {
+      "ids": [
+        84,
+        92
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10505,
+        "legal": 11194
+      }
+    },
+    {
+      "ids": [
+        85,
+        94
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7282,
+        "legal": 7491
+      }
+    },
+    {
+      "ids": [
+        85,
+        99
+      ],
+      "nearBoundaryMeters": {
+        "admin": 30479,
+        "legal": 35775
+      }
+    },
+    {
+      "ids": [
+        85,
+        100
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3767,
+        "legal": 4219
+      }
+    },
+    {
+      "ids": [
+        85,
+        102
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1947,
+        "legal": 2169
+      }
+    },
+    {
+      "ids": [
+        85,
+        110
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7953,
+        "legal": 8268
+      }
+    },
+    {
+      "ids": [
+        85,
+        111
+      ],
+      "nearBoundaryMeters": {
+        "admin": 16176,
+        "legal": 17829
+      }
+    },
+    {
+      "ids": [
+        86,
+        87
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10139,
+        "legal": 10441
+      }
+    },
+    {
+      "ids": [
+        86,
+        92
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4744,
+        "legal": 5064
+      }
+    },
+    {
+      "ids": [
+        86,
+        100
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10752,
+        "legal": 8507
+      }
+    },
+    {
+      "ids": [
+        87,
+        92
+      ],
+      "nearBoundaryMeters": {
+        "admin": 16092,
+        "legal": 17124
+      }
+    },
+    {
+      "ids": [
+        88,
+        89
+      ],
+      "nearBoundaryMeters": {
+        "admin": 20103,
+        "legal": 23093
+      }
+    },
+    {
+      "ids": [
+        88,
+        97
+      ],
+      "nearBoundaryMeters": {
+        "admin": 12637,
+        "legal": 11628
+      }
+    },
+    {
+      "ids": [
+        88,
+        98
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3482,
+        "legal": 4770
+      }
+    },
+    {
+      "ids": [
+        89,
+        90
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10725,
+        "legal": 10349
+      }
+    },
+    {
+      "ids": [
+        89,
+        97
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9535,
+        "legal": 10645
+      }
+    },
+    {
+      "ids": [
+        89,
+        98
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3498,
+        "legal": 3217
+      }
+    },
+    {
+      "ids": [
+        90,
+        97
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10436,
+        "legal": 11058
+      }
+    },
+    {
+      "ids": [
+        90,
+        98
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10451,
+        "legal": 9251
+      }
+    },
+    {
+      "ids": [
+        91,
+        93
+      ],
+      "nearBoundaryMeters": {
+        "admin": 15656,
+        "legal": 15215
+      }
+    },
+    {
+      "ids": [
+        91,
+        103
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2746,
+        "legal": 3611
+      }
+    },
+    {
+      "ids": [
+        93,
+        103
+      ],
+      "nearBoundaryMeters": {
+        "admin": 15720,
+        "legal": 16986
+      }
+    },
+    {
+      "ids": [
+        94,
+        95
+      ],
+      "nearBoundaryMeters": {
+        "admin": 15992,
+        "legal": 16316
+      }
+    },
+    {
+      "ids": [
+        94,
+        96
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1801,
+        "legal": 1858
+      }
+    },
+    {
+      "ids": [
+        94,
+        102
+      ],
+      "nearBoundaryMeters": {
+        "admin": 11759,
+        "legal": 11922
+      }
+    },
+    {
+      "ids": [
+        94,
+        103
+      ],
+      "nearBoundaryMeters": {
+        "admin": 35304,
+        "legal": 35618
+      }
+    },
+    {
+      "ids": [
+        95,
+        96
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8843,
+        "legal": 8199
+      }
+    },
+    {
+      "ids": [
+        95,
+        101
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2073,
+        "legal": 2268
+      }
+    },
+    {
+      "ids": [
+        95,
+        102
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7444,
+        "legal": 7325
+      }
+    },
+    {
+      "ids": [
+        96,
+        103
+      ],
+      "nearBoundaryMeters": {
+        "admin": 664,
+        "legal": 599
+      }
+    },
+    {
+      "ids": [
+        97,
+        98
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9885,
+        "legal": 3880
+      }
+    },
+    {
+      "ids": [
+        99,
+        100
+      ],
+      "nearBoundaryMeters": {
+        "admin": 36750,
+        "legal": 38613
+      }
+    },
+    {
+      "ids": [
+        100,
+        101
+      ],
+      "nearBoundaryMeters": {
+        "admin": 7922,
+        "legal": 9034
+      }
+    },
+    {
+      "ids": [
+        101,
+        102
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8228,
+        "legal": 12413
+      }
+    },
+    {
+      "ids": [
+        105,
+        106
+      ],
+      "nearBoundaryMeters": {
+        "admin": 30668,
+        "legal": 32430
+      }
+    },
+    {
+      "ids": [
+        105,
+        108
+      ],
+      "nearBoundaryMeters": {
+        "admin": 15950,
+        "legal": 16532
+      }
+    },
+    {
+      "ids": [
+        106,
+        107
+      ],
+      "nearBoundaryMeters": {
+        "admin": 16323,
+        "legal": 18388
+      }
+    },
+    {
+      "ids": [
+        106,
+        108
+      ],
+      "nearBoundaryMeters": {
+        "admin": 241,
+        "legal": 293
+      }
+    },
+    {
+      "ids": [
+        106,
+        126
+      ],
+      "nearBoundaryMeters": {
+        "admin": 13268,
+        "legal": 14435
+      }
+    },
+    {
+      "ids": [
+        107,
+        108
+      ],
+      "nearBoundaryMeters": {
+        "admin": 21525,
+        "legal": 21066
+      }
+    },
+    {
+      "ids": [
+        107,
+        109
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5420,
+        "legal": 6123
+      }
+    },
+    {
+      "ids": [
+        107,
+        126
+      ],
+      "nearBoundaryMeters": {
+        "admin": 26352,
+        "legal": 27323
+      }
+    },
+    {
+      "ids": [
+        108,
+        109
+      ],
+      "nearBoundaryMeters": {
+        "admin": 15896,
+        "legal": 16629
+      }
+    },
+    {
+      "ids": [
+        109,
+        110
+      ],
+      "nearBoundaryMeters": {
+        "admin": 30412,
+        "legal": 31820
+      }
+    },
+    {
+      "ids": [
+        109,
+        111
+      ],
+      "nearBoundaryMeters": {
+        "admin": 21814,
+        "legal": 23517
+      }
+    },
+    {
+      "ids": [
+        109,
+        126
+      ],
+      "nearBoundaryMeters": {
+        "admin": 34481,
+        "legal": 35827
+      }
+    },
+    {
+      "ids": [
+        110,
+        111
+      ],
+      "nearBoundaryMeters": {
+        "admin": 25177,
+        "legal": 25252
+      }
+    },
+    {
+      "ids": [
+        112,
+        113
+      ],
+      "nearBoundaryMeters": {
+        "admin": 22170,
+        "legal": 20729
+      }
+    },
+    {
+      "ids": [
+        114,
+        115
+      ],
+      "nearBoundaryMeters": {
+        "admin": 14427,
+        "legal": 13762
+      }
+    },
+    {
+      "ids": [
+        117,
+        118
+      ],
+      "nearBoundaryMeters": {
+        "admin": 15585,
+        "legal": 11835
+      }
+    },
+    {
+      "ids": [
+        117,
+        120
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8589,
+        "legal": 9209
+      }
+    },
+    {
+      "ids": [
+        117,
+        123
+      ],
+      "nearBoundaryMeters": {
+        "admin": 21973,
+        "legal": 22444
+      }
+    },
+    {
+      "ids": [
+        118,
+        121
+      ],
+      "nearBoundaryMeters": {
+        "admin": 15428,
+        "legal": 15690
+      }
+    },
+    {
+      "ids": [
+        118,
+        123
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9799,
+        "legal": 10562
+      }
+    },
+    {
+      "ids": [
+        119,
+        120
+      ],
+      "nearBoundaryMeters": {
+        "admin": 16650,
+        "legal": 15860
+      }
+    },
+    {
+      "ids": [
+        119,
+        122
+      ],
+      "nearBoundaryMeters": {
+        "admin": 8734,
+        "legal": 8912
+      }
+    },
+    {
+      "ids": [
+        121,
+        123
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5433,
+        "legal": 5754
+      }
+    },
+    {
+      "ids": [
+        123,
+        124
+      ],
+      "nearBoundaryMeters": {
+        "admin": 18928,
+        "legal": 19458
+      }
+    },
+    {
+      "ids": [
+        125,
+        127
+      ],
+      "nearBoundaryMeters": {
+        "admin": 85677,
+        "legal": 85214
+      }
+    }
+  ],
+  "excludedDisagreements": [
+    {
+      "ids": [
+        48,
+        51
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2253,
+        "legal": 0
+      }
+    },
+    {
+      "ids": [
+        50,
+        53
+      ],
+      "nearBoundaryMeters": {
+        "admin": 237,
+        "legal": 9
+      }
+    },
+    {
+      "ids": [
+        52,
+        55
+      ],
+      "nearBoundaryMeters": {
+        "admin": 0,
+        "legal": 239
+      }
+    },
+    {
+      "ids": [
+        118,
+        120
+      ],
+      "nearBoundaryMeters": {
+        "admin": 628,
+        "legal": 0
+      }
+    }
+  ],
+  "geometryChoice": "연결 지도는 기존 제작 시 대조한 지리 좌표를 사용한다. 이미지에서 추출한 단독 지도는 지역별 여백·비등방 축척과 픽셀 복원 때문에 서로 직접 이어 붙일 수 없다. 최신 이미지 윤곽과 좌표의 차이는 기존 제작 검증 기록을 승계하며, 연결 지도의 법정동은 2023년 좌표 기반임을 UI에 명시한다. 기준일 불명인 최신 좌표로 간주하지 않는다.",
+  "validation": "동 이름별 대응, 구멍·분리 구역 유지, 구역 내부 직사각형에 이름 배치(작으면 내부점으로 인출선). 이름 유무는 같은 고정 벡터 공유. 기존 지역별 출처/대조 기록: maps/{id}/sources.txt. 경계 표본 근접은 인접 판정의 근사이며 전체 지역의 신규 육안 전수 검증을 의미하지 않는다.",
+  "checkedReferencePages": [
+    "https://github.com/vuski/admdongkor",
+    "https://github.com/KnellBalm/kr-admin-geojson",
+    "https://dokdokinfo.kr/areaboundary/seoul/gangnam-gu/"
+  ],
+  "knownDiscrepancy": "법정동 원자료의 독립 단순화로 이웃 다각형 사이에 작은 틈/겹침이 남아 있다. 이를 임의의 새 경계로 덮거나 스냅하지 않고 보존한다. 행정동·법정동 간 인접 판정이 다른 4쌍은 연결 후보에서 제외했다. 최신 이미지 지도와의 상세 차이·복원 내역은 기존 지역별 sources.txt 및 제작자료/검증경계의 구역별 진단을 승계한다.",
+  "checks": {
+    "geometry": "127개 지역, 4706개 구역, 169개 분리 구역, 28개 내부 구멍. 각 이름/인출선 내부점 및 글자 사각형 모서리, 폐합 경로, 양방향 인접, 이름 유무 동일 도형 검사 통과.",
+    "interaction": "file: 환경에서 fetch를 금지하고 실제 지역별 JS 스크립트를 실행하는 Node 회귀 검사 통과. 연결·해제·미리보기·URL 복원·캐시·빠른 전환·로딩 실패 후 재시도·잘못된 자료 검사를 포함한다. 실제 브라우저 검증을 대체하지 않는다.",
+    "visual": "강남구+서초구 두 경계 체계의 SVG를 PNG로 렌더링하여 확인. 브라우저 실사용·PNG 다운로드는 실행 환경의 서버/파일 URL 제한으로 미확인."
+  },
+  "dataLoading": "로컬 파일 직접 열기와 HTTP 모두 지원하도록 지역별 일반 JS 스크립트를 동적으로 불러온다. file://에서 차단되는 JSON fetch는 사용하지 않는다. 로딩 실패·잘못된 자료·타임아웃은 캐시에서 제거하여 재시도할 수 있다."
+}

@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="data/regions.js" defer></script>
+    <script src="data/neighbors.js" defer></script>
+    <script src="connection-engine.js" defer></script>
     <script src="app.js" defer></script>
 </head>
 <body>
@@ -37,6 +39,18 @@
                 <div class="region-counts" id="region-counts"></div>
             </div>
             <p class="map-intro">이름 표시 유무를 선택해 활용하세요. 지도를 누르면 크게 볼 수 있습니다.</p>
+            <section class="connection-panel" aria-labelledby="connection-heading">
+                <h3 id="connection-heading">인접 지역 연결</h3>
+                <p class="connection-help">경계를 맞댄 지역을 추가해 하나의 지도로 볼 수 있습니다.</p>
+                <div id="connected-regions" class="connected-regions" aria-label="현재 지도에 포함된 지역"></div>
+                <div class="inline-controls">
+                    <label class="field connection-field">연결할 지역<select id="neighbor"></select></label>
+                    <button class="button" id="connect" type="button">연결</button>
+                    <button class="button secondary" id="disconnect" type="button" hidden>연결 해제</button>
+                </div>
+                <p id="connection-status" role="status" aria-live="polite"></p>
+                <p id="connection-note" class="connection-help" hidden>연결 지도는 공통 축척의 경계 좌표를 사용합니다. 행정동: 2026-10-01 · 법정동: 2023-07-29 좌표에 최신 명칭 반영. 단독 지도와 세부 윤곽이 다를 수 있습니다. <a href="data/connection-validation.json" target="_blank" rel="noopener">출처·검증 기록</a></p>
+            </section>
             <div class="map-grid" id="maps"></div>
         </main>
     </div>

@@ -80,3 +80,12 @@ body:has(dialog[open]) { overflow: hidden; }
     .card-heading { padding: 14px; }
     .preview-toolbar h2 { font-size: .85em; }
 }
+.connection-panel { padding: 18px; border: 1px solid #d8e4f0; background: #f8fafc; border-radius: 10px; margin-bottom: 22px; }
+.connection-help { font-size: .8em; color: #71859a; line-height: 1.7; margin-top: 8px; }
+.connected-regions { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
+.connected-region { display: inline-flex; align-items: center; gap: 8px; border-radius: 7px; padding: 6px 10px; background: #e0ecf8; color: #37536e; font-size: .82em; }
+.connected-region button { border: 0; background: transparent; color: inherit; min-width: 30px; min-height: 30px; cursor: pointer; font: inherit; }
+button:disabled { cursor: default; opacity: .5; }
+.connection-field { flex: 1; min-width: 0; }
+#neighbor { width: 100%; }
+#connection-status { color: #526b82; font-size: .82em; line-height: 1.7; margin-top: 10px; }

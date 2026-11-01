@@ -1,0 +1,18 @@
+Google Fonts CSS metadata:
+https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&family=Nanum+Gothic:wght@400&family=Noto+Serif+KR:wght@500
+
+Noto Sans KR (500, subset for existing map and page characters):
+https://fonts.gstatic.com/s/notosanskr/v40/PbyxFmXiEBPT4ITbgNA5Cgms3VYcOA-vvnIzztgyeLQ.ttf
+License: NotoSansKR-OFL.txt
+
+Nanum Gothic (400, original unchanged):
+https://fonts.gstatic.com/s/nanumgothic/v26/PN_3Rfi-oW3hYwmKDpxS7F_z_g.ttf
+License: NanumGothic-OFL.txt
+
+Noto Serif KR (500, subset for existing map and page characters):
+https://fonts.gstatic.com/s/notoserifkr/v32/3JnoSDn90Gmq2mr3blnHaTZXbOtLJDvui3JOncjUeM52.ttf
+License: NotoSerifKR-OFL.txt
+
+Eight existing local fonts: apt-utils/fonts/*.woff2 (embedded unchanged).
+Google font license originals: https://github.com/google/fonts/tree/main/ofl
+Generated JS bundles: python3 blank_map/tools/build_font_assets.py FONT_SOURCE_DIR

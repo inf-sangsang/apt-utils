@@ -1,6 +1,6 @@
 """Build connected-map vectors from the archived, cross-checked production inputs.
 Run: python3 blank_map/tools/build_connections.py [path/to/제작자료]
-Requires numpy, scipy and Pillow; never fetches or silently updates source data.
+Requires numpy, scipy, Pillow and Shapely; never fetches or silently updates source data.
 """
 from pathlib import Path
 import sys, json, re, hashlib
@@ -8,6 +8,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 from scipy.ndimage import minimum_filter
 from scipy.spatial import cKDTree
+from build_legal_outlines import legal_display
 
 OUT = Path(__file__).resolve().parents[1] / 'data'
 SOURCE = Path(sys.argv[1]) if len(sys.argv) > 1 else OUT.parents[2] / '전체지역_백지도/제작자료'
@@ -83,6 +84,7 @@ for r in rows:
             features.append({'name': name, 'polygons': polys, 'labelBox': label_box(polys, name)})
         pts = np.concatenate([np.array(p[0]) for f in features for p in f['polygons']])
         result[kind] = {'bounds': [*pts.min(0), *pts.max(0)], 'features': features}
+    result['legal'].update(legal_display(result['legal']['features']))
     regions.append(result)
     (OUT/'connections').mkdir(exist_ok=True)
     (OUT/'connections'/f'{r["id"]}.js').write_text('window.BLANK_MAP_GEOMETRY['+str(r['id'])+']='+json.dumps(result, ensure_ascii=False, separators=(',', ':'))+';\n')

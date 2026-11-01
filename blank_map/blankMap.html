@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="127개 지역의 행정동·법정동 백지도. 이름 표시 유무별 4종을 미리 보고 PNG·SVG로 다운로드하세요.">
-    <title>백지도 | APT Utils</title>
+    <title>백지도</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style id="selected-font-style"></style>
     <script src="data/regions.js" defer></script>
     <script src="data/neighbors.js" defer></script>
     <script src="connection-engine.js" defer></script>
+    <script src="font-engine.js" defer></script>
     <script src="app.js" defer></script>
 </head>
 <body>
@@ -17,6 +19,7 @@
     <header>
         <h1>🗺️ 백지도</h1>
         <p class="subtitle">지역별 행정동·법정동 지도를 한눈에</p>
+        <label class="font-control">폰트 선택: <select id="fontSelect" aria-label="폰트 선택"></select></label>
         <a class="home-link" href="../index.html">← APT Utils 홈으로</a>
     </header>
     <section class="control-panel" aria-label="지역 검색 및 필터">
@@ -35,31 +38,38 @@
         </aside>
         <main id="map-panel" class="map-panel" aria-labelledby="region-title">
             <div class="region-heading">
-                <div><p class="eyebrow" id="region-province"></p><h2 id="region-title"></h2></div>
-                <div class="region-counts" id="region-counts"></div>
+                <p class="eyebrow" id="region-province"></p>
+                <div class="region-title-row"><h2 id="region-title"></h2><p class="region-counts" id="region-counts"></p></div>
             </div>
-            <p class="map-intro">이름 표시 유무를 선택해 활용하세요. 지도를 누르면 크게 볼 수 있습니다.</p>
-            <section class="connection-panel" aria-labelledby="connection-heading">
-                <h3 id="connection-heading">인접 지역 연결</h3>
-                <p class="connection-help">경계를 맞댄 지역을 추가해 하나의 지도로 볼 수 있습니다.</p>
-                <div id="connected-regions" class="connected-regions" aria-label="현재 지도에 포함된 지역"></div>
-                <div class="inline-controls">
-                    <label class="field connection-field">연결할 지역<select id="neighbor"></select></label>
-                    <button class="button" id="connect" type="button">연결</button>
-                    <button class="button secondary" id="disconnect" type="button" hidden>연결 해제</button>
-                </div>
-                <p id="connection-status" role="status" aria-live="polite"></p>
-                <p id="connection-note" class="connection-help" hidden>연결 지도는 공통 축척의 경계 좌표를 사용합니다. 행정동: 2026-10-01 · 법정동: 2023-07-29 좌표에 최신 명칭 반영. 단독 지도와 세부 윤곽이 다를 수 있습니다. <a href="data/connection-validation.json" target="_blank" rel="noopener">출처·검증 기록</a></p>
-            </section>
+            <div class="map-toolbar">
+                <label class="map-option"><input type="checkbox" id="district-only" aria-describedby="district-help">구만 표시</label>
+                <p class="map-intro">지도를 눌러 확대 · PNG/SVG 다운로드</p>
+            </div>
+            <p id="district-help" class="visually-hidden">‘구만 표시’를 켜면 동 경계와 동 이름을 숨깁니다. 구가 없는 시는 시 외곽선을 표시합니다.</p>
+            <div class="map-controls">
+                <details id="connection-settings" class="settings-panel" aria-labelledby="connection-heading">
+                    <summary id="connection-heading"><span class="summary-title">지역 연결</span><span id="connection-summary" class="summary-meta"></span></summary>
+                    <div class="settings-body">
+                        <p class="connection-help">인접한 지역을 추가해 하나의 지도로 볼 수 있습니다.</p>
+                        <div id="connected-regions" class="connected-regions" aria-label="현재 지도에 포함된 지역"></div>
+                        <div class="inline-controls">
+                            <label class="field connection-field">연결할 지역<select id="neighbor"></select></label>
+                            <button class="button" id="connect" type="button">연결</button>
+                            <button class="button secondary" id="disconnect" type="button" hidden>모두 연결 해제</button>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            <p id="connection-status" class="map-status" role="status" aria-live="polite" aria-atomic="true"></p>
             <div class="map-grid" id="maps"></div>
         </main>
     </div>
     <noscript><p class="empty">지역 선택과 지도 미리보기를 사용하려면 JavaScript를 켜 주세요.</p></noscript>
 </div>
 <dialog id="preview" aria-labelledby="preview-title">
-    <div class="preview-toolbar"><h2 id="preview-title"></h2><button type="button" id="close-preview" class="button secondary">닫기 ✕</button></div>
+    <div class="preview-toolbar"><h2 id="preview-title"></h2><button type="button" id="preview-size" class="button secondary" hidden>전체 보기</button><button type="button" id="close-preview" class="button secondary">닫기 ✕</button></div>
     <div class="preview-canvas"><img id="preview-image" alt=""></div>
-    <p class="preview-note">원본 크기의 파일은 PNG·SVG 다운로드 버튼을 이용해 주세요.</p>
+    <p class="preview-note">연결 지도는 원본 크기로 열립니다. 스크롤해서 살펴보거나 전체 보기를 누르세요. 파일은 PNG·SVG 다운로드 버튼을 이용해 주세요.</p>
 </dialog>
 </body>
 </html>

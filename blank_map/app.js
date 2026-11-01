@@ -7,6 +7,7 @@
     const regions = provinces.flatMap(sido => catalog.filter(r => r.sido === sido));
     const graph = window.BLANK_MAP_NEIGHBORS;
     const engine = window.BlankMapConnection;
+    const fonts = window.BlankMapFonts;
     const $ = id => document.getElementById(id);
     const province = $('province'), search = $('search'), list = $('regions'), dialog = $('preview');
     const variants = [
@@ -14,6 +15,10 @@
         { file: 'admin-blank', kind: '행정동', label: '이름 없음' },
         { file: 'legal-labeled', kind: '법정동', label: '이름 있음' },
         { file: 'legal-blank', kind: '법정동', label: '이름 없음' }
+    ];
+    const districtVariants = [
+        { file: 'district-labeled', kind: '구·시 외곽선', label: '이름 있음' },
+        { file: 'district-blank', kind: '구·시 외곽선', label: '이름 없음' }
     ];
     const normalize = value => value.normalize('NFC').replace(/\s/g, '').toLowerCase();
     const byId = id => regions.find(r => r.id === id);
@@ -23,7 +28,49 @@
     }
     let selected = hashRegions() || [regions.find(r => r.sido === '서울특별시' && r.name === '강남구') || regions[0]];
     let renderVersion = 0, urls = [];
+    const responsiveViews = new Map();
+    function updateView(img) {
+        const view = responsiveViews.get(img);
+        if (!view) return;
+        const { width, height } = img.getBoundingClientRect();
+        if (!width || !height) return;
+        const original = img.className === 'original-size';
+        const key = original ? 'original' : `${Math.round(width)}x${Math.round(height)}`;
+        if (view.key === key) return;
+        view.key = key;
+        const previous = view.url;
+        view.url = original ? null : URL.createObjectURL(new Blob([view.item.forViewport({ width, height })], { type: 'image/svg+xml;charset=utf-8' }));
+        img.src = view.url || view.item.svg;
+        if (previous) URL.revokeObjectURL(previous);
+    }
+    const viewObserver = typeof ResizeObserver === 'undefined' ? null : new ResizeObserver(entries => entries.forEach(entry => updateView(entry.target)));
+    function observeView(img, item) {
+        const previous = responsiveViews.get(img);
+        if (previous?.url) URL.revokeObjectURL(previous.url);
+        responsiveViews.delete(img);
+        viewObserver?.unobserve(img);
+        if (!item.forViewport || !viewObserver) return;
+        responsiveViews.set(img, { item });
+        viewObserver.observe(img);
+    }
     const cache = new Map();
+    let chosenFont = null;
+    function setStatus(message, quiet = false) {
+        $('connection-status').textContent = message;
+        $('connection-status').className = `map-status${quiet ? ' visually-hidden' : ''}`;
+    }
+    for (const [family, label] of fonts.fonts) {
+        const option = new Option(label, family);
+        option.style.fontFamily = `'${family}', sans-serif`;
+        $('fontSelect').add(option);
+    }
+    function chooseFont(family) {
+        if (!fonts.fonts.some(f => f[0] === family)) return;
+        chosenFont = family;
+        $('fontSelect').value = family;
+        document.body.style.fontFamily = `'${family}', sans-serif`;
+    }
+    try { chooseFont(localStorage.getItem('selectedFont')); } catch (_) { /* Storage may be unavailable in private/local contexts. */ }
     for (const name of new Set(regions.map(r => r.sido))) province.add(new Option(name, name));
 
     function renderList() {
@@ -49,10 +96,11 @@
     }
     function renderConnections() {
         const ids = selected.map(r => r.id);
+        $('connection-summary').textContent = `${ids.length}개 지역 선택`;
         $('connected-regions').replaceChildren();
         for (const region of selected) {
             const chip = document.createElement('span'); chip.className = 'connected-region';
-            const name = document.createElement('span'); name.textContent = `${region.sido} ${region.name}`; chip.append(name);
+            const name = document.createElement('span'); name.textContent = region.name; name.title = `${region.sido} ${region.name}`; chip.append(name);
             if (ids.length > 1) {
                 const remove = document.createElement('button'); remove.type = 'button'; remove.textContent = '×';
                 remove.setAttribute('aria-label', `${region.name} 연결에서 제외`);
@@ -71,34 +119,42 @@
         $('neighbor').disabled = !neighbors.length;
         $('connect').disabled = !neighbors.length;
         $('disconnect').hidden = ids.length === 1;
-        $('connection-note').hidden = ids.length === 1;
     }
     function saveBlob(blob, filename) {
         const url = URL.createObjectURL(blob), link = document.createElement('a');
         link.href = url; link.download = filename; document.body.append(link); link.click(); link.remove();
         setTimeout(() => URL.revokeObjectURL(url), 10000);
     }
-    async function downloadPNG(source, filename, button) {
+    async function downloadPNG(source, filename, button, ratio = 2) {
         button.disabled = true; button.textContent = 'PNG 생성 중…';
         try {
             await document.fonts.ready;
             const img = new Image(); img.src = source;
             await img.decode();
             const canvas = document.createElement('canvas');
-            // Keep large combinations within common browser canvas limits.
-            const ratio = Math.min(2, 8192/Math.max(img.naturalWidth, img.naturalHeight), Math.sqrt(24000000/(img.naturalWidth*img.naturalHeight)));
+            // Preserve export resolution; never silently shrink a large map.
+            if (Math.max(img.naturalWidth, img.naturalHeight)*ratio > 8192 || img.naturalWidth*img.naturalHeight*ratio*ratio > 24000000) {
+                setStatus('원본 해상도의 PNG 생성 한도를 초과했습니다. SVG를 다운로드하면 전체 크기와 선명도를 유지할 수 있습니다.');
+                return;
+            }
             canvas.width = Math.round(img.naturalWidth*ratio); canvas.height = Math.round(img.naturalHeight*ratio);
             canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
             const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
             if (!blob) throw new Error('PNG encoding failed');
             saveBlob(blob, filename);
         } catch (error) {
-            $('connection-status').textContent = 'PNG를 만들지 못했습니다. 다시 시도하거나 SVG를 다운로드해 주세요.';
+            setStatus('PNG를 만들지 못했습니다. 다시 시도하거나 SVG를 다운로드해 주세요.');
         } finally { button.disabled = false; button.textContent = 'PNG 다운로드'; }
     }
-    function renderCards(items, name) {
+    function generatedMapItem(data, kind, labeled, title, font) {
+        const source = fonts.apply(engine.svg(data, kind, labeled, title), font);
+        const url = URL.createObjectURL(new Blob([source], { type: 'image/svg+xml;charset=utf-8' }));
+        urls.push(url);
+        return { svg: url, forViewport: viewport => fonts.apply(engine.svg(data, kind, labeled, title, viewport), font) };
+    }
+    function renderCards(items, name, activeVariants = variants) {
         $('maps').replaceChildren();
-        for (const [i, variant] of variants.entries()) {
+        for (const [i, variant] of activeVariants.entries()) {
             const item = items[i], title = `${name} ${variant.kind} ${variant.label}`;
             const card = document.createElement('article'); card.className = 'map-card';
             const heading = document.createElement('div'); heading.className = 'card-heading';
@@ -109,9 +165,14 @@
             open.setAttribute('aria-label', `${title} 크게 보기`);
             const img = document.createElement('img'); img.src = item.svg; img.alt = title; img.width = 1400; img.height = 1300;
             open.append(img);
+            observeView(img, item);
             open.addEventListener('click', () => {
                 $('preview-title').textContent = `${name} · ${variant.kind} · ${variant.label}`;
+                $('preview-image').className = selected.length > 1 ? 'original-size' : '';
+                $('preview-size').hidden = selected.length === 1;
+                $('preview-size').textContent = '전체 보기';
                 $('preview-image').src = item.svg; $('preview-image').alt = title; dialog.showModal();
+                observeView($('preview-image'), item);
             });
             const actions = document.createElement('div'); actions.className = 'card-actions';
             for (const format of ['png', 'svg']) {
@@ -122,7 +183,7 @@
                 action.setAttribute('aria-label', `${title} ${format.toUpperCase()} 다운로드`);
                 if (action.tagName === 'BUTTON') {
                     action.type = 'button';
-                    action.addEventListener('click', () => downloadPNG(item.svg, filename, action));
+                    action.addEventListener('click', () => downloadPNG(item.svg, filename, action, item.pngRatio || 2));
                 } else { action.href = item[format]; action.download = filename; }
                 actions.append(action);
             }
@@ -168,41 +229,68 @@
         if (updateHash) history.replaceState(null, '', `#${selected.map(r => r.id).join('+')}`);
         if (dialog.open) dialog.close();
         $('preview-image').removeAttribute('src');
+        viewObserver?.disconnect();
+        for (const view of responsiveViews.values()) if (view.url) URL.revokeObjectURL(view.url);
+        responsiveViews.clear();
         $('maps').replaceChildren();
         $('maps').removeAttribute('aria-busy');
         urls.forEach(url => URL.revokeObjectURL(url)); urls = [];
         const name = selected.map(r => r.name).join(' + ');
+        const districtOnly = $('district-only').checked;
+        const activeVariants = districtOnly ? districtVariants : variants;
         $('region-province').textContent = [...new Set(selected.map(r => r.sido))].join(' · ');
-        $('region-title').textContent = name;
+        $('region-title').textContent = selected.length === 1 ? name : `${selected[0].name} 외 ${selected.length-1}개 지역`;
+        $('region-title').title = name;
         $('region-counts').textContent = `행정동 ${selected.reduce((s, r) => s+r.adminCount, 0)}개 · 법정동 ${selected.reduce((s, r) => s+r.legalCount, 0)}개`;
-        document.title = `${name} 백지도 | APT Utils`;
+        $('region-counts').hidden = districtOnly;
         renderConnections(); renderList();
-        if (selected.length === 1) {
-            const region = selected[0];
-            $('connection-status').textContent = '인접 지역을 선택하고 연결을 눌러 주세요.';
-            renderCards(variants.map(v => ({ svg: `maps/${region.id}/${v.file}.svg`, png: `maps/${region.id}/${v.file}.png` })), name);
-            return;
-        }
-        $('connection-status').textContent = '연결 지도를 만드는 중입니다…';
+        setStatus('지도를 만드는 중입니다…');
         $('maps').setAttribute('aria-busy', 'true');
         try {
-            const data = await Promise.all(selected.map(r => loadGeometry(r.id)));
+            const fontPromise = chosenFont ? fonts.font(chosenFont) : Promise.resolve(null);
+            if (selected.length === 1 && !districtOnly) {
+                // Legal maps use the same cleaned network in single-region
+                // and connected views. Preserve existing administrative maps.
+                const region = selected[0];
+                const [font, originals, geometry] = await Promise.all([fontPromise, chosenFont ? fonts.originalMaps(region.id) : null, loadGeometry(region.id)]);
+                if (version !== renderVersion) return;
+                if (font) $('selected-font-style').textContent = font.css;
+                const items = variants.map(v => {
+                    if (v.file.startsWith('legal')) return generatedMapItem([{ ...geometry, name: region.name }], 'legal', v.file.endsWith('labeled'), `${name} ${v.kind} ${v.label}`, font);
+                    if (!font || !v.file.endsWith('labeled')) return { svg: `maps/${region.id}/${v.file}.svg`, png: `maps/${region.id}/${v.file}.png` };
+                    const source = fonts.apply(originals.admin, font);
+                    const url = URL.createObjectURL(new Blob([source], { type: 'image/svg+xml;charset=utf-8' }));
+                    urls.push(url); return { svg: url, pngRatio: 1 };
+                });
+                renderCards(items, name);
+                setStatus(font ? '선택한 글씨체를 지도와 다운로드에 적용했습니다.' : '인접 지역을 선택하고 연결을 눌러 주세요.', true);
+                return;
+            }
+            const [data, font] = await Promise.all([Promise.all(selected.map(r => loadGeometry(r.id))), fontPromise]);
             if (version !== renderVersion) return;
-            const items = variants.map(v => {
-                const source = engine.svg(data, v.file.startsWith('admin') ? 'admin' : 'legal', v.file.endsWith('labeled'), `${name} ${v.kind} ${v.label}`);
-                const url = URL.createObjectURL(new Blob([source], { type: 'image/svg+xml;charset=utf-8' }));
-                urls.push(url); return { svg: url };
+            if (font) $('selected-font-style').textContent = font.css;
+            const items = activeVariants.map(v => {
+                const mapData = data.map(r => ({ ...r, name: byId(r.id).name }));
+                const kind = districtOnly ? 'district' : v.file.startsWith('admin') ? 'admin' : 'legal';
+                const labeled = v.file.endsWith('labeled'), title = `${name} ${v.kind} ${v.label}`;
+                return generatedMapItem(mapData, kind, labeled, title, font);
             });
-            renderCards(items, name);
-            $('connection-status').textContent = `${selected.length}개 지역을 실제 위치와 같은 축척으로 연결했습니다.`;
+            renderCards(items, name, activeVariants);
+            setStatus(districtOnly ? `${selected.length}개 지역의 구·시 외곽선만 표시했습니다.` : `${selected.length}개 지역을 실제 위치와 같은 축척으로 연결했습니다.`, true);
         } catch (error) {
             if (version !== renderVersion) return;
-            $('connection-status').textContent = '지도 자료를 불러오지 못했습니다. ';
+            setStatus('지도 자료를 불러오지 못했습니다. ');
             const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'button secondary'; retry.textContent = '다시 시도';
             retry.addEventListener('click', () => selectRegions(selected, false)); $('connection-status').append(retry);
         } finally { if (version === renderVersion) $('maps').removeAttribute('aria-busy'); }
     }
     province.addEventListener('change', renderList);
+    $('fontSelect').addEventListener('change', () => {
+        chooseFont($('fontSelect').value);
+        try { localStorage.setItem('selectedFont', chosenFont); } catch (_) { /* Rendering still works without storage. */ }
+        selectRegions(selected, false);
+    });
+    $('district-only').addEventListener('change', () => selectRegions(selected, false));
     search.addEventListener('input', renderList);
     $('connect').addEventListener('click', () => {
         const region = byId(Number($('neighbor').value));
@@ -211,6 +299,14 @@
     $('disconnect').addEventListener('click', () => selectRegions([selected[0]]));
     $('reset').addEventListener('click', () => { province.value = ''; search.value = ''; renderList(); search.focus(); });
     $('close-preview').addEventListener('click', () => dialog.close());
+    $('preview-size').addEventListener('click', () => {
+        const original = $('preview-image').className !== 'original-size';
+        $('preview-image').className = original ? 'original-size' : '';
+        $('preview-size').textContent = original ? '전체 보기' : '원본 크기';
+        const view = responsiveViews.get($('preview-image'));
+        if (view) view.key = null;
+        if (viewObserver) updateView($('preview-image'));
+    });
     dialog.addEventListener('click', event => {
         if (event.target !== dialog) return;
         const rect = dialog.getBoundingClientRect();

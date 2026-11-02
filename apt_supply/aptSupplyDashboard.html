@@ -13,6 +13,7 @@
     <script src="data/regionList.js"></script>
     <script src="data/supplyList.js"></script>
     <script src="data/supplyCountList.js"></script>
+    <link rel="stylesheet" href="../common-nav.css">
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PTYRE0ZWFW"></script>
@@ -24,9 +25,14 @@
     gtag('config', 'G-PTYRE0ZWFW');
 </script>
 
-<body>
-    <div class="container">
+<body class="apt-tool-page">
+    <div class="apt-title-bar">
+        <nav class="apt-site-nav" aria-label="사이트 탐색">
+            <a class="apt-home-link" href="../index.html"><svg class="apt-home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 10.5 12 3l9 7.5M5.5 9v11h5v-6h3v6h5V9"/></svg><span>APT Utils 홈으로</span></a>
+        </nav>
         <h1>🏢 아파트 공급 대시보드</h1>
+    </div>
+    <div class="container">
         <span style="color: #d8d8d8; font-size: 0.9em; display: block; text-align: center;">마지막 데이터 업데이트 : 2026년 10월 6일 (2025~2030년 공급 목록)</span>
         <div
             style="margin-top: 20px; margin-bottom: 10px; text-align: center; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="data/regionIndex.js"></script>
+    <link rel="stylesheet" href="../common-nav.css">
 </head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PTYRE0ZWFW"></script>
@@ -25,12 +26,16 @@
     gtag('config', 'G-PTYRE0ZWFW');
 </script>
 
-<body>
+<body class="apt-tool-page">
+    <div class="apt-title-bar">
+        <nav class="apt-site-nav" aria-label="사이트 탐색">
+            <a class="apt-home-link" href="../index.html"><svg class="apt-home-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 10.5 12 3l9 7.5M5.5 9v11h5v-6h3v6h5V9"/></svg><span>APT Utils 홈으로</span></a>
+        </nav>
+        <h1>🏫 학교 데이터 대시보드</h1>
+    </div>
     <div class="container">
         <header>
-            <h1>🏫 학교 데이터 대시보드</h1>
             <div class="subtitle">전국 초·중학교 학생수와 진학 현황</div>
-            <a class="home-link" href="../index.html">← APT Utils 홈으로</a>
         </header>
 
         <!-- 지도 기능은 추가 개선 후 공개: 코드와 UI 구조는 유지한다. -->

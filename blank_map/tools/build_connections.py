@@ -69,68 +69,77 @@ def boundary_samples(features):
     return points, cKDTree(points), np.concatenate(weights)
 
 
-rows = json.loads((SOURCE/'제작_입력.json').read_text())
-regions = []
-for r in rows:
-    result = {'id': r['id'], 'referenceMap': {'url': r['meta']['url'], 'date': '2026-09-30'}}
-    for kind in ['admin', 'legal']:
-        names = r[kind+'_names']
-        field = 'adm_nm' if kind == 'admin' else 'EMD_KOR_NM'
-        lookup = {norm(f['properties'][field].split()[-1]): f for f in r[kind]}
-        features = []
-        for name in names:
-            f = lookup[norm(name)]
-            polys = [[np.round(tm(np.array(ring)), 2).tolist() for ring in p] for p in polygons(f)]
-            features.append({'name': name, 'polygons': polys, 'labelBox': label_box(polys, name)})
-        pts = np.concatenate([np.array(p[0]) for f in features for p in f['polygons']])
-        result[kind] = {'bounds': [*pts.min(0), *pts.max(0)], 'features': features}
-    result['legal'].update(legal_display(result['legal']['features']))
-    regions.append(result)
-    (OUT/'connections').mkdir(exist_ok=True)
-    (OUT/'connections'/f'{r["id"]}.js').write_text('window.BLANK_MAP_GEOMETRY['+str(r['id'])+']='+json.dumps(result, ensure_ascii=False, separators=(',', ':'))+';\n')
+def main():
+    rows = json.loads((SOURCE/'제작_입력.json').read_text())
+    extra = OUT/'additional-regions.json'
+    if extra.exists():
+        existing = {r['id'] for r in rows}
+        rows += [r for r in json.loads(extra.read_text()) if r['id'] not in existing]
+    regions = []
+    for r in rows:
+        result = {'id': r['id'], 'referenceMap': {'url': r['meta']['url'], 'date': '2026-09-30'}}
+        for kind in ['admin', 'legal']:
+            names = r[kind+'_names']
+            field = 'adm_nm' if kind == 'admin' else 'EMD_KOR_NM'
+            lookup = {norm(f['properties'][field].split()[-1]): f for f in r[kind]}
+            features = []
+            for name in names:
+                f = lookup[norm(name)]
+                polys = [[np.round(tm(np.array(ring)), 2).tolist() for ring in p] for p in polygons(f)]
+                features.append({'name': name, 'polygons': polys, 'labelBox': label_box(polys, name)})
+            pts = np.concatenate([np.array(p[0]) for f in features for p in f['polygons']])
+            result[kind] = {'bounds': [*pts.min(0), *pts.max(0)], 'features': features}
+        result['legal'].update(legal_display(result['legal']['features']))
+        regions.append(result)
+        (OUT/'connections').mkdir(exist_ok=True)
+        (OUT/'connections'/f'{r["id"]}.js').write_text('window.BLANK_MAP_GEOMETRY['+str(r['id'])+']='+json.dumps(result, ensure_ascii=False, separators=(',', ':'))+';\n')
 
-samples = {kind: [boundary_samples(r[kind]['features']) for r in regions] for kind in ['admin', 'legal']}
-neighbors = {str(r['id']): [] for r in rows}
-checks, disagreements = [], []
-for i, a in enumerate(regions):
-    for j in range(i+1, len(regions)):
-        b = regions[j]
-        alo, ahi = np.array(a['admin']['bounds']).reshape(2, 2)
-        blo, bhi = np.array(b['admin']['bounds']).reshape(2, 2)
-        if np.any(alo > bhi+100) or np.any(blo > ahi+100):
-            continue
-        lengths = {}
-        for kind, tolerance in [('admin', 5), ('legal', 40)]:
-            ap, at, aw = samples[kind][i]; bp, bt, bw = samples[kind][j]
-            # Require a length, never just a common corner. Symmetric test
-            # limits effects of different vertex densities in the two inputs.
-            lengths[kind] = int(min(aw[bt.query(ap, distance_upper_bound=tolerance)[0] < tolerance].sum(),
-                                    bw[at.query(bp, distance_upper_bound=tolerance)[0] < tolerance].sum()))
-        agreement = all(v >= 200 for v in lengths.values())
-        record = {'ids': [a['id'], b['id']], 'nearBoundaryMeters': lengths}
-        if agreement:
-            neighbors[str(a['id'])].append(b['id']); neighbors[str(b['id'])].append(a['id'])
-            checks.append(record)
-        elif any(v >= 200 for v in lengths.values()):
-            disagreements.append(record)
+    samples = {kind: [boundary_samples(r[kind]['features']) for r in regions] for kind in ['admin', 'legal']}
+    neighbors = {str(r['id']): [] for r in rows}
+    checks, disagreements = [], []
+    for i, a in enumerate(regions):
+        for j in range(i+1, len(regions)):
+            b = regions[j]
+            alo, ahi = np.array(a['admin']['bounds']).reshape(2, 2)
+            blo, bhi = np.array(b['admin']['bounds']).reshape(2, 2)
+            if np.any(alo > bhi+100) or np.any(blo > ahi+100):
+                continue
+            lengths = {}
+            for kind, tolerance in [('admin', 5), ('legal', 40)]:
+                ap, at, aw = samples[kind][i]; bp, bt, bw = samples[kind][j]
+                # Require a length, never just a common corner. Symmetric test
+                # limits effects of different vertex densities in the two inputs.
+                lengths[kind] = int(min(aw[bt.query(ap, distance_upper_bound=tolerance)[0] < tolerance].sum(),
+                                        bw[at.query(bp, distance_upper_bound=tolerance)[0] < tolerance].sum()))
+            agreement = all(v >= 200 for v in lengths.values())
+            record = {'ids': [a['id'], b['id']], 'nearBoundaryMeters': lengths}
+            if agreement:
+                neighbors[str(a['id'])].append(b['id']); neighbors[str(b['id'])].append(a['id'])
+                checks.append(record)
+            elif any(v >= 200 for v in lengths.values()):
+                disagreements.append(record)
 
-(OUT/'neighbors.js').write_text('window.BLANK_MAP_NEIGHBORS = '+json.dumps(neighbors, separators=(',', ':'))+';\n')
-report = {
-    'method': '공통 TM 투영, 10m 이하 경계 표본. 행정동 5m/법정동 40m 이내 양방향 근접 길이 각각 200m 이상인 쌍만 허용. 점 접촉 제외. 불일치는 보수적으로 연결 목록에서 제외.',
-    'sources': [{'url': 'https://github.com/vuski/admdongkor', 'date': '2026-10-01', 'role': '행정동 좌표'},
-                {'url': 'https://github.com/KnellBalm/kr-admin-geojson', 'date': '2023-07-29', 'role': '법정동 좌표, 기존 제작 입력의 최신 명칭 재분류 포함'},
-                {'url': 'https://dokdokinfo.kr/areaboundary/', 'date': '2026-09-30', 'role': '지역별 참고 지도·명칭. 지역별 URL은 sources.json 및 connections/{id}.js'}],
-    'inputSha256': hashlib.sha256((SOURCE/'제작_입력.json').read_bytes()).hexdigest(),
-    'regions': len(rows), 'accepted': checks, 'excludedDisagreements': disagreements,
-    'geometryChoice': '연결 지도는 기존 제작 시 대조한 지리 좌표를 사용한다. 이미지에서 추출한 단독 지도는 지역별 여백·비등방 축척과 픽셀 복원 때문에 서로 직접 이어 붙일 수 없다. 최신 이미지 윤곽과 좌표의 차이는 기존 제작 검증 기록을 승계하며, 연결 지도의 법정동은 2023년 좌표 기반임을 UI에 명시한다. 기준일 불명인 최신 좌표로 간주하지 않는다.',
-    'validation': '동 이름별 대응, 구멍·분리 구역 유지, 구역 내부 직사각형에 이름 배치(작으면 내부점으로 인출선). 이름 유무는 같은 고정 벡터 공유. 기존 지역별 출처/대조 기록: maps/{id}/sources.txt. 경계 표본 근접은 인접 판정의 근사이며 전체 지역의 신규 육안 전수 검증을 의미하지 않는다.'
-}
-report['checkedReferencePages'] = ['https://github.com/vuski/admdongkor', 'https://github.com/KnellBalm/kr-admin-geojson', 'https://dokdokinfo.kr/areaboundary/seoul/gangnam-gu/']
-report['dataLoading'] = '로컬 파일 직접 열기와 HTTP 모두 지원하도록 지역별 일반 JS 스크립트를 동적으로 불러온다. file://에서 차단되는 JSON fetch는 사용하지 않는다. 로딩 실패·잘못된 자료·타임아웃은 캐시에서 제거하여 재시도할 수 있다.'
-report['knownDiscrepancy'] = '법정동 원자료의 독립 단순화로 이웃 다각형 사이에 작은 틈/겹침이 남아 있다. 이를 임의의 새 경계로 덮거나 스냅하지 않고 보존한다. 행정동·법정동 간 인접 판정이 다른 4쌍은 연결 후보에서 제외했다. 최신 이미지 지도와의 상세 차이·복원 내역은 기존 지역별 sources.txt 및 제작자료/검증경계의 구역별 진단을 승계한다.'
-report['checks'] = {'geometry': '127개 지역, 4706개 구역, 169개 분리 구역, 28개 내부 구멍. 각 이름/인출선 내부점 및 글자 사각형 모서리, 폐합 경로, 양방향 인접, 이름 유무 동일 도형 검사 통과.', 'interaction': 'file: 환경에서 fetch를 금지하고 실제 지역별 JS 스크립트를 실행하는 Node 회귀 검사 통과. 연결·해제·미리보기·URL 복원·캐시·빠른 전환·로딩 실패 후 재시도·잘못된 자료 검사를 포함한다. 실제 브라우저 검증을 대체하지 않는다.', 'visual': '강남구+서초구 두 경계 체계의 SVG를 PNG로 렌더링하여 확인. 브라우저 실사용·PNG 다운로드는 실행 환경의 서버/파일 URL 제한으로 미확인.'}
-encoded = json.dumps(report, ensure_ascii=False, indent=2)
-(OUT/'connection-validation.json').write_text(encoded)
-(SOURCE/'백지도_연결_검증.json').write_text(encoded)
-print('regions', len(rows), 'connections', len(checks), 'excluded', len(disagreements))
-print('Gangnam neighbors:', neighbors['23'])
+    (OUT/'neighbors.js').write_text('window.BLANK_MAP_NEIGHBORS = '+json.dumps(neighbors, separators=(',', ':'))+';\n')
+    report = {
+        'method': '공통 TM 투영, 10m 이하 경계 표본. 행정동 5m/법정동 40m 이내 양방향 근접 길이 각각 200m 이상인 쌍만 허용. 점 접촉 제외. 불일치는 보수적으로 연결 목록에서 제외.',
+        'sources': [{'url': 'https://github.com/vuski/admdongkor', 'date': '2026-10-01', 'role': '행정동 좌표'},
+                    {'url': 'https://github.com/KnellBalm/kr-admin-geojson', 'date': '2023-07-29', 'role': '법정동 좌표, 기존 제작 입력의 최신 명칭 재분류 포함'},
+                    {'url': 'https://dokdokinfo.kr/areaboundary/', 'date': '2026-09-30', 'role': '지역별 참고 지도·명칭. 지역별 URL은 sources.json 및 connections/{id}.js'}],
+        'inputSha256': hashlib.sha256((SOURCE/'제작_입력.json').read_bytes()).hexdigest(),
+        'regions': len(rows), 'accepted': checks, 'excludedDisagreements': disagreements,
+        'geometryChoice': '연결 지도는 기존 제작 시 대조한 지리 좌표를 사용한다. 이미지에서 추출한 단독 지도는 지역별 여백·비등방 축척과 픽셀 복원 때문에 서로 직접 이어 붙일 수 없다. 최신 이미지 윤곽과 좌표의 차이는 기존 제작 검증 기록을 승계하며, 연결 지도의 법정동은 2023년 좌표 기반임을 UI에 명시한다. 기준일 불명인 최신 좌표로 간주하지 않는다.',
+        'validation': '동 이름별 대응, 구멍·분리 구역 유지, 구역 내부 직사각형에 이름 배치(작으면 내부점으로 인출선). 이름 유무는 같은 고정 벡터 공유. 기존 지역별 출처/대조 기록: maps/{id}/sources.txt. 경계 표본 근접은 인접 판정의 근사이며 전체 지역의 신규 육안 전수 검증을 의미하지 않는다.'
+    }
+    report['checkedReferencePages'] = ['https://github.com/vuski/admdongkor', 'https://github.com/KnellBalm/kr-admin-geojson', 'https://dokdokinfo.kr/areaboundary/seoul/gangnam-gu/']
+    report['dataLoading'] = '로컬 파일 직접 열기와 HTTP 모두 지원하도록 지역별 일반 JS 스크립트를 동적으로 불러온다. file://에서 차단되는 JSON fetch는 사용하지 않는다. 로딩 실패·잘못된 자료·타임아웃은 캐시에서 제거하여 재시도할 수 있다.'
+    report['knownDiscrepancy'] = '법정동 원자료의 독립 단순화로 이웃 다각형 사이에 작은 틈/겹침이 남아 있다. 이를 임의의 새 경계로 덮거나 스냅하지 않고 보존한다. 행정동·법정동 간 인접 판정이 다른 4쌍은 연결 후보에서 제외했다. 최신 이미지 지도와의 상세 차이·복원 내역은 기존 지역별 sources.txt 및 제작자료/검증경계의 구역별 진단을 승계한다.'
+    report['checks'] = {'geometry': '127개 지역, 4706개 구역, 169개 분리 구역, 28개 내부 구멍. 각 이름/인출선 내부점 및 글자 사각형 모서리, 폐합 경로, 양방향 인접, 이름 유무 동일 도형 검사 통과.', 'interaction': 'file: 환경에서 fetch를 금지하고 실제 지역별 JS 스크립트를 실행하는 Node 회귀 검사 통과. 연결·해제·미리보기·URL 복원·캐시·빠른 전환·로딩 실패 후 재시도·잘못된 자료 검사를 포함한다. 실제 브라우저 검증을 대체하지 않는다.', 'visual': '강남구+서초구 두 경계 체계의 SVG를 PNG로 렌더링하여 확인. 브라우저 실사용·PNG 다운로드는 실행 환경의 서버/파일 URL 제한으로 미확인.'}
+    encoded = json.dumps(report, ensure_ascii=False, indent=2)
+    (OUT/'connection-validation.json').write_text(encoded)
+    (SOURCE/'백지도_연결_검증.json').write_text(encoded)
+    print('regions', len(rows), 'connections', len(checks), 'excluded', len(disagreements))
+    print('Gangnam neighbors:', neighbors['23'])
+
+
+if __name__ == '__main__':
+    main()

@@ -887,5 +887,19 @@ window.BLANK_MAP_REGIONS = [
     "name": "서귀포시",
     "adminCount": 17,
     "legalCount": 27
+  },
+  {
+    "id": 128,
+    "sido": "경기도",
+    "name": "의왕시",
+    "adminCount": 6,
+    "legalCount": 11
+  },
+  {
+    "id": 129,
+    "sido": "경기도",
+    "name": "과천시",
+    "adminCount": 7,
+    "legalCount": 10
   }
 ];

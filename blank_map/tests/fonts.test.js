@@ -27,11 +27,11 @@ const engine = sandbox.window.BlankMapFonts;
         assert.ok(result.includes('<path d="M 0,0 L 10,10"/>'));
     }
     await assert.rejects(engine.font('unknown'));
-    for (let id = 1; id <= 127; id++) {
+    for (let id = 1; id <= 129; id++) {
         const maps = await engine.originalMaps(id);
         for (const kind of ['admin', 'legal']) {
             assert.equal(maps[kind], fs.readFileSync(path.join(base, `maps/${id}/${kind}-labeled.svg`), 'utf8'), `${id} ${kind}: 원본 경계와 글자 위치 보존`);
         }
     }
-    console.log('PASS: 11개 글씨체 내장, 127개 지역 원본 벡터·라벨 위치 보존, file:에서 fetch 없이 로딩');
+    console.log('PASS: 11개 글씨체 내장, 129개 지역 원본 벡터·라벨 위치 보존, file:에서 fetch 없이 로딩');
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -61,8 +61,8 @@ function setup(hash = '', loader, Observer, storage = new Map()) {
     assert.ok(singleLegal.includes('data-dong-boundaries="23"'), '단독 법정동 지도도 정리된 경계망 사용');
     assert.ok(!singleLegal.includes('<path data-name='), '단독 법정동은 기존 다각형을 겹쳐 그리지 않음');
     const regionButtons = () => e.regions.children.filter(c => c.className === 'region-button');
-    assert.equal(regionButtons().length, 127, '전체 지역 목록 누락 없음');
-    assert.equal(new Set(regionButtons().map(c => c.dataset.id)).size, 127, '지역 중복 없음');
+    assert.equal(regionButtons().length, 129, '전체 지역 목록 누락 없음');
+    assert.equal(new Set(regionButtons().map(c => c.dataset.id)).size, 129, '지역 중복 없음');
     const jejuIndex = e.regions.children.findIndex(c => c.className === 'region-group' && c.textContent === '제주특별자치도');
     assert.equal(e.regions.children.filter(c => c.className === 'region-group' && c.textContent === '제주특별자치도').length, 1, '제주 그룹이 분리되지 않음');
     assert.equal(e.regions.children[jejuIndex+1].textContent, '제주시');
@@ -72,7 +72,7 @@ function setup(hash = '', loader, Observer, storage = new Map()) {
     e.search.value = '서귀포'; e.search.listeners.input();
     assert.deepEqual(regionButtons().map(c => c.textContent), ['서귀포시']);
     e.reset.click();
-    assert.equal(regionButtons().length, 127);
+    assert.equal(regionButtons().length, 129);
 
     assert.ok(e.neighbor.children.some(o => o.value === 22));
     e['connection-settings'].open = true;
@@ -200,5 +200,20 @@ function setup(hash = '', loader, Observer, storage = new Map()) {
     const savedUI = setup('', undefined, undefined, storage);
     await Promise.all([savedUI.window.BlankMapFonts.font('old_studio3'), savedUI.window.BlankMapFonts.originalMaps(23)]); await tick();
     assert.equal(savedUI.elements.fontSelect.value, 'old_studio3', '다른 페이지와 같은 저장 키로 글씨체 복원');
+    const additionsUI = setup('#128'), a = additionsUI.elements;
+    await tick();
+    assert.equal(a['region-title'].textContent, '의왕시');
+    assert.equal(a.maps.children.length, 4);
+    a.province.value = '경기도'; a.province.listeners.change();
+    for (const name of ['의왕시', '과천시']) {
+        a.search.value = name; a.search.listeners.input();
+        assert.deepEqual(a.regions.children.filter(c => c.className === 'region-button').map(c => c.textContent), [name]);
+    }
+    a.neighbor.value = '129'; a.connect.click(); await tick();
+    assert.equal(additionsUI.location.hash, '#128+129');
+    assert.equal(a['region-title'].title, '의왕시 + 과천시');
+    assert.equal(a.maps.children.length, 4);
+    a['district-only'].checked = true; a['district-only'].listeners.change(); await tick();
+    assert.equal(a.maps.children.length, 2, '추가 지역도 시 외곽선 표시 지원');
     console.log('PASS: file: 환경에서 fetch 없이 실제 자료 스크립트 로딩, 연결·해제·미리보기·URL 복원·캐시·빠른 전환·실패 후 재시도·잘못된 자료 처리');
 })().catch(error => { console.error(error); process.exitCode = 1; });

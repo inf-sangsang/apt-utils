@@ -1529,6 +1529,30 @@
       "sharedEdgesDrawnOnce": true,
       "gapWidthMeters": 40,
       "snappingDistanceMeters": 20
+    },
+    {
+      "id": 128,
+      "legalFeaturesSha256": "398cb2c47bd7e49ccab7026ec1db62a29ab3556290300b06ab10ee560c645649",
+      "outlineSegments": 1,
+      "boundarySegments": 38,
+      "featuresPreserved": 11,
+      "coverageValid": true,
+      "labelsInsideOwnDong": true,
+      "sharedEdgesDrawnOnce": true,
+      "gapWidthMeters": 40,
+      "snappingDistanceMeters": 20
+    },
+    {
+      "id": 129,
+      "legalFeaturesSha256": "239d7fe58f0c9e25a856d73bfc06da2fcf03937bf123afe2e892e8c404738134",
+      "outlineSegments": 1,
+      "boundarySegments": 39,
+      "featuresPreserved": 10,
+      "coverageValid": true,
+      "labelsInsideOwnDong": true,
+      "sharedEdgesDrawnOnce": true,
+      "gapWidthMeters": 40,
+      "snappingDistanceMeters": 20
     }
   ]
 }

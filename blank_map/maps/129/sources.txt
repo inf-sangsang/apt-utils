@@ -1,0 +1,16 @@
+경기도 과천시 백지도 — 출처 및 대조
+사용자 요청에 따른 추가 지역 (2026-11-02). 기존 지역 ID는 유지한다.
+행정동 좌표: https://github.com/vuski/admdongkor (2026-10-01)
+법정동 좌표: https://github.com/KnellBalm/kr-admin-geojson (2023-07-29)
+두 좌표 자료는 기존 제작자료의 전국 GeoJSON에서 해당 시 전체를 추출했다.
+추가 제작 입력과 동별 원본 좌표: data/additional-regions.json
+두 체계의 별도 참고 지도: https://dokdokinfo.kr/areaboundary/gyeonggi-do/gwacheon-si/ (지도 기준일 2026-09-30)
+참고 그림 URL: 위 URL + 경기도%20과천시%20행정동%20행정구역%20경계%20지도.png / 법정동으로 바꾼 URL
+대조: 각 체계의 모든 동 이름·해당 구역 배치·외곽 및 내부 경계·분리 구역을 참고 그림과 비교했다.
+차이: GeoJSON의 단순화로 참고 그림보다 선이 거칠다. TM 등방 투영으로 종횡비도 다르다.
+법정동의 2023년 좌표를 최신 공식 경계로 간주하지 않는다. 날짜가 확인되는 보관 좌표를 사용했다.
+법정동 표시 경계는 기존 coverage_clean 정리 규칙을 적용했다. 원본 다각형은 connections/129.js에 보존한다.
+인접: 기존과 동일한 양방향 경계 근접 길이 검사(행정동 5m, 법정동 40m, 양쪽 200m 이상).
+라벨: 해당 동 내부 직사각형, 좁으면 인출선. 이름 있음/없음은 동일 벡터 공유.
+검사: connections.test.js, app.test.js, fonts.test.js 및 audit_catalog.py.
+새 PNG는 SVG의 2배 크기, 글씨체는 Nanum Gothic. 기존 지도 파일은 보존한다.

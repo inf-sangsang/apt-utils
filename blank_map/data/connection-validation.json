@@ -18,7 +18,7 @@
     }
   ],
   "inputSha256": "999a83e7899b7236d03434162f67571853a9013405c77b563696ed1c6a2534e6",
-  "regions": 127,
+  "regions": 129,
   "accepted": [
     {
       "ids": [
@@ -2589,6 +2589,126 @@
         "admin": 85677,
         "legal": 85214
       }
+    },
+    {
+      "ids": [
+        21,
+        129
+      ],
+      "nearBoundaryMeters": {
+        "admin": 3222,
+        "legal": 3628
+      }
+    },
+    {
+      "ids": [
+        22,
+        129
+      ],
+      "nearBoundaryMeters": {
+        "admin": 10783,
+        "legal": 11492
+      }
+    },
+    {
+      "ids": [
+        71,
+        128
+      ],
+      "nearBoundaryMeters": {
+        "admin": 9645,
+        "legal": 9748
+      }
+    },
+    {
+      "ids": [
+        72,
+        128
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2729,
+        "legal": 2937
+      }
+    },
+    {
+      "ids": [
+        75,
+        128
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1765,
+        "legal": 1820
+      }
+    },
+    {
+      "ids": [
+        75,
+        129
+      ],
+      "nearBoundaryMeters": {
+        "admin": 1947,
+        "legal": 2034
+      }
+    },
+    {
+      "ids": [
+        77,
+        128
+      ],
+      "nearBoundaryMeters": {
+        "admin": 4312,
+        "legal": 4512
+      }
+    },
+    {
+      "ids": [
+        80,
+        128
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5477,
+        "legal": 5835
+      }
+    },
+    {
+      "ids": [
+        80,
+        129
+      ],
+      "nearBoundaryMeters": {
+        "admin": 5659,
+        "legal": 6018
+      }
+    },
+    {
+      "ids": [
+        86,
+        128
+      ],
+      "nearBoundaryMeters": {
+        "admin": 546,
+        "legal": 602
+      }
+    },
+    {
+      "ids": [
+        96,
+        128
+      ],
+      "nearBoundaryMeters": {
+        "admin": 2752,
+        "legal": 2835
+      }
+    },
+    {
+      "ids": [
+        128,
+        129
+      ],
+      "nearBoundaryMeters": {
+        "admin": 6378,
+        "legal": 6701
+      }
     }
   ],
   "excludedDisagreements": [
@@ -2642,9 +2762,10 @@
   ],
   "knownDiscrepancy": "법정동 원자료의 독립 단순화로 이웃 다각형 사이에 작은 틈/겹침이 남아 있다. 이를 임의의 새 경계로 덮거나 스냅하지 않고 보존한다. 행정동·법정동 간 인접 판정이 다른 4쌍은 연결 후보에서 제외했다. 최신 이미지 지도와의 상세 차이·복원 내역은 기존 지역별 sources.txt 및 제작자료/검증경계의 구역별 진단을 승계한다.",
   "checks": {
-    "geometry": "127개 지역, 4706개 구역, 169개 분리 구역, 28개 내부 구멍. 각 이름/인출선 내부점 및 글자 사각형 모서리, 폐합 경로, 양방향 인접, 이름 유무 동일 도형 검사 통과.",
+    "geometry": "전체 지역의 구역 내부 라벨, 폐합 경로, 양방향 인접, 이름 유무 동일 도형은 connections.test.js로 검사한다.",
     "interaction": "file: 환경에서 fetch를 금지하고 실제 지역별 JS 스크립트를 실행하는 Node 회귀 검사 통과. 연결·해제·미리보기·URL 복원·캐시·빠른 전환·로딩 실패 후 재시도·잘못된 자료 검사를 포함한다. 실제 브라우저 검증을 대체하지 않는다.",
     "visual": "강남구+서초구 두 경계 체계의 SVG를 PNG로 렌더링하여 확인. 브라우저 실사용·PNG 다운로드는 실행 환경의 서버/파일 URL 제한으로 미확인."
   },
-  "dataLoading": "로컬 파일 직접 열기와 HTTP 모두 지원하도록 지역별 일반 JS 스크립트를 동적으로 불러온다. file://에서 차단되는 JSON fetch는 사용하지 않는다. 로딩 실패·잘못된 자료·타임아웃은 캐시에서 제거하여 재시도할 수 있다."
+  "dataLoading": "로컬 파일 직접 열기와 HTTP 모두 지원하도록 지역별 일반 JS 스크립트를 동적으로 불러온다. file://에서 차단되는 JSON fetch는 사용하지 않는다. 로딩 실패·잘못된 자료·타임아웃은 캐시에서 제거하여 재시도할 수 있다.",
+  "additionalInputSha256": "f8d984c149eb90797756b12ad1d8f1203cb260d66fcfc9d5fceda93104fc6868"
 }

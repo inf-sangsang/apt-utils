@@ -43,7 +43,7 @@
     }
     const mapCache = new Map();
     async function originalMaps(id) {
-        if (!Number.isInteger(id) || id < 1 || id > 127) throw new Error('Unknown map');
+        if (!Number.isInteger(id) || id < 1 || id > 129) throw new Error('Unknown map');
         if (!mapCache.has(id)) {
             const request = load(`font-maps/${id}`).then(async packed => {
                 const bytes = Uint8Array.from(atob(packed), c => c.charCodeAt(0));

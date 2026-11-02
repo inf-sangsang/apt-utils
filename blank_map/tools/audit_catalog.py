@@ -27,6 +27,10 @@ def key(sido, name):
 regions = assignment(BASE/'data/regions.js')
 targets = json.loads((WORK/'지도_제작대상_지역목록/지역목록.json').read_text())
 inputs = json.loads((ORIGINAL/'제작자료/제작_입력.json').read_text())
+additions = json.loads((BASE/'data/additional-regions.json').read_text())
+additional_ids = {r['id'] for r in additions}
+inputs += additions
+targets += [{'시도': r['sido'], '제작지역': r['name']} for r in additions]
 sources = json.loads((BASE/'data/sources.json').read_text())
 graph = assignment(BASE/'data/neighbors.js')
 issues = []
@@ -49,7 +53,8 @@ source_regions = [norm(r['지역']) for r in sources]
 check(Counter(source_regions) == Counter(norm(r['sido']+' '+r['name']) for r in regions), '출처 목록 누락/중복')
 original_folders = {key(p.name, d.name) for p in ORIGINAL.iterdir() if p.is_dir() and p.name in {r['sido'] for r in regions}
                     for d in p.iterdir() if d.is_dir()}
-check(original_folders == expected, f'제작 원본 폴더 차이: {sorted(original_folders ^ expected)}')
+original_expected = expected - {key(r['sido'], r['name']) for r in additions}
+check(original_folders == original_expected, f'제작 원본 폴더 차이: {sorted(original_folders ^ original_expected)}')
 check(set(graph) == {str(i) for i in ids}, '인접 목록 ID 누락/초과')
 by_id = {r['id']: r for r in inputs}
 files_checked = 0
@@ -59,7 +64,8 @@ with zipfile.ZipFile(BASE/'maps/all-maps.zip') as archive:
     for r in regions:
         region = key(r['sido'], r['name'])
         src = ORIGINAL/r['sido']/r['name'].replace(' ', '_')
-        original_files = {norm(p.name): p for p in src.iterdir() if p.is_file()}
+        is_addition = r['id'] in additional_ids
+        original_files = {norm(p.name): p for p in src.iterdir() if p.is_file()} if not is_addition else {}
         production = by_id.get(r['id'])
         check(production is not None and key(production['sido'], production['name']) == region, f'{region}: 제작 입력 ID 불일치')
         geometry = assignment(BASE/'data/connections'/f'{r["id"]}.js')
@@ -76,10 +82,11 @@ with zipfile.ZipFile(BASE/'maps/all-maps.zip') as archive:
                 shipped = BASE/'maps'/str(r['id'])/name
                 original = original_files.get(original_stem+'.'+extension)
                 files_checked += 1
-                if not shipped.is_file() or original is None:
+                if not shipped.is_file() or (original is None and not is_addition):
                     check(False, f'{region}: 파일 누락 {name}'); continue
                 content = shipped.read_bytes()
-                check(hashlib.sha256(content).digest() == hashlib.sha256(original.read_bytes()).digest(), f'{region}: 원본과 파일 불일치 {name}')
+                if not is_addition:
+                    check(hashlib.sha256(content).digest() == hashlib.sha256(original.read_bytes()).digest(), f'{region}: 원본과 파일 불일치 {name}')
                 if extension == 'png':
                     check(content[:8] == b'\x89PNG\r\n\x1a\n' and len(content) > 100, f'{region}: 잘못된 PNG {name}')
                 else:
@@ -87,7 +94,8 @@ with zipfile.ZipFile(BASE/'maps/all-maps.zip') as archive:
                     paths = [e for e in tree.iter() if e.tag.endswith('}path') and 'data-name' in e.attrib]
                     texts = [e.text for e in tree.iter() if e.tag.endswith('}text')]
                     kind = variant.split('-')[0]
-                    check([e.attrib['data-name'] for e in paths] == production[kind+'_names'], f'{region}: SVG 동 경계명 불일치 {name}')
+                    if not (is_addition and kind == 'legal'):
+                        check([e.attrib['data-name'] for e in paths] == production[kind+'_names'], f'{region}: SVG 동 경계명 불일치 {name}')
                     check(texts == (production[kind+'_names'] if variant.endswith('labeled') else []), f'{region}: SVG 이름 표시 누락/불일치 {name}')
                 archive_name = '전체지역_백지도/'+region+'/'+original_stem+'.'+extension
                 zip_expected.add(archive_name)
@@ -101,14 +109,15 @@ report = {'checkedAt': datetime.now(timezone.utc).isoformat(), 'status': 'PASS' 
           'regions': len(regions), 'standaloneMapFiles': files_checked, 'connectionDataFiles': len(connection_files),
           'archiveMapFiles': len(zip_maps), 'sourceRecords': len(sources),
           'checks': ['기준 지역 목록과 페이지 지역 집합·ID', '제작 원본·페이지 지도 폴더의 누락/초과',
-                     'PNG/SVG 전 파일의 원본 SHA-256 일치', 'SVG 경계별 이름·표시 이름과 제작 입력 대응',
+                     '기존 PNG/SVG 원본 SHA-256 일치·추가 지도 파일 형식 검사', 'SVG 경계별 이름·표시 이름과 제작 입력 대응',
                      '연결 지도별 행정동/법정동 이름 대응', '인접 관계의 양방향 참조', '출처 목록·파일',
                      '전체 다운로드 ZIP 내 지도 목록·CRC·크기 일치'],
+          'additionalRegions': [{'id': r['id'], 'name': r['name']} for r in additions],
           'displayFix': '원본 목록 끝에 추가된 서귀포시가 세종시 뒤에 분리되어 보였음. UI에서 시도별로 모아 제주시·서귀포시를 같은 제주 그룹에 표시. 기존 ID·URL·지도 파일은 유지.',
           'limitations': '목록·파일·명칭 대조 결과이며 새 경계 정확도 검증이나 브라우저 실사용 검증은 아니다.',
           'jeju': [r for r in regions if r['sido'] == '제주특별자치도'], 'issues': issues}
 encoded = json.dumps(report, ensure_ascii=False, indent=2)
 (BASE/'data/catalog-validation.json').write_text(encoded)
-(ORIGINAL/'제작자료/목록_파일_대조.json').write_text(encoded)
+# Keep this repository's audit local; archived production inputs are read-only.
 print(encoded)
 raise SystemExit(bool(issues))

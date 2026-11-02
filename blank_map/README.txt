@@ -57,6 +57,13 @@ node blank_map/tests/connections.test.js
 node blank_map/tests/app.test.js
 node blank_map/tests/fonts.test.js
 python3 blank_map/tests/legal_display_test.py
-127개 지역 전체의 구역 내부 라벨/인출점, 구멍·분리 구역, 폐합 경로, 동일 벡터,
+129개 지역 전체의 구역 내부 라벨/인출점, 구멍·분리 구역, 폐합 경로, 동일 벡터,
 인접 그래프, 연결 상태/실패/빠른 전환을 검사한다.
 실제 브라우저의 폰트와 PNG 내보내기는 별도 브라우저 확인이 필요하다.
+
+2026-11-02: 의왕시(ID 128)·과천시(ID 129)를 사용자 요청 예외로 추가.
+기존 대상 목록과 data/additional-regions.json을 합쳐 현재 129개 지역을 제공한다.
+두 지역의 이름/경계 대조 및 자료 차이는 maps/{128,129}/sources.txt에 기록했다.
+추가 지도 재생성: python3 blank_map/tools/build_additional_regions.py [제작자료] (기존 의존성 + resvg-py).
+추가 PNG는 SVG의 2배 크기이며 Nanum Gothic을 사용한다.
+목록·파일·전체 ZIP 검사: python3 blank_map/tools/audit_catalog.py

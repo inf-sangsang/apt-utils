@@ -14,7 +14,14 @@ const data = id => {
     vm.runInNewContext(fs.readFileSync(path.join(base, 'data/connections', `${id}.js`), 'utf8'), sandbox);
     return JSON.parse(JSON.stringify(sandbox.window.BLANK_MAP_GEOMETRY[id]));
 };
-assert.equal(regions.length, 127);
+assert.equal(regions.length, 129);
+assert.deepEqual(JSON.parse(JSON.stringify(regions.filter(r => r.id >= 128))), [
+    { id: 128, sido: '경기도', name: '의왕시', adminCount: 6, legalCount: 11 },
+    { id: 129, sido: '경기도', name: '과천시', adminCount: 7, legalCount: 10 }
+]);
+assert.ok(engine.connected([128, 129], graph), '의왕–과천 연결');
+assert.ok(graph[129].includes(22), '과천–서초 인접');
+assert.ok(graph[128].includes(80), '의왕–안양 동안구 인접');
 assert.ok(graph[23].includes(22), '강남–서초 인접');
 assert.ok(!graph[23].includes(1), '강남–종로 비인접');
 assert.ok(engine.connected([23, 22], graph));
@@ -178,4 +185,4 @@ const shiftedSVG = engine.svg([shiftedLegal], 'legal', false, '법정동');
 const thinPath = shiftedSVG.match(/<path data-name="[^"]*" d="([^"]*)"/)[1];
 const thickPath = shiftedSVG.match(/<path data-region="999" d="([^"]*)"/)[1];
 assert.equal(thickPath, thinPath.replace(/ Z/g, ''), '행정동과 위치가 다른 법정동도 굵고 얇은 외곽선이 정확히 일치');
-console.log(`PASS: 127개 지역, ${featureCount}개 구역 내부 라벨, ${separatedCount}개 분리 구역, ${holeCount}개 내부 구멍, 인접 그래프와 동일 벡터 4종, 법정동 자체 외곽선`);
+console.log(`PASS: 129개 지역, ${featureCount}개 구역 내부 라벨, ${separatedCount}개 분리 구역, ${holeCount}개 내부 구멍, 인접 그래프와 동일 벡터 4종, 법정동 자체 외곽선`);

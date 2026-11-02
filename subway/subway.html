@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>지하철 이용량 비교 · APT Utils</title>
+  <meta name="description" content="수도권 지하철역의 출퇴근 시간대와 평일·주말 이용량을 골라 비교하세요.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <div><a class="home" href="../index.html">APT UTILS <span>/ 교통</span></a>
+      <h1>지하철 이용량 비교</h1>
+      <p>궁금한 역을 찾아 담고, 출퇴근 흐름을 한눈에 비교하세요.</p></div>
+      <div class="dataset-tag">수도권 <strong>752</strong>개 역·호선</div>
+    </header>
+
+    <section class="panel" aria-labelledby="search-title">
+      <div class="section-heading"><div><span class="eyebrow">01 / SEARCH</span><h2 id="search-title">역 검색</h2></div><span id="result-count" class="count"></span></div>
+      <div class="search-bar">
+        <label class="search-field"><span class="sr-only">역명, 지역명 또는 호선 검색</span><input id="search" type="search" placeholder="역명 · 지역명 · 호선 검색 (예: 동대문구)" autocomplete="off"></label>
+        <label><span class="sr-only">호선 선택</span><select id="line"><option value="">전체 호선</option></select></label>
+        <button id="merge-lines" class="line-switch" type="button" role="switch" aria-checked="false" aria-label="호선 통합">
+          <span class="split-label">호선별 분리</span><span class="merged-label">호선 통합</span>
+        </button>
+      </div>
+      <div class="table-wrap search-results"><table id="search-table"><caption class="sr-only">검색한 지하철역 이용량</caption><thead></thead><tbody></tbody></table></div>
+      <div class="table-footer"><span>체크한 뒤 담거나, 행의 ‘담기’를 누르세요.</span><span id="merge-note">같은 이름의 역은 호선별로 구분합니다.</span></div>
+    </section>
+
+    <div class="connector">
+      <button id="add-checked" class="primary" disabled>선택한 역 담기 <span id="checked-count">0</span> ↓</button>
+    </div>
+
+    <section class="panel selected-panel" aria-labelledby="selected-title">
+      <div class="section-heading"><div><span class="eyebrow">02 / COMPARE</span><h2 id="selected-title">내가 담은 역 <span id="selected-count" class="count">0</span></h2></div><button id="clear" class="quiet" disabled>전체 비우기</button></div>
+      <div class="table-wrap"><table id="selected-table"><caption class="sr-only">선택한 지하철역 비교</caption><thead></thead><tbody></tbody></table></div>
+      <div class="table-footer"><span id="save-note">담은 역은 이 브라우저에 자동 저장됩니다.</span><span>열 제목을 누르면 정렬됩니다.</span></div>
+    </section>
+    <footer class="notes">
+      <p><strong>계산 기준</strong> 평일 평균은 월~금 하루 총이용량의 평균, 주말 평균은 토·일 하루 총이용량의 평균입니다. 일주일 이용량은 월~일 각 하루의 총합입니다.</p>
+      <p>장암 7호선은 지정값 0을 적용했고, 복정 수인분당선·신내 6호선은 다른 날짜로 빠진 요일을 보완했습니다. 서울 1호선은 집계 식별 검토로 제외했습니다.</p>
+      <a href="https://stcis.go.kr/wps/main.do" target="_blank" rel="noopener noreferrer">자료 출처: STCIS 국가대중교통정보센터 ↗</a>
+    </footer>
+    <div id="status" class="sr-only" role="status" aria-live="polite"></div>
+  </main>
+</body>
+</html>

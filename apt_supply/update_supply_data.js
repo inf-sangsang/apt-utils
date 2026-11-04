@@ -1,5 +1,6 @@
 /* Chrome에서 수집한 단지 표를 검증하고 목록/연간 집계를 함께 갱신한다.
- * node apt_supply/update_supply_data.js apt_supply/data/aptginSnapshot_20261006.json
+ * node apt_supply/update_supply_data.js apt_supply/data/aptginSnapshot_20261105.json 2026 2030
+ * --dry-run 옵션은 데이터 파일을 변경하지 않고 검증 결과만 출력한다.
  */
 const fs = require('node:fs');
 const path = require('node:path');
@@ -8,11 +9,19 @@ const assert = require('node:assert/strict');
 const directory = path.join(__dirname, 'data');
 const input = process.argv[2];
 if (!input) throw new Error('수집한 JSON 파일 경로가 필요합니다.');
+const startYear = Number(process.argv[3] || 2025);
+const endYear = Number(process.argv[4] || 2030);
+assert.ok(Number.isInteger(startYear) && Number.isInteger(endYear) && startYear >= 2000 && endYear >= startYear, '갱신 연도 범위 오류');
+const startMonth = `${startYear}-01`;
+const endMonth = `${endYear}-12`;
+const periods = [];
+for (let year = startYear; year <= endYear; year += 3) periods.push([`${year}-01`, `${Math.min(year + 2, endYear)}-12`]);
+const dryRun = process.argv.includes('--dry-run');
 const snapshots = JSON.parse(fs.readFileSync(input, 'utf8'));
 const provinces = ['서울','경기','인천','부산','대구','광주','대전','울산','세종','강원','충북','충남','전북','경북','경남','제주'];
-assert.equal(snapshots.length, 32);
+assert.equal(snapshots.length, provinces.length * periods.length);
 for (const region of provinces) {
-    for (const [start, end] of [['2025-01','2027-12'], ['2028-01','2030-12']]) {
+    for (const [start, end] of periods) {
         assert.equal(snapshots.filter(s => s.region === region && s.start === start && s.end === end).length, 1);
     }
 }
@@ -24,6 +33,15 @@ const aliases = {
 };
 const fresh = [];
 for (const snapshot of snapshots) {
+    if (snapshot.derivedFrom) {
+        const source = snapshot.derivedFrom;
+        const total = source.summary.match(/#총계\s*([\d,]+)단지\s*([\d,]+)세대/);
+        assert.ok(source.start <= snapshot.start && source.end >= snapshot.end && total, '교차 확인 기간/총계 오류');
+        assert.equal(source.rows.length, Number(total[1].replaceAll(',', '')));
+        assert.ok(source.rows.every(row => row[3] >= source.start && row[3] <= source.end));
+        assert.equal(source.rows.reduce((sum, row) => sum + Number(row[4].replaceAll(',', '')), 0), Number(total[2].replaceAll(',', '')));
+        assert.deepEqual(snapshot.rows, source.rows.filter(row => row[3] >= snapshot.start && row[3] <= snapshot.end), '교차 확인 원문과 추출 결과 불일치');
+    }
     const total = snapshot.summary.match(/#총계\s*([\d,]+)단지\s*([\d,]+)세대/);
     assert.ok(total, snapshot.region + ' 총계 누락');
     assert.equal(snapshot.rows.length, Number(total[1].replaceAll(',', '')));
@@ -51,7 +69,7 @@ for (const row of fresh) {
     unique.set(key, row);
 }
 const old = require('./data/supplyList.js');
-const history = old.slice(1).filter(row => row[3] < '2025-01');
+const history = old.slice(1).filter(row => row[3] < startMonth || row[3] > endMonth);
 const rows = [...history, ...unique.values()].sort((a,b) => a[3].localeCompare(b[3]) || a[2].localeCompare(b[2]) || a[1].localeCompare(b[1]));
 const regions = vm.runInNewContext(fs.readFileSync(path.join(directory, 'regionList.js'), 'utf8') + ';regions');
 const yearly = regions.map(([region]) => {
@@ -67,12 +85,14 @@ const yearly = regions.map(([region]) => {
 for (const row of fresh) assert.ok(regions.some(([region]) => row[2] === region || row[2].startsWith(region + ' ')), '지역 집계 미연결');
 const date = path.basename(input).match(/(\d{8})/)[1];
 const stamp = `${date.slice(0,4)}-${date.slice(4,6)}-${date.slice(6,8)}`;
-const header = `// 출처: https://aptgin.com/home/gin05/gin0501\n// 업데이트: ${stamp} (2025~2030년 갱신, 2024년 이전 기존 자료 유지)\n\n`;
+const header = `// 출처: https://aptgin.com/home/gin05/gin0501\n// 업데이트: ${stamp} (${startYear}~${endYear}년 갱신, 해당 기간 밖 기존 자료 유지)\n\n`;
 function save(filename, variable, data) {
     fs.writeFileSync(path.join(directory, filename), header + `const ${variable} = [\n` +
         data.map(row => '    ' + JSON.stringify(row)).join(',\n') + '\n];\n\n' +
         `if (typeof module !== 'undefined' && module.exports) module.exports = ${variable};\n`);
 }
-save('supplyList.js', 'supplyData', [old[0], ...rows]);
-save('supplyCountList.js', 'regionYearlyData', yearly);
-console.log(JSON.stringify({ preserved: history.length, replaced: old.length-1-history.length, collected: fresh.length, total: rows.length, regions: yearly.length }));
+if (!dryRun) {
+    save('supplyList.js', 'supplyData', [old[0], ...rows]);
+    save('supplyCountList.js', 'regionYearlyData', yearly);
+}
+console.log(JSON.stringify({ dryRun, startYear, endYear, preserved: history.length, replaced: old.length-1-history.length, collected: fresh.length, total: rows.length, regions: yearly.length }));

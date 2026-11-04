@@ -10,6 +10,14 @@
   <script src="app.js" defer></script>
   <link rel="stylesheet" href="../common-nav.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PTYRE0ZWFW"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-PTYRE0ZWFW');
+  </script>
 </head>
 <body class="apt-tool-page">
     <div class="apt-title-bar">
@@ -47,11 +55,6 @@
       <div class="table-wrap"><table id="selected-table"><caption class="sr-only">선택한 지하철역 비교</caption><thead></thead><tbody></tbody></table></div>
       <div class="table-footer"><span id="save-note">담은 역은 이 브라우저에 자동 저장됩니다.</span><span>열 제목을 누르면 정렬됩니다.</span></div>
     </section>
-    <footer class="notes">
-      <p><strong>계산 기준</strong> 평일 평균은 월~금 하루 총이용량의 평균, 주말 평균은 토·일 하루 총이용량의 평균입니다. 일주일 이용량은 월~일 각 하루의 총합입니다.</p>
-      <p>장암 7호선은 지정값 0을 적용했고, 복정 수인분당선·신내 6호선은 다른 날짜로 빠진 요일을 보완했습니다. 서울 1호선은 집계 식별 검토로 제외했습니다.</p>
-      <a href="https://stcis.go.kr/wps/main.do" target="_blank" rel="noopener noreferrer">자료 출처: STCIS 국가대중교통정보센터 ↗</a>
-    </footer>
     <div id="status" class="sr-only" role="status" aria-live="polite"></div>
   </main>
 </body>

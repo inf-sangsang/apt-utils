@@ -61,7 +61,8 @@
                 <div class="sort-section">
                     <label for="dateSelect">기준월 선택:</label>
                     <select id="dateSelect">
-                        <option value="202609" selected>2026년 09월</option>
+                        <option value="202610" selected>2026년 10월</option>
+                        <option value="202609">2026년 09월</option>
                         <option value="202608">2026년 08월</option>
                         <option value="202607">2026년 07월</option>
                         <option value="202606">2026년 06월</option>
@@ -172,10 +173,10 @@
         <!-- Initialize app and load data -->
         <script>
             // Define available dates manually as requested
-            window.availableDates = ['202609','202608','202607','202606','202605','202604','202603','202602','202601', '202512', '202511', '202510', '202509', '202508', '202507', '202506', '202505'];
+            window.availableDates = ['202610','202609','202608','202607','202606','202605','202604','202603','202602','202601', '202512', '202511', '202510', '202509', '202508', '202507', '202506', '202505'];
 
             // Default date
-            let targetDate = '202609';
+            let targetDate = '202610';
 
             // Check session storage for user selection
             const storedDate = sessionStorage.getItem('selectedDataDate');

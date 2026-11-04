@@ -4,6 +4,7 @@
 
 // Available data dates - automatically populated
 window.availableDataDates = [
+    { value: '202610', label: '2026년 10월' },
     { value: '202609', label: '2026년 09월' },
     { value: '202608', label: '2026년 08월' },
     { value: '202607', label: '2026년 07월' },
@@ -24,4 +25,4 @@ window.availableDataDates = [
 ];
 
 // Set the default/latest data date
-window.currentDataDate = '202609';
+window.currentDataDate = '202610';
